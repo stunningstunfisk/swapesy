@@ -24,11 +24,11 @@ const Main = () => {
         initialRouteName={homeLabel}
         screenOptions={
           ({ route }) => ({
-            tabBarActiveTintColor: 'tomato',
+            tabBarActiveTintColor: '#d06f3b',
             tabBarInactiveTintColor: 'grey',
             tabBarLabelStyle: {
-              paddingBottom: 10,
-              fontSize: 10
+              padding: 0,
+              fontSize: 12
             },
             tabBarStyle: [
               {
