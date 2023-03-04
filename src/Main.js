@@ -10,6 +10,8 @@ import ChatPage from './pages/Chat';
 import TradesPage from './pages/Trades';
 import UploadPage from './pages/Upload';
 
+import ListingInfo from './pages/ListingInfo/index.js';
+
 const Tab = createBottomTabNavigator();
 
 function Main() {
@@ -17,7 +19,7 @@ function Main() {
     <Navbar
       pages={(
         <>
-          <Tab.Screen name="Home" component={HomePage} />
+          <Tab.Screen name="Home" component={ListingInfo} />
           <Tab.Screen name="Chat" component={ChatPage} />
           <Tab.Screen name="Trades" component={TradesPage} />
           <Tab.Screen name="Upload" component={UploadPage} />
