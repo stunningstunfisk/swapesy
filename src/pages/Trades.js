@@ -13,8 +13,8 @@ const Trades = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <View>
-        <Button color={currentView === 0 ? 'green' : 'grey'} title='ACTIVE LISTINGS' onPress={() => setCurrentView(0)} />
-        <Button color={currentView === 1 ? 'green' : 'grey'} title='OUTGOING OFFERS' onPress={() => setCurrentView(1)} />
+        <Button color={currentView === 0 ? 'green' : 'grey'} title='MY ACTIVE LISTINGS' onPress={() => setCurrentView(0)} />
+        <Button color={currentView === 1 ? 'green' : 'grey'} title='MY PLACED OFFERS' onPress={() => setCurrentView(1)} />
       </View>
       <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
         {currentView === 0
@@ -23,7 +23,6 @@ const Trades = ({ navigation }) => {
             <Text>
               INCOMING HEADER
             </Text>
-
             <FlatList
               style={{ flex: 1 }}
               data={TEST_DATA}
@@ -31,7 +30,6 @@ const Trades = ({ navigation }) => {
               renderItem={({ item }) => <MiniListing listing={item} />} // item is the hardcoded value for FlatList
               keyExtractor={(listing, index) => listing.id + index}
             />
-
           </>
 
           :
