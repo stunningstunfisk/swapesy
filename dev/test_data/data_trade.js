@@ -31,15 +31,27 @@ const TRADE_DATA =
   title: 'Most Amazing Card EVER!',
   user_id: USER_DATA,
   cards: [CARD_DATA],
-  offers: [OFFER_DATA, OFFER_DATA],
+  offers: [],
   completed: false,
   accepted_offer: null,
   rating: null,
 };
 
+
+function randomInteger(max) {
+  return Math.floor(Math.random() * max);
+};
+
 const TRADES = [];
+
 for (let i = 0; i < 7; ++i) {
-  TRADES.push(TRADE_DATA);
+  let newTrade = JSON.parse(JSON.stringify(TRADE_DATA));
+  let offers = randomInteger(12);
+  console.log('offers', offers);
+  for (let j = 0; j < offers; ++j) {
+    newTrade.offers.push(OFFER_DATA);
+  }
+  TRADES.push(newTrade);
 };
 
 export default TRADES;

@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import { Avatar, Icon, ListItem } from '@rneui/themed';
+import { ListItem } from '@rneui/themed';
+
+import MiniOffer from './MiniOffer.jsx';
 
 
 const styles = StyleSheet.create({
   cardImage: {
-    height: 35,
-    width: 25,
+    height: 70,
+    width: 50,
     borderWidth: 1,
-    borderRadius: '0.125rem',
+    borderRadius: 2,
   },
   listing: {
     borderWidth: 1,
     flex: 1,
     flexDirection: 'row',
-    padding: '2rem',
-  },
-  offer: {
-    borderWidth: 1,
-    flex: 1,
-    flexDirection: 'row',
-    padding: '2rem',
+    justifyContent: 'space-around',
+    padding: 16,
   },
   profileImage: {
     height: 50,
@@ -35,7 +32,6 @@ const MiniListing = ({ listing }) => {
       content={
         // LIST TITLE AREA
         <View style={styles.listing}>
-          <Text>{listing.title}</Text>
           {listing.cards.map((card) =>
             <Image
               style={styles.cardImage}
@@ -43,31 +39,22 @@ const MiniListing = ({ listing }) => {
               source={card.url}
             />
           )}
+          <Text>{listing.title}</Text>
+          <View>
+            <Text>{listing.offers.length} OFFERS</Text>
+          </View>
         </View>
       }
       isExpanded={expanded}
-      noIcon
       onPress={() => {
         setExpanded(!expanded);
       }}
     >
       {/* Collapsable Content */}
       {listing.offers.map((offer) => {
-        return (<View style={styles.offer}>
-          <Avatar
-            rounded
-            source={offer.user_id.profile_url}
-            style={styles.profileImage}
-          />
-          {offer.cards.map((card) =>
-            <Image
-              style={styles.cardImage}
-              key={card.id}
-              source={card.url}
-            />
-          )}
-          <Button title='ACCEPT OFFER' onPress={() => { }} />
-        </View>);
+        return (
+          <MiniOffer offer={offer} />
+        );
       })}
 
     </ListItem.Accordion >
