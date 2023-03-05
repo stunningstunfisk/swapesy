@@ -40,6 +40,9 @@ const Navbar = ({pages}) => {
                 case 'Upload':
                   iconName = focused ? 'duplicate' : 'duplicate-outline';
                   break;
+                case 'UserProfile':
+                  iconName = focused ? 'person' : 'person-outline';
+                  break;
                 default:
                   break;
               }
