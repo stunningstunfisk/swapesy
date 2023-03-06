@@ -17,9 +17,12 @@ const Main = ({user}) => {
       pages={
         <>
           <Tab.Screen name='Home' component={HomePage} />
-          <Tab.Screen name='Chat' component={ChatPage} />
+          <Tab.Screen name='Chat'>
+            {() => <ChatPage user={user} />}
+          </Tab.Screen>
           <Tab.Screen name='Trades' component={TradesPage} />
           <Tab.Screen name='Upload' component={UploadPage} />
+
         </>
       }
     />
