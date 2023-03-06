@@ -4,7 +4,7 @@ import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
 import MiniOffer from './MiniOffer.jsx';
-import PressableOpacity from './PressableOpacity.jsx';
+import PressableOpacity from './buttons/PressableOpacity.jsx';
 
 
 const styles = StyleSheet.create({
