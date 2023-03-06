@@ -22,8 +22,6 @@ function Upload({ navigation }) {
       </Pressable> */}
     </View>
   );
-};
-
-export default Upload;
+}
 
 export default Upload;
