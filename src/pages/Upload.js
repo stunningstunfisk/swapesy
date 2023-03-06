@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import ModalView from '../components/common/modals/ModalView';
 
-const Upload = ({ navigation }) => {
+function Upload({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleModal = () => {
@@ -22,6 +22,6 @@ const Upload = ({ navigation }) => {
       </Pressable>
     </View>
   );
-};
+}
 
 export default Upload;
