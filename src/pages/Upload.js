@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { Image, View, Text, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { Image, View, Text, Pressable, TextInput } from 'react-native';
+import ModalView from '../components/common/modals/ModalView';
 import { Dropdown } from 'react-native-select-dropdown';
 import DropdownComponent from '../components/Dropdown.js';
 // import PhotoUpload from 'react-native-photo-upload';
@@ -19,10 +20,16 @@ const Upload = ({ navigation }) => {
     { label: 'Damaged', value: '5' },
   ];
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleModal = () => {
+    setModalVisible(!modalVisible);
+  };
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text
-          style={{ fontSize: 26, fontWeight: 'bold' }}
+        onPress={() => navigation.navigate('Home')}
+        style={{ fontSize: 26, fontWeight: 'bold' }}
       >
         Add a Card</Text>
 
@@ -36,8 +43,14 @@ const Upload = ({ navigation }) => {
       <ImagePickerComponent />
       <CameraComponent />
 
+      {/* <ModalView handleModal={handleModal} modalVisible={modalVisible} />
+      <Pressable onPress={handleModal}>
+        <Text>Show Modal</Text>
+      </Pressable> */}
     </View>
   );
-}
+};
+
+export default Upload;
 
 export default Upload;
