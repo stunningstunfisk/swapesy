@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-//Navbar
+// Navbar
 import Navbar from './layout/Navbar'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
@@ -14,7 +14,7 @@ import UploadPage from './pages/Upload';
 const Main = ({user}) => {
   return (
     <Navbar
-      pages={
+      pages={(
         <>
           <Tab.Screen name='Home' component={HomePage} />
           <Tab.Screen name='Chat'>
@@ -24,9 +24,8 @@ const Main = ({user}) => {
           <Tab.Screen name='Upload' component={UploadPage} />
 
         </>
-      }
+      )}
     />
-
 
   );
 }
