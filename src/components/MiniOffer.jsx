@@ -43,7 +43,6 @@ const MiniOffer = ({ offer }) => {
           />
         )}
       </View>
-      <Button title='ACCEPT OFFER' onPress={() => { }} />
     </View>
   );
 }

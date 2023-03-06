@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import { Animated, Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
-import { Entypo } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 import MiniOffer from './MiniOffer.jsx';
 
@@ -20,6 +20,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 16,
   },
+  offer: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+  },
+  pressable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 16,
+  },
   profileImage: {
     height: 50,
     width: 50,
@@ -28,6 +38,14 @@ const styles = StyleSheet.create({
 
 const MiniListing = ({ listing }) => {
   const [expanded, setExpanded] = useState(false);
+
+  const animatedButtonScale = new Animated.Value(1);
+  const handleOnPressIn = () => {
+    Animated.spring(animatedButtonScale, {
+      toValue: 1.5,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
     <ListItem.Accordion
@@ -47,16 +65,52 @@ const MiniListing = ({ listing }) => {
           </View>
         </View>
       }
-      icon={<Entypo name="chevron-down" size={24} color="black" />}
+      icon={<FontAwesome name="chevron-down" size={24} color="black" />}
       isExpanded={expanded}
       onPress={() => {
         setExpanded(!expanded);
       }}
     >
+
       {/* Collapsable Content */}
       {listing.offers.map((offer) => {
         return (
-          <MiniOffer offer={offer} />
+          <ListItem.Swipeable
+            leftContent={(reset) => (
+              <Pressable
+                onPress={() => reset()}
+                onPressIn={handleOnPressIn}
+                style={[styles.pressable, { backgroundColor: 'red', flex: 1}]}
+              >
+                <FontAwesome name="trash-o" size={48} color="black" />
+              </Pressable>
+            )}
+            rightContent={(reset) => (
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <Pressable
+                  onPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'green', flex: 1 }]}
+                >
+                  <Text>ACCEPT OFFER</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'grey', flex: 1 }]}
+                >
+                  <Text>MORE INFO</Text>
+                </Pressable>
+              </View>
+            )}
+          >
+
+            {/* Offer List Item */}
+            <ListItem.Content style={styles.offer}>
+              <FontAwesome name="caret-left" size={24} color="black" />
+              <MiniOffer offer={offer} />
+              <FontAwesome name="caret-right" size={24} color="black" />
+            </ListItem.Content>
+
+          </ListItem.Swipeable>
         );
       })}
 
