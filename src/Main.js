@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-//Navbar
-import Navbar from './layout/Navbar'
+// Navbar
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-const Tab = createBottomTabNavigator();
+import Navbar from './layout/Navbar';
 
 // Screens
 import HomePage from './pages/Home';
@@ -12,20 +11,21 @@ import TradesPage from './pages/Trades';
 import UploadPage from './pages/Upload';
 import UserProfilePage from './pages/UserProfile';
 
+const Tab = createBottomTabNavigator();
+
 const Main = () => {
   return (
     <Navbar
-      pages={
+      pages={(
         <>
-          <Tab.Screen name='Home' component={HomePage} />
-          <Tab.Screen name='Chat' component={ChatPage} />
-          <Tab.Screen name='Trades' component={TradesPage} />
-          <Tab.Screen name='Upload' component={UploadPage} />
-          <Tab.Screen name='Profile' component={UserProfilePage} />
+          <Tab.Screen name="Home" component={HomePage} />
+          <Tab.Screen name="Chat" component={ChatPage} />
+          <Tab.Screen name="Trades" component={TradesPage} />
+          <Tab.Screen name="Upload" component={UploadPage} />
+          <Tab.Screen name="Profile" component={UserProfilePage} />
         </>
-      }
+      )}
     />
-
 
   );
 }
