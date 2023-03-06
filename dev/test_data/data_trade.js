@@ -4,7 +4,7 @@ import stunfiskImage from './stunfisk.png';
 const USER_DATA = {
   id: 0,
   profile_url: ashImage,
-  reputation: 0,
+  reputation: randomInteger(5),
   cards: [],
   name: 'Ash',
   bio: 'I\'m having a major hat crisis'
@@ -47,11 +47,12 @@ const TRADES = [];
 for (let i = 0; i < 7; ++i) {
   let newTrade = JSON.parse(JSON.stringify(TRADE_DATA));
   let offers = randomInteger(12);
-  console.log('offers', offers);
+
   for (let j = 0; j < offers; ++j) {
     newTrade.offers.push(OFFER_DATA);
   }
   TRADES.push(newTrade);
 };
+
 
 export default TRADES;
