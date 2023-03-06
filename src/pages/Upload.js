@@ -52,5 +52,3 @@ const Upload = ({ navigation }) => {
 };
 
 export default Upload;
-
-export default Upload;
