@@ -49,6 +49,6 @@ const Upload = ({ navigation }) => {
       </Pressable> */}
     </View>
   );
-};
+}
 
 export default Upload;
