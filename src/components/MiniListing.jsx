@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import { ListItem } from '@rneui/themed';
+import { Icon, ListItem } from '@rneui/themed';
+import { FaChevronDown } from 'react-icons/fa';
 
 import MiniOffer from './MiniOffer.jsx';
 
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
 
 const MiniListing = ({ listing }) => {
   const [expanded, setExpanded] = useState(false);
+
   return (
     <ListItem.Accordion
       content={
@@ -45,6 +47,7 @@ const MiniListing = ({ listing }) => {
           </View>
         </View>
       }
+      icon={FaChevronDown}
       isExpanded={expanded}
       onPress={() => {
         setExpanded(!expanded);
