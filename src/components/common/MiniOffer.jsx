@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   offer: {
     backgroundColor: 'orange',
-    borderRadius: 4,
+    borderRadius: 8,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
