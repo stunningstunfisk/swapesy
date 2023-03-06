@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import { Icon, ListItem } from '@rneui/themed';
-import { FaChevronDown } from 'react-icons/fa';
+import { ListItem } from '@rneui/themed';
+import { Entypo } from '@expo/vector-icons';
 
 import MiniOffer from './MiniOffer.jsx';
 
@@ -47,7 +47,7 @@ const MiniListing = ({ listing }) => {
           </View>
         </View>
       }
-      icon={FaChevronDown}
+      icon={<Entypo name="chevron-down" size={24} color="black" />}
       isExpanded={expanded}
       onPress={() => {
         setExpanded(!expanded);
