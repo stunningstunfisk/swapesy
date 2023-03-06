@@ -11,7 +11,7 @@ import ChatPage from './pages/Chat';
 import TradesPage from './pages/Trades';
 import UploadPage from './pages/Upload';
 
-const Main = () => {
+const Main = ({user}) => {
   return (
     <Navbar
       pages={
