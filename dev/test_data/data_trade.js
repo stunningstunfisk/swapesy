@@ -1,5 +1,5 @@
 import ashImage from './ash.jpg';
-import stunfiskImage from './stunfisk.png';
+import stunfiskImage from './stunfisk_card.png';
 
 const USER_DATA = {
   id: 0,
@@ -43,6 +43,9 @@ function randomInteger(max) {
 };
 
 const TRADES = [];
+
+let newTrade = JSON.parse(JSON.stringify(TRADE_DATA));
+TRADES.push(newTrade);
 
 for (let i = 0; i < 7; ++i) {
   let newTrade = JSON.parse(JSON.stringify(TRADE_DATA));

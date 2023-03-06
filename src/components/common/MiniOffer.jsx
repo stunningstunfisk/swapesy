@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { Avatar } from '@rneui/themed';
 
 
@@ -11,29 +11,42 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   cardView: {
+    flex: 2,
+    justifyContent: 'center',
     flexDirection: 'row',
+  },
+  offer: {
+    backgroundColor: 'orange',
+    borderRadius: 4,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    margin: 2,
   },
   profileImage: {
     height: 40,
     width: 40,
   },
-  offer: {
-    borderWidth: 1,
+  user: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 16,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 });
 
 const MiniOffer = function CreateMiniOffer({ offer }) {
   return (
     <View style={styles.offer}>
-      <Avatar
-        rounded
-        source={offer.user_id.profile_url}
-        style={styles.profileImage}
-      />
+      <View style={styles.user}>
+        <Text>{offer.user_id.name}</Text>
+        <Avatar
+          rounded
+          source={offer.user_id.profile_url}
+          style={styles.profileImage}
+        />
+        <Text>{`REP: ${offer.user_id.reputation}`}</Text>
+      </View>
       <View style={styles.cardView}>
         {offer.cards.map((card) => (
           <Image

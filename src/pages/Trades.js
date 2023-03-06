@@ -25,9 +25,7 @@ const Trades = function CreateTradesPage({ navigation }) {
                 INCOMING HEADER
               </Text>
               <FlatList
-                style={{
-                  flex: 1,
-                }}
+                style={{ flex: 1 }}
                 data={TEST_DATA}
                 ListEmptyComponent={<Text>NO DATA</Text>}
                 renderItem={({ item }) => <MiniListing listing={item} />}
@@ -45,7 +43,7 @@ const Trades = function CreateTradesPage({ navigation }) {
                 style={{ flex: 1 }}
                 data={[]}
                 ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <Text style={{ paddingTop: 20 }}>{item.title}</Text>}
+                renderItem={({ item }) => <Text>{item.title}</Text>}
                 keyExtractor={(item, index) => item.id + index}
               />
             </>

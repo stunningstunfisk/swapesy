@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
 import MiniOffer from './MiniOffer';
+import MiniListingTitle from './MiniListingTitle';
 import PressableOpacity from './buttons/PressableOpacity';
 
 
@@ -11,20 +12,20 @@ const styles = StyleSheet.create({
   cardImage: {
     height: 70,
     width: 50,
-    borderWidth: 1,
     borderRadius: 2,
-  },
-  listing: {
-    borderWidth: 1,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 16,
   },
   offer: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
+  },
+  listTitle: {
+    backgroundColor: 'skyblue',
+    borderRadius: 8,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 4,
   },
   pressable: {
     alignItems: 'center',
@@ -41,75 +42,69 @@ const styles = StyleSheet.create({
 const MiniListing = function CreateMiniListing({ listing }) {
   const [expanded, setExpanded] = useState(false);
 
+  if (listing.offers.length > 0) {
+    return (
+      <ListItem.Accordion
+        containerStyle={{ backgroundColor: 'lime', padding: 0 }}
+        content={
+          // LIST TITLE AREA
+          <MiniListingTitle listing={listing} />
+        }
+        icon={<FontAwesome name="chevron-down" size={24} color="black" />}
+        isExpanded={expanded}
+        onPress={() => {
+          setExpanded(!expanded);
+        }}
+        style={styles.listTitle}
+      >
+
+        {/* Collapsable Content */}
+        {listing.offers.map((offer) => (
+          <ListItem.Swipeable
+            containerStyle={{ backgroundColor: 'purple', padding: 0 }}
+            leftContent={(reset) => (
+              <View style={{ flex: 1, flexDirection: 'column' }}>
+                <PressableOpacity
+                  onLongPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'red' }]}
+                >
+                  <FontAwesome name="trash-o" size={48} color="black" />
+                </PressableOpacity>
+              </View>
+            )}
+            rightContent={(reset) => (
+              <View style={{ flex: 1, flexDirection: 'column' }}>
+                <PressableOpacity
+                  onLongPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'green' }]}
+                >
+                  <Text>ACCEPT OFFER</Text>
+                </PressableOpacity>
+                <PressableOpacity
+                  onLongPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'grey' }]}
+                >
+                  <Text>MORE INFO</Text>
+                </PressableOpacity>
+              </View>
+            )}
+          >
+
+            {/* Offer List Item */}
+            <ListItem.Content style={styles.offer}>
+              <FontAwesome name="chevron-left" size={24} color="black" />
+              <MiniOffer offer={offer} />
+              <FontAwesome name="chevron-right" size={24} color="black" />
+            </ListItem.Content>
+
+          </ListItem.Swipeable>
+        ))}
+
+      </ListItem.Accordion>
+    );
+  }
   return (
-    <ListItem.Accordion
-      content={
-        // LIST TITLE AREA
-        (
-          <View style={styles.listing}>
-            {listing.cards.map((card) => (
-              <Image
-                style={styles.cardImage}
-                key={card.id}
-                source={card.url}
-              />
-            ))}
-            <View>
-              <Text>{listing.title}</Text>
-              <Text>{`${listing.offers.length} OFFERS`}</Text>
-            </View>
-          </View>
-        )
-      }
-      icon={<FontAwesome name="chevron-down" size={24} color="black" />}
-      isExpanded={expanded}
-      onPress={() => {
-        setExpanded(!expanded);
-      }}
-    >
-
-      {/* Collapsable Content */}
-      {listing.offers.map((offer) => (
-        <ListItem.Swipeable
-          leftContent={(reset) => (
-            <View style={{ flex: 1, flexDirection: 'column' }}>
-              <PressableOpacity
-                onLongPress={() => reset()}
-                style={[styles.pressable, { backgroundColor: 'red' }]}
-              >
-                <FontAwesome name="trash-o" size={48} color="black" />
-              </PressableOpacity>
-            </View>
-          )}
-          rightContent={(reset) => (
-            <View style={{ flex: 1, flexDirection: 'column' }}>
-              <PressableOpacity
-                onLongPress={() => reset()}
-                style={[styles.pressable, { backgroundColor: 'green' }]}
-              >
-                <Text>ACCEPT OFFER</Text>
-              </PressableOpacity>
-              <PressableOpacity
-                onLongPress={() => reset()}
-                style={[styles.pressable, { backgroundColor: 'grey' }]}
-              >
-                <Text>MORE INFO</Text>
-              </PressableOpacity>
-            </View>
-          )}
-        >
-
-          {/* Offer List Item */}
-          <ListItem.Content style={styles.offer}>
-            <FontAwesome name="caret-left" size={24} color="black" />
-            <MiniOffer offer={offer} />
-            <FontAwesome name="caret-right" size={24} color="black" />
-          </ListItem.Content>
-
-        </ListItem.Swipeable>
-      ))}
-
-    </ListItem.Accordion>
+    <MiniListingTitle listing={listing} />
   );
 };
 
