@@ -71,7 +71,7 @@ const MiniListing = ({ listing }) => {
         return (
           <ListItem.Swipeable
             leftContent={(reset) => (
-              <View>
+              <View style={{ flex: 1, flexDirection: 'column' }}>
                 <PressableOpacity
                   onLongPress={() => reset()}
                   style={[styles.pressable, { backgroundColor: 'red' }]}
