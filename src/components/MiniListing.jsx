@@ -71,12 +71,14 @@ const MiniListing = ({ listing }) => {
         return (
           <ListItem.Swipeable
             leftContent={(reset) => (
-              <PressableOpacity
-                onLongPress={() => reset()}
-                style={[styles.pressable, { backgroundColor: 'red' }]}
-              >
-                <FontAwesome name="trash-o" size={48} color="black" />
-              </PressableOpacity>
+              <View>
+                <PressableOpacity
+                  onLongPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'red' }]}
+                >
+                  <FontAwesome name="trash-o" size={48} color="black" />
+                </PressableOpacity>
+              </View>
             )}
             rightContent={(reset) => (
               <View style={{ flex: 1, flexDirection: 'column' }}>
