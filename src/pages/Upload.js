@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
 
-const Upload = ({ navigation }) => {
+function Upload({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text
-          onPress={() => navigation.navigate('Home')}
-          style={{ fontSize: 26, fontWeight: 'bold' }}
+        onPress={() => navigation.navigate('Home')}
+        style={{ fontSize: 26, fontWeight: 'bold' }}
       >
         Upload Screen
       </Text>
@@ -14,4 +14,4 @@ const Upload = ({ navigation }) => {
   );
 }
 
-export default Upload
+export default Upload;
