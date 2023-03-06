@@ -16,10 +16,10 @@ const Upload = ({ navigation }) => {
       >
         Upload Screen
       </Text>
-      {/* <ModalView handleModal={handleModal} modalVisible={modalVisible} />
+      <ModalView handleModal={handleModal} modalVisible={modalVisible} />
       <Pressable onPress={handleModal}>
         <Text>Show Modal</Text>
-      </Pressable> */}
+      </Pressable>
     </View>
   );
 };
