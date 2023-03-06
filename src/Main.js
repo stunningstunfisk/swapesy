@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 // Navbar
+import Navbar from './layout/Navbar'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Navbar from './layout/Navbar';
+const Tab = createBottomTabNavigator();
 
 // Screens
 import HomePage from './pages/Home';
@@ -10,9 +11,7 @@ import ChatPage from './pages/Chat';
 import TradesPage from './pages/Trades';
 import UploadPage from './pages/Upload';
 
-const Tab = createBottomTabNavigator();
-
-function Main() {
+const Main = ({user}) => {
   return (
     <Navbar
       pages={(

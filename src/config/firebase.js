@@ -7,6 +7,7 @@ import Constants from 'expo-constants';
 const firebaseConfigs = {
   apiKey: 'AIzaSyDV5NeTfw6qL7khxpKGxLe1nEEuT_ZaQEg',
   authDomain: 'swapesy-2eee7.firebaseapp.com',
+  databaseURL: 'https://swapesy-2eee7.firebaseio.com',
   projectId: 'swapesy-2eee7',
   storageBucket: 'swapesy-2eee7.appspot.com',
   messagingSenderId: '970390197655',

@@ -3,9 +3,12 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 const auth = getAuth();
+
+import firebase from '../config/firebase'
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+const db = getFirestore(firebase)
 
 const SignUp = ({navigation}) => {
 
@@ -25,7 +28,16 @@ const SignUp = ({navigation}) => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, value.email, value.password);
+      const newUser = await createUserWithEmailAndPassword(auth, value.email, value.password);
+
+      //Create new user document
+      const docRef = await setDoc(doc(db, 'user', newUser.user.uid), {
+        bio: '',
+        name: newUser.user.email,
+        profile_picture: '',
+        reputation: 0
+      });
+
       navigation.navigate('SignIn');
     } catch (error) {
       setValue({
