@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Image, Button, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import MiniListing from '../components/MiniListing.jsx';
+import MiniListing from '../components/common/MiniListing.jsx';
 
 import TEST_DATA from '../../dev/test_data/data_trade.js'
 console.log('TEST DATA BEING USED', TEST_DATA[0]);
