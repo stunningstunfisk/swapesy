@@ -53,8 +53,8 @@ const MiniListing = ({ listing }) => {
               source={card.url}
             />
           )}
-          <Text>{listing.title}</Text>
           <View>
+            <Text>{listing.title}</Text>
             <Text>{listing.offers.length} OFFERS</Text>
           </View>
         </View>
@@ -73,7 +73,7 @@ const MiniListing = ({ listing }) => {
             leftContent={(reset) => (
               <PressableOpacity
                 onLongPress={() => reset()}
-                style={[styles.pressable, { backgroundColor: 'red'}]}
+                style={[styles.pressable, { backgroundColor: 'red' }]}
               >
                 <FontAwesome name="trash-o" size={48} color="black" />
               </PressableOpacity>
@@ -82,13 +82,13 @@ const MiniListing = ({ listing }) => {
               <View style={{ flex: 1, flexDirection: 'column' }}>
                 <PressableOpacity
                   onLongPress={() => reset()}
-                  style={[styles.pressable, { backgroundColor: 'green'}]}
+                  style={[styles.pressable, { backgroundColor: 'green' }]}
                 >
                   <Text>ACCEPT OFFER</Text>
                 </PressableOpacity>
                 <PressableOpacity
                   onLongPress={() => reset()}
-                  style={[styles.pressable, { backgroundColor: 'grey'}]}
+                  style={[styles.pressable, { backgroundColor: 'grey' }]}
                 >
                   <Text>MORE INFO</Text>
                 </PressableOpacity>
