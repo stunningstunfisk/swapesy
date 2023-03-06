@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Image, View, Text, Pressable, TextInput } from 'react-native';
 import ModalView from '../components/common/modals/ModalView';
 import { Dropdown } from 'react-native-select-dropdown';
-import DropdownComponent from '../components/Dropdown.js';
+import DropdownComponent from '../components/common/Dropdown.js';
 // import PhotoUpload from 'react-native-photo-upload';
-import ImagePickerComponent from '../components/ImagePicker.js';
-import CameraComponent from '../components/Camera.js';
+import ImagePickerComponent from '../components/upload_page/ImagePicker.js';
+import CameraComponent from '../components/upload_page/Camera.js';
 import styles from '../../styles/upload.js'
 
 const Upload = ({ navigation }) => {
