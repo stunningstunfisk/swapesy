@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Animated, Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
 import MiniOffer from './MiniOffer.jsx';
+import PressableOpacity from './PressableOpacity.jsx';
 
 
 const styles = StyleSheet.create({
@@ -27,8 +28,9 @@ const styles = StyleSheet.create({
   },
   pressable: {
     alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 16,
+    flex: 1,
+    justifyContent: 'center',
   },
   profileImage: {
     height: 50,
@@ -38,14 +40,6 @@ const styles = StyleSheet.create({
 
 const MiniListing = ({ listing }) => {
   const [expanded, setExpanded] = useState(false);
-
-  const animatedButtonScale = new Animated.Value(1);
-  const handleOnPressIn = () => {
-    Animated.spring(animatedButtonScale, {
-      toValue: 1.5,
-      useNativeDriver: true,
-    }).start();
-  };
 
   return (
     <ListItem.Accordion
@@ -77,28 +71,27 @@ const MiniListing = ({ listing }) => {
         return (
           <ListItem.Swipeable
             leftContent={(reset) => (
-              <Pressable
-                onPress={() => reset()}
-                onPressIn={handleOnPressIn}
-                style={[styles.pressable, { backgroundColor: 'red', flex: 1}]}
+              <PressableOpacity
+                onLongPress={() => reset()}
+                style={[styles.pressable, { backgroundColor: 'red'}]}
               >
                 <FontAwesome name="trash-o" size={48} color="black" />
-              </Pressable>
+              </PressableOpacity>
             )}
             rightContent={(reset) => (
-              <View style={{flex: 1, flexDirection: 'column'}}>
-                <Pressable
-                  onPress={() => reset()}
-                  style={[styles.pressable, { backgroundColor: 'green', flex: 1 }]}
+              <View style={{ flex: 1, flexDirection: 'column' }}>
+                <PressableOpacity
+                  onLongPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'green'}]}
                 >
                   <Text>ACCEPT OFFER</Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => reset()}
-                  style={[styles.pressable, { backgroundColor: 'grey', flex: 1 }]}
+                </PressableOpacity>
+                <PressableOpacity
+                  onLongPress={() => reset()}
+                  style={[styles.pressable, { backgroundColor: 'grey'}]}
                 >
                   <Text>MORE INFO</Text>
-                </Pressable>
+                </PressableOpacity>
               </View>
             )}
           >
