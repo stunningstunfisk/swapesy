@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  View, Image, Text, Pressable,
+  View, Image, Text, Pressable, TouchableOpacity,
 } from 'react-native';
 import styles from '../../../styles/listingCard';
 
@@ -15,9 +15,9 @@ function ListingCard({ navigation, listing, homePage }) {
 
   return (
     // pressing on listing card opens up the listing page
-    <View
+    <TouchableOpacity
       style={styles.wrapper}
-      // onPress={() => navigation.push('Listing', { listingId: listing.id })}
+      onPress={() => navigation.push('Listing', { listingId: listing.id })}
     >
       <View style={styles.imgWrapper}>
         <Image source={listing.cards[0].url} style={styles.mainImg} />
@@ -41,7 +41,7 @@ function ListingCard({ navigation, listing, homePage }) {
           </Text>
         </Pressable>
       )}
-    </View>
+    </TouchableOpacity>
   );
 }
 
