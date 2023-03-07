@@ -2,9 +2,9 @@ import * as React from 'react';
 import {
   View, Text, Image,
 } from 'react-native';
-import MyCards from '../../components/UserProfile/MyCards';
-import CurrentListings from '../../components/UserProfile/CurrentListings';
-import Transactions from '../../components/UserProfile/TransactionHistory';
+import MyCards from './MyCards';
+import CurrentListings from './CurrentListings';
+import Transactions from './TransactionHistory';
 import SegmentSelect from '../../components/common/SegmentSelect';
 import styles from '../../../styles/userProfile/userProfile';
 
