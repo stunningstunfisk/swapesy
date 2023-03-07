@@ -3,7 +3,8 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
-import MiniOffer from './MiniOffer.jsx';
+// import MiniOffer from './MiniOffer.jsx';
+import Offer from './Offer';
 import PressableOpacity from './buttons/PressableOpacity.jsx';
 
 
@@ -101,7 +102,7 @@ const MiniListing = ({ listing }) => {
             {/* Offer List Item */}
             <ListItem.Content style={styles.offer}>
               <FontAwesome name="caret-left" size={24} color="black" />
-              <MiniOffer offer={offer} />
+              <Offer offer={offer} sellerId={1}/>
               <FontAwesome name="caret-right" size={24} color="black" />
             </ListItem.Content>
 

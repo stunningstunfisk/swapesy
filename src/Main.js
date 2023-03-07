@@ -14,7 +14,7 @@ import ListingInfo from './pages/ListingInfo/index.js';
 
 const Tab = createBottomTabNavigator();
 
-function Main({ user }) {
+function Main() {
   return (
     <Navbar
       pages={(

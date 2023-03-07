@@ -31,7 +31,7 @@ const MiniOffer = ({ offer }) => {
     <View style={styles.offer}>
       <Avatar
         rounded
-        source={offer.user_id.profile_url}
+        source={offer.user_id.profile_picture}
         style={styles.profileImage}
       />
       <View style={styles.cardView}>
