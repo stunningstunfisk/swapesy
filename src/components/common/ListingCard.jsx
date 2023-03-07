@@ -17,7 +17,7 @@ function ListingCard({ navigation, listing, homePage }) {
     // pressing on listing card opens up the listing page
     <TouchableOpacity
       style={styles.wrapper}
-      onPress={() => navigation.push('Listing', { listingId: listing.id })}
+      // onPress={() => navigation.navigate('ListingInfo', { listingId: listing.id })}
     >
       <View style={styles.imgWrapper}>
         <Image source={listing.cards[0].url} style={styles.mainImg} />
