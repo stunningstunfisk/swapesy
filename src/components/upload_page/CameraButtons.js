@@ -8,7 +8,7 @@ function CameraButton({ title, onPress, icon, color }) {
       <Entypo name={icon} size={28} color={color ? color : '#f1f1f1'} />
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

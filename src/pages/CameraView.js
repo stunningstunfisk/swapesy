@@ -102,11 +102,12 @@ function CameraView({ navigation }) {
         </Camera>
       ) : (
         <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, width: '100%', alignItems: 'center' }}>
+          <View style={{ flex: 1, width: '100%', height: '100%', alignItems: 'center' }}>
             {uri && (
               <Image
                 source={{ uri: uri }}
-                style={{ width: 200, height: 200, backgroundColor: 'blue' }}
+                style={{ width: '100%', height: '100%', backgroundColor: 'blue' }}
+                // style={{ width: 200, height: 200, backgroundColor: 'blue' }}
               />
             )}
           </View>
@@ -119,6 +120,9 @@ function CameraView({ navigation }) {
           >
             <TouchableOpacity style={styles.button} onPress={() => setShowCamera(true)}>
               <Text style={styles.button}>Re-take</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => setShowCamera(true)}>
+              <Text style={styles.button}>Done</Text>
             </TouchableOpacity>
           </View>
         </View>

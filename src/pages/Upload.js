@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Image, View, Text, Pressable, TextInput, Button } from 'react-native';
 import ModalView from '../components/common/modals/ModalView';
-import { Dropdown } from 'react-native-select-dropdown';
 import DropdownComponent from '../components/common/Dropdown.js';
 import ImagePickerComponent from '../components/upload_page/ImagePicker.js';
 import CameraView from './CameraView.js';
@@ -11,7 +10,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 function UploadHome({ user }) {
-  const [name, onChangeName] = React.useState('Card Name...');
+  const [name, onChangeName] = useState('');
   const navigation = useNavigation();
 
   const conditions = [
@@ -39,6 +38,7 @@ function UploadHome({ user }) {
 
       <TextInput
         style={styles.input}
+        placeholder='Card Name...'
         onChangeText={onChangeName}
         value={name}
       />
