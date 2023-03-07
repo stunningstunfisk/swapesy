@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { useState, useEffect } from 'react';
+import {
+  View, Text, FlatList, TouchableOpacity,
+} from 'react-native';
+import styles from '../../../styles/userProfile';
 
 const cards = [
   {
@@ -19,27 +23,43 @@ const cards = [
   },
 ];
 
-function Item({ title }) {
+function Item({
+  title, cost, counterparty, date, rating,
+}) {
+  const rateTransaction = () => {
+
+  };
+
   return (
-    <View style={{ color: 'pink' }}>
-      <Text style={{ fontSize: 15 }}>{title}</Text>
+    <View style={styles.transactionWrapper}>
+      <Text style={styles.transaction}>{title}</Text>
+      <Text style={styles.transaction}>{cost}</Text>
+      <Text style={styles.transaction}>{counterparty}</Text>
+      <Text style={styles.transaction}>{date}</Text>
+      <Text
+        style={styles.transaction}
+        onPress={rateTransaction}
+      >
+        {rating}
+      </Text>
     </View>
   );
 }
-function TransactionHistory() {
+function TransactionHistory({ userId }) {
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+
+  }, []);
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text
-        onPress={() => alert('TransactionHistory')}
-        style={{ fontSize: 26, fontWeight: 'bold' }}
-      >
-        TransactionHistory
-      </Text>
-      <FlatList
-        data={cards}
-        renderItem={({ item }) => <Item title={item.title} />}
-        keyExtreactor={(item) => item.id}
-      />
+      {transactions ? (
+        <FlatList
+          data={transactions}
+          renderItem={({ item }) => <Item title={item.title} />}
+          keyExtreactor={(item) => item.id}
+        />
+      ) : <Text style={styles.noData}>Woops! There are no cards</Text>}
     </View>
   );
 }
