@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   View, Text, FlatList, Image,
 } from 'react-native';
-import ListingCard from '../common/ListingCard';
+import ListingCard from '../../components/common/ListingCard';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
 import styles from '../../../styles/userProfile/userProfile';
 

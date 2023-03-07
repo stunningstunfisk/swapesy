@@ -2,13 +2,13 @@ import * as React from 'react';
 import {
   View, Text, Image,
 } from 'react-native';
-import MyCards from '../components/UserProfile/MyCards';
-import CurrentListings from '../components/UserProfile/CurrentListings';
-import Transactions from '../components/UserProfile/TransactionHistory';
-import SegmentSelect from '../components/common/SegmentSelect';
-import styles from '../../styles/userProfile/userProfile';
+import MyCards from '../../components/UserProfile/MyCards';
+import CurrentListings from '../../components/UserProfile/CurrentListings';
+import Transactions from '../../components/UserProfile/TransactionHistory';
+import SegmentSelect from '../../components/common/SegmentSelect';
+import styles from '../../../styles/userProfile/userProfile';
 
-const { USER_DATA } = require('../../dev/test_data/data_profile');
+const { USER_DATA } = require('../../../dev/test_data/data_profile');
 
 function UserProfile({ navigation }) {
   const buttons = ['Cards', 'Listings', 'Past Transactions'];

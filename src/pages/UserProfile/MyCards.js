@@ -7,7 +7,7 @@ import { SpeedDial } from '@rneui/themed';
 import styles from '../../../styles/userProfile/userProfile';
 import cardStyles from '../../../styles/userProfile/inventoryCard';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
-import ModalView from '../common/modals/ModalView';
+import ModalView from '../../components/common/modals/ModalView';
 
 const { CARDS } = require('../../../dev/test_data/data_profile');
 
