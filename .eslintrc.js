@@ -22,6 +22,16 @@ module.exports = {
         max: 2,
       },
     ],
+    'object-curly-newline': [
+      'error', {
+        ImportDeclaration: {
+          multiline: true, minProperties: 9,
+        },
+        ExportDeclaration: {
+          multiline: true, minProperties: 2,
+        },
+      },
+    ],
     'react/jsx-filename-extension': 'off',
     'react/jsx-props-no-spreading': 'warn',
     'react/prop-types': 'off',
