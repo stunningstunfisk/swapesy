@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 2,
   },
+  noData: {
+    fontSize: 25,
+  },
 });
 
 export default styles;
