@@ -4,6 +4,10 @@ import { Animated, Pressable, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   button: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 2,
     borderColor: 'rgba(128,128,128,0.25)',
     borderRadius: 16,

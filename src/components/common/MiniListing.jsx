@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
@@ -10,9 +10,6 @@ import PressableOpacity from './buttons/PressableOpacity';
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
     margin: 2,
   },
   buttonText: {
@@ -24,17 +21,19 @@ const styles = StyleSheet.create({
     padding: 4,
     margin: 1,
   },
-  cardImage: {
-    height: 70,
-    width: 50,
-    borderRadius: 2,
-  },
   container: {
-    backgroundColor: 'lime',
+    backgroundColor: 'white',
     borderRadius: 16,
     flexGrow: 'inherit',
     padding: 0,
     margin: 2,
+    borderWidth: 2,
+    borderColor: 'rgba(128,128,128,0.25)',
+    elevation: 4, // for Android only
+    shadowColor: '#c3b2a0',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
   },
   offer: {
     alignItems: 'center',
@@ -42,7 +41,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   listTitle: {
-    backgroundColor: 'skyblue',
     borderRadius: 8,
     flex: 1,
     flexDirection: 'row',
@@ -57,17 +55,17 @@ const styles = StyleSheet.create({
 
 const MiniListing = function CreateMiniListing({ listing }) {
   const [expanded, setExpanded] = useState(false);
-  const buttonViewRef = useRef(null);
+  const offerIndent = 40;
 
   if (listing.offers.length > 0) {
     return (
       <ListItem.Accordion
-        containerStyle={styles.container}
+        containerStyle={[styles.container, styles.shadow]}
         content={
           // LIST TITLE AREA
           <MiniListingTitle listing={listing} />
         }
-        icon={<FontAwesome name="chevron-down" size={24} color="black" />}
+        icon={<FontAwesome style={{ margin: 12 }} name="chevron-down" size={24} color="black" />}
         isExpanded={expanded}
         onPress={() => {
           setExpanded(!expanded);
@@ -78,12 +76,12 @@ const MiniListing = function CreateMiniListing({ listing }) {
         {/* Collapsable Content */}
         {listing.offers.map((offer) => (
           <ListItem.Swipeable
-            containerStyle={styles.container}
+            containerStyle={[styles.container, { marginLeft: offerIndent }]}
             leftContent={(reset) => (
               <View style={styles.buttonView}>
                 <PressableOpacity
                   onLongPress={() => reset()}
-                  style={[styles.button, { backgroundColor: 'red', width: 48 }]}
+                  style={[styles.button, { marginLeft: offerIndent, backgroundColor: 'red', width: 48 }]}
                 >
                   <FontAwesome name="trash-o" size={48} color="black" />
                 </PressableOpacity>
@@ -110,9 +108,9 @@ const MiniListing = function CreateMiniListing({ listing }) {
 
             {/* Offer List Item */}
             <View style={styles.offer}>
-              <FontAwesome name="chevron-left" size={24} color="black" />
+              <FontAwesome style={{ margin: 12 }} name="chevron-left" size={24} color="black" />
               <MiniOffer offer={offer} />
-              <FontAwesome name="chevron-right" size={24} color="black" />
+              <FontAwesome style={{ margin: 12 }} name="chevron-right" size={24} color="black" />
             </View>
 
           </ListItem.Swipeable>
@@ -122,7 +120,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
     );
   }
   return (
-    <View style={{ backgroundColor: 'grey' }}>
+    <View style={[styles.container, { margin: 6 }]}>
       <MiniListingTitle listing={listing} />
     </View>
   );

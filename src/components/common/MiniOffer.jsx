@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   offer: {
-    backgroundColor: 'orange',
     borderRadius: 8,
     flex: 1,
     flexDirection: 'row',
