@@ -6,7 +6,7 @@ import Navbar from './layout/Navbar';
 
 // Screens
 import HomePage from './pages/Home';
-import ChatPage from './pages/Chat';
+import ChatPage from './stack/ChatStack';
 import TradesPage from './pages/Trades';
 import UploadPage from './pages/Upload';
 

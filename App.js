@@ -2,24 +2,23 @@ import './src/config/firebase';
 
 import * as React from 'react';
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+// import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider } from 'react-native-elements';
 
-import { useAuthentication } from './src/util/hooks/userAuth.js';
+import { useAuthentication } from './src/util/hooks/userAuth';
 
-import Main from './src/Main'
+import Main from './src/Main';
 import AuthStack from './src/stack/AuthStack';
 
 export default function App() {
-
   const { user } = useAuthentication();
 
   return (
     <ThemeProvider>
-      {user ? <Main user={user}/> : <AuthStack />}
+      {user ? <Main user={user} /> : <AuthStack />}
     </ThemeProvider>
-  )
+  );
 }
 
 // const styles = StyleSheet.create({

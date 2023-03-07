@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import react, { useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -14,6 +14,31 @@ const auth = getAuth();
 
 const db = getFirestore(firebase);
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  controls: {
+    flex: 1,
+  },
+
+  control: {
+    marginTop: 10,
+    width: 250,
+  },
+
+  error: {
+    marginTop: 10,
+    padding: 10,
+    color: '#fff',
+    backgroundColor: '#D54826FF',
+  },
+});
 // eslint-disable-next-line react/prop-types
 function SignUp({ navigation }) {
   const [value, setValue] = useState({
@@ -91,31 +116,5 @@ function SignUp({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  controls: {
-    flex: 1,
-  },
-
-  control: {
-    marginTop: 10,
-    width: 250,
-  },
-
-  error: {
-    marginTop: 10,
-    padding: 10,
-    color: '#fff',
-    backgroundColor: '#D54826FF',
-  },
-});
 
 export default SignUp;
