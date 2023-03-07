@@ -6,9 +6,10 @@ import Navbar from './layout/Navbar';
 
 // Screens
 import HomePage from './pages/Home';
-import ChatPage from './pages/Chat';
+import ChatPage from './stack/ChatStack';
 import TradesPage from './pages/Trades';
 import UploadPage from './stack/UploadStack';
+import UserProfilePage from './pages/UserProfile';
 
 import ListingInfo from './pages/ListingInfo/index.js';
 
@@ -19,11 +20,14 @@ function Main({ user }) {
     <Navbar
       pages={(
         <>
-          <Tab.Screen name="Home" component={ListingInfo} />
-          <Tab.Screen name="Chat" component={ChatPage} />
+          <Tab.Screen name="Home" component={HomePage} />
+          <Tab.Screen name="Chat">
+            {() => <ChatPage user={user} />}
+          </Tab.Screen>
           <Tab.Screen name="Trades" component={TradesPage} />
           {/* <Tab.Screen name="Upload" component={UploadPage} /> */}
           <Tab.Screen name="Upload">{() => <UploadPage user={user} />}</Tab.Screen>
+          <Tab.Screen name="Profile" component={UserProfilePage} />
         </>
       )}
     />

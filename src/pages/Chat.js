@@ -1,17 +1,13 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
-
-const Chat = ({ navigation }) => {
+import React from 'react';
+import { View } from 'react-native';
+import ChatStack from '../stack/ChatStack';
+// eslint-disable-next-line react/prop-types
+function Chat({ user }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text
-        onPress={() => navigation.navigate('Home')}
-        style={{ fontSize: 26, fontWeight: 'bold' }}
-      >
-        Chat Screen
-      </Text>
+    <View>
+      <ChatStack user={user} />
     </View>
   );
 }
 
-export default Chat
+export default Chat;
