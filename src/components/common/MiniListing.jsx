@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderRadius: 16,
-    flexGrow: 'inherit',
     padding: 0,
     margin: 2,
     borderWidth: 2,
@@ -60,7 +59,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
   if (listing.offers.length > 0) {
     return (
       <ListItem.Accordion
-        containerStyle={[styles.container, styles.shadow]}
+        containerStyle={[styles.container, styles.shadow, { width: '100%' }]}
         content={
           // LIST TITLE AREA
           <MiniListingTitle listing={listing} />

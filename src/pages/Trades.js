@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import MiniListing from '../components/common/MiniListing';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
@@ -65,7 +65,7 @@ const Trades = function CreateTradesPage({ navigation }) {
             </>
           )}
       </View>
-    </View >
+    </View>
   );
 };
 
