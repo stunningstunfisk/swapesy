@@ -51,7 +51,7 @@ export default StyleSheet.create({
   details: {
     marginTop: '15%',
     flex: 1,
-    flexDirection: 'collumn',
+    flexDirection: 'column',
     alignItems: 'center',
     right: '11%',
   },
