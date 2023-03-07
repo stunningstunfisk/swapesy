@@ -61,6 +61,16 @@ for (let i = 0; i < 7; ++i) {
   TRADES.push(newTrade);
 }
 
+const LISTINGS = [];
+
+for (let i = 0; i < 7; ++i) {
+  const newListing = JSON.parse(JSON.stringify(LISTING_DATA));
+  newListing.id = i;
+  newListing.title = `${LISTING_DATA.title} sample ${i}`;
+
+  LISTINGS.push(newListing);
+}
+
 module.exports = {
-  USER_DATA, CARD_DATA, TRADES, LISTING_DATA,
+  USER_DATA, CARD_DATA, TRADES, LISTING_DATA, LISTINGS,
 };
