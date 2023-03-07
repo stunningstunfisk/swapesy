@@ -13,7 +13,7 @@ import UserProfilePage from './pages/UserProfile';
 
 const Tab = createBottomTabNavigator();
 
-const Main = () => {
+function Main() {
   return (
     <Navbar
       pages={(
