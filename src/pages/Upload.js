@@ -1,16 +1,18 @@
+/* eslint-disable */
 import React, { useState } from 'react';
-import { Image, View, Text, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Image, View, Text, Pressable, TextInput, Button } from 'react-native';
 import ModalView from '../components/common/modals/ModalView';
 import { Dropdown } from 'react-native-select-dropdown';
 import DropdownComponent from '../components/common/Dropdown.js';
-// import PhotoUpload from 'react-native-photo-upload';
 import ImagePickerComponent from '../components/upload_page/ImagePicker.js';
-import CameraComponent from '../components/upload_page/Camera.js';
-import styles from '../../styles/upload.js'
+import CameraView from './CameraView.js';
+// import styles from '../../styles/upload.js';
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const Upload = ({ navigation }) => {
+function UploadHome({ user }) {
   const [name, onChangeName] = React.useState('Card Name...');
-
+  const navigation = useNavigation();
 
   const conditions = [
     { label: 'Near Mint', value: '1' },
@@ -25,13 +27,15 @@ const Upload = ({ navigation }) => {
   const handleModal = () => {
     setModalVisible(!modalVisible);
   };
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text
         onPress={() => navigation.navigate('Home')}
         style={{ fontSize: 26, fontWeight: 'bold' }}
       >
-        Add a Card</Text>
+        Add a Card
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -40,8 +44,11 @@ const Upload = ({ navigation }) => {
       />
 
       <DropdownComponent data={conditions} />
-      <ImagePickerComponent />
-      <CameraComponent />
+      <View style={styles.imageBox}>
+        <AntDesign name="camera" size={20} color="black" />
+        <ImagePickerComponent />
+        <Button title="Take a picture" onPress={() => navigation.navigate('CameraView')} />
+      </View>
 
       {/* <ModalView handleModal={handleModal} modalVisible={modalVisible} />
       <Pressable onPress={handleModal}>
@@ -51,4 +58,23 @@ const Upload = ({ navigation }) => {
   );
 }
 
-export default Upload;
+export default UploadHome;
+
+const styles = StyleSheet.create({
+  imageBox: {
+    // flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+    backgroundColor: '#dcdcdc',
+    width: 300,
+    height: 350,
+  },
+  input: {
+    height: 40,
+    width: 200,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});

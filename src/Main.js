@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 import HomePage from './pages/Home';
 import ChatPage from './pages/Chat';
 import TradesPage from './pages/Trades';
-import UploadPage from './pages/Upload';
+import UploadPage from './stack/UploadStack';
 
 const Main = ({user}) => {
   return (
@@ -19,7 +19,8 @@ const Main = ({user}) => {
           <Tab.Screen name="Home" component={HomePage} />
           <Tab.Screen name="Chat" component={ChatPage} />
           <Tab.Screen name="Trades" component={TradesPage} />
-          <Tab.Screen name="Upload" component={UploadPage} />
+          {/* <Tab.Screen name="Upload" component={UploadPage} /> */}
+          <Tab.Screen name="Upload">{() => <UploadPage user={user}/>}</Tab.Screen>
         </>
       )}
     />

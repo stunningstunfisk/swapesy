@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-const CameraButton = ({ title, onPress, icon, color }) => {
+function CameraButton({ title, onPress, icon, color }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
       <Entypo name={icon} size={28} color={color ? color : '#f1f1f1'} />
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     color: '#f1f1f1',
-    marginLeft: 10
-    }
-})
+    marginLeft: 10,
+  },
+});
 
 export default CameraButton;

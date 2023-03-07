@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styles from '../../styles/upload.js'
+import styles from '../../../styles/upload.js';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const DropdownComponent = ({ data }) => {
+function DropdownComponent({ data }) {
   const [value, setValue] = useState(null);
 
   return (
@@ -29,6 +29,6 @@ const DropdownComponent = ({ data }) => {
       )}
     />
   );
-};
+}
 
 export default DropdownComponent;
