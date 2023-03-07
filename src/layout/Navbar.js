@@ -41,7 +41,7 @@ function Navbar({ pages }) {
                 case 'Upload':
                   iconName = focused ? 'duplicate' : 'duplicate-outline';
                   break;
-                case 'UserProfile':
+                case 'Profile':
                   iconName = focused ? 'person' : 'person-outline';
                   break;
                 default:
