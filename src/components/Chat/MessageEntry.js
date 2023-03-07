@@ -5,20 +5,20 @@ import { ListItem } from '@rneui/themed';
 
 const styles = StyleSheet.create({
   toUser: {
-    color: 'C9C9C9',
+    backgroundColor: '#C9C9C9',
   },
   fromUser: {
-    color: '72BEE9',
+    backgroundColor: '#72BEE9',
   },
 });
 
 function MessageEntry({ message, messageWith }) {
-  // useEffect(() => { console.log('message', message, messageWith); }, []);
-
+  useEffect(() => { console.log('message', message, messageWith); }, []);
   return (
-    <View style={message.from === messageWith ? styles.toUser : styles.fromUser}>
+    <View>
       <ListItem
         key={message.created_at.seconds}
+        style={message.from === messageWith ? styles.toUser : styles.fromUser}
       >
         <ListItem.Content>
           <ListItem.Title>{message.text}</ListItem.Title>

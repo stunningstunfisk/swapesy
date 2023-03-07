@@ -24,7 +24,6 @@ function Main({ user }) {
           </Tab.Screen>
           <Tab.Screen name="Trades" component={TradesPage} />
           <Tab.Screen name="Upload" component={UploadPage} />
-
         </>
       )}
     />

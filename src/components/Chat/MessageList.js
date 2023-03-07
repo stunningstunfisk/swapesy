@@ -77,21 +77,21 @@ function MessageList({ user, state }) {
   const [inputMsg, setInputMsg] = useState('');
 
   useEffect(() => {
-    const fetched = [];
-    const logFetched = async (msgs) => {
-      console.log('fetched msgs', msgs);
-    };
+    let fetched = [];
+    // const logFetched = async (msgs) => {
+    //   console.log('fetched msgs', msgs);
+    // };
     const q = query(collection(db, `conversation/${state.route.params.chatId}/messages`), orderBy('created_at', 'asc'));
 
     const unsuscribe = onSnapshot(q, async (querySnapshot) => {
       // eslint-disable-next-line no-shadow
-      // fetched = [];
+      fetched = [];
       querySnapshot.forEach(async (doc) => {
         const msg = doc.data();
         fetched.push(msg);
       });
-      await logFetched(fetched);
-      await setMessages([...fetched]);
+      // await logFetched(fetched);
+      await setMessages(fetched);
     });
 
     return () => {
@@ -109,7 +109,9 @@ function MessageList({ user, state }) {
         text: inputMsg,
       });
       setInputMsg('');
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -122,9 +124,10 @@ function MessageList({ user, state }) {
               renderItem={
                 ({ item }) => {
                   const { messageWith } = state.route.params;
+                  console.log('creating item', item);
                   return (
                     <Item
-                      message={item}
+                      item={item}
                       messageWith={messageWith}
                     />
                   );
