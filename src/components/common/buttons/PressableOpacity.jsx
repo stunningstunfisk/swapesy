@@ -50,7 +50,6 @@ const PressableOpacity = function CreatePressableOpacityButton({ children, ...pr
       </Animated.View>
     </Pressable>
   );
-};
-
+}
 
 export default PressableOpacity;
