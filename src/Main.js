@@ -10,10 +10,11 @@ import ChatPage from './stack/ChatStack';
 import TradesPage from './pages/Trades';
 import UploadPage from './pages/Upload';
 
+import ListingInfo from './pages/ListingInfo/index.js';
+
 const Tab = createBottomTabNavigator();
 
-// eslint-disable-next-line react/prop-types
-function Main({ user }) {
+function Main() {
   return (
     <Navbar
       pages={(
