@@ -43,6 +43,19 @@ const styles = StyleSheet.create({
   noData: {
     fontSize: 25,
   },
+  transactionWrapper: {
+    flex: 1,
+    paddingTop: 5,
+    flexDirection: 'row',
+  },
+  transaction: {
+    fontSize: 15,
+    padding: 2,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 8,
+    paddingTop: 20,
+  },
 });
 
 export default styles;
