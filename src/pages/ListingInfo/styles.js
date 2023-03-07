@@ -1,6 +1,25 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  button: {
+    marginTop: 10,
+    flex: 1,
+    backgroundColor: '#d06f3b',
+    width: '50%',
+    borderRadius: 20,
+    left: 100,
+  },
+  buttonText: {
+    color: '#e9e7e4',
+    fontSize: 40,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  inline: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '70%',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -50,15 +69,22 @@ export default StyleSheet.create({
     borderColor: '#54130e',
     borderWidth: 1,
   },
-  text: {
+  typeText: {
+    color: '#e9e7e4',
+    left: '10%',
     fontSize: 20,
-    textAlign: 'center',
+    fontWeight: 'bold',
+    top: '7%',
+  },
+  spaceEvenly: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   offer: {
     flex: 1,
     flexDirection: 'column',
-    margin: 20,
-    marginBottom: -10,
+    margin: 10,
+    marginBottom: 0,
   },
   offerCard: {
     flex: 1,
@@ -66,19 +92,23 @@ export default StyleSheet.create({
     height: 90,
   },
   offerDetails: {
+    flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: '#a6502c',
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-    width: '80%',
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    width: '50%',
     height: '70%',
-    top: '3.5%',
-    right: '20%',
+    top: '10%',
+    right: '5%',
   },
   offerText: {
+    color: '#e9e7e4',
+    width: '60%',
     left: '8%',
-    fontSize: 15,
-    fontWeight: 'bold',
+    fontSize: 18,
+    top: '4%',
   },
   miniCard: {
     height: '100%',
@@ -87,9 +117,6 @@ export default StyleSheet.create({
     borderColor: '#54130e',
     borderWidth: 1,
     borderRadius: 4,
-  },
-  cardsDisplay: {
-    overflow: 'hidden',
   },
   hidden: {
     height: 0,
