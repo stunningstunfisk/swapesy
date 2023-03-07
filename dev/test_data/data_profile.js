@@ -71,6 +71,17 @@ for (let i = 0; i < 7; ++i) {
   LISTINGS.push(newListing);
 }
 
+const CARDS = [];
+
+for (let i = 0; i < 7; ++i) {
+  const newCard = JSON.parse(JSON.stringify(CARD_DATA));
+  newCard.id = i;
+  newCard.name = `${CARD_DATA.name} ${i}`;
+  newCard.condition = 'Mediocre at best';
+
+  CARDS.push(newCard);
+}
+
 module.exports = {
-  USER_DATA, CARD_DATA, TRADES, LISTING_DATA, LISTINGS,
+  USER_DATA, CARD_DATA, TRADES, LISTING_DATA, LISTINGS, CARDS,
 };
