@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { useState } from 'react';
 import {
-  View, Text, FlatList, Image,
+  View, Text, FlatList, Image, TouchableOpacity,
 } from 'react-native';
 import styles from '../../../styles/userProfile';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
+import ModalView from '../common/modals/ModalView';
 
 const { CARDS } = require('../../../dev/test_data/data_profile');
 
@@ -11,10 +13,21 @@ const cards = CARDS;
 // let cards;
 
 function Item({ name }) {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleModal = () => {
+    console.log('Pressed');
+    setModalVisible(!modalVisible);
+  };
+
   return (
-    <View style={{ borderWidth: 1, width: 70, height: 90 }}>
+    <TouchableOpacity
+      style={{ borderWidth: 1, width: 70, height: 90 }}
+      onPress={handleModal}
+    >
       <Text style={{ fontSize: 15 }}>{name}</Text>
-    </View>
+      {modalVisible && <ModalView />}
+    </TouchableOpacity>
   );
 }
 function MyCards() { // cards prop will go here
@@ -25,7 +38,11 @@ function MyCards() { // cards prop will go here
           data={cards}
           renderItem={({ item }) => <Item name={item.name} />}
           numColumns={4}
-          columnWrapperStyle={{ justifyContent: 'flex-start', marginBottom: 15, gap: 15 }}
+          columnWrapperStyle={{
+            justifyContent: 'flex-start',
+            marginBottom: 15,
+            gap: 15,
+          }}
           keyExtreactor={(item) => item.id}
         />
       ) : (
