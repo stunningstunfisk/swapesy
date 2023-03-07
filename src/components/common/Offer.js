@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View, Text, Image, FlatList, TouchableOpacity, LayoutAnimation, StyleSheet,
-} from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   button: {
@@ -21,7 +19,7 @@ const styles = StyleSheet.create({
   details: {
     marginTop: '15%',
     flex: 1,
-    flexDirection: 'collumn',
+    flexDirection: 'column',
     alignItems: 'center',
     right: '11%',
   },
