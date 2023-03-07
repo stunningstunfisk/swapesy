@@ -1,6 +1,25 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  button: {
+    marginTop: 10,
+    flex: 1,
+    backgroundColor: '#d06f3b',
+    width: '50%',
+    borderRadius: 20,
+    left: 100,
+  },
+  buttonText: {
+    color: '#e9e7e4',
+    fontSize: 40,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  inline: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '70%',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -8,6 +27,7 @@ export default StyleSheet.create({
     width: '100%',
   },
   carousel: {
+    zIndex: 1,
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#e9e7e4',
@@ -45,31 +65,60 @@ export default StyleSheet.create({
   smallPfp: {
     zIndex: 1,
     aspectRatio: 1 / 1,
-    height: '250%',
     borderRadius: 500,
     borderColor: '#54130e',
-    borderWidth: 2,
+    borderWidth: 1,
   },
-  text: {
+  typeText: {
+    color: '#e9e7e4',
+    left: '10%',
     fontSize: 20,
-    textAlign: 'center',
-    marginTop: '15%',
+    fontWeight: 'bold',
+    top: '7%',
+  },
+  spaceEvenly: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  offer: {
+    flex: 1,
+    flexDirection: 'column',
+    margin: 10,
+    marginBottom: 0,
   },
   offerCard: {
     flex: 1,
     flexDirection: 'row',
-    marginLeft: '3%',
-    marginBottom: '7%',
+    height: 90,
   },
   offerDetails: {
-    borderColor: 'red',
-    borderWidth: 2,
-    top: '4.2%',
-    right: '100%',
-    width: '20%',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: '#a6502c',
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    width: '50%',
+    height: '70%',
+    top: '10%',
+    right: '5%',
   },
   offerText: {
-    left: '10%',
-    fontSize: 30,
+    color: '#e9e7e4',
+    width: '60%',
+    left: '8%',
+    fontSize: 18,
+    top: '4%',
+  },
+  miniCard: {
+    height: '100%',
+    aspectRatio: 2.5 / 3.5,
+    marginLeft: 10,
+    borderColor: '#54130e',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  hidden: {
+    height: 0,
   },
 });
