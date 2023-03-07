@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 
 import MiniListing from '../components/common/MiniListing.jsx';
+import Offer from '../components/common/Offer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
 import TEST_DATA from '../../dev/test_data/data_trade.js';
@@ -60,9 +61,9 @@ function Trades({ navigation }) {
 
               <FlatList
                 style={{ flex: 1 }}
-                data={[]}
+                data={TEST_DATA[0].offers}
                 ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <Text style={{ paddingTop: 20 }}>{item.title}</Text>}
+                renderItem={({ item }) => <Offer offer={item} sellerId={1} />}
                 keyExtractor={(item, index) => item.id + index}
               />
             </>

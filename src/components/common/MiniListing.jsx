@@ -116,7 +116,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
               {/* Offer List Item */}
               <View style={styles.offer}>
                 <FontAwesome style={{ margin: 12 }} name="chevron-left" size={24} color="black" />
-                <Offer offer={offer} sellerId={1}/>
+                <Offer offer={offer} sellerId={1} />
                 <FontAwesome style={{ margin: 12 }} name="chevron-right" size={24} color="black" />
               </View>
 
