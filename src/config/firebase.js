@@ -1,21 +1,32 @@
-import { initializeApp } from "firebase/app";
-// import { getAuth } from "firebase/auth";
-// import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_DATABASE_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_APP_ID,
+  FIREBASE_MEASUREMENT_ID,
+} from '@env';
+
 import 'firebase/auth';
+// eslint-disable-next-line import/no-extraneous-dependencies, no-unused-vars
 import Constants from 'expo-constants';
 
 const firebaseConfigs = {
-  apiKey: 'AIzaSyDV5NeTfw6qL7khxpKGxLe1nEEuT_ZaQEg',
-  authDomain: 'swapesy-2eee7.firebaseapp.com',
-  databaseURL: 'https://swapesy-2eee7.firebaseio.com',
-  projectId: 'swapesy-2eee7',
-  storageBucket: 'swapesy-2eee7.appspot.com',
-  messagingSenderId: '970390197655',
-  appId: '1:970390197655:web:fa43284edd656805d6e0d2',
-  measurementId: 'G-FSY1RYZY4Z'
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  databaseURL: FIREBASE_DATABASE_URL,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  appId: FIREBASE_APP_ID,
+  measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfigs)
+const app = initializeApp(firebaseConfigs);
 // const db =  getFirestore(app)
 // const auth = getAuth(app)
 
@@ -25,4 +36,4 @@ const app = initializeApp(firebaseConfigs)
 //   auth
 // }
 
-export default app
+export default app;
