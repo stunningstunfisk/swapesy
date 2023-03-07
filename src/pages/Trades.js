@@ -25,13 +25,13 @@ function Trades({ navigation }) {
       <View style={styles.navbarView}>
         <PressableOpacity
           onPress={() => setCurrentView(0)}
-          style={{ height: 24, backgroundColor: currentView === 0 ? 'green' : 'lightgrey' }}
+          style={{ height: 48, backgroundColor: currentView === 0 ? 'green' : 'lightgrey' }}
         >
           <Text>MY ACTIVE LISTINGS</Text>
         </PressableOpacity>
         <PressableOpacity
           onPress={() => setCurrentView(1)}
-          style={{ height: 24, backgroundColor: currentView === 0 ? 'lightgrey' : 'green' }}
+          style={{ height: 48, backgroundColor: currentView === 0 ? 'lightgrey' : 'green' }}
         >
           <Text>OUTGOING OFFERS</Text>
         </PressableOpacity>
@@ -63,7 +63,7 @@ function Trades({ navigation }) {
                 style={{ flex: 1 }}
                 data={TEST_DATA[0].offers}
                 ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <Offer offer={item} sellerId={1} />}
+                renderItem={({ item }) => <Offer offer={item} sellerId={2} />}
                 keyExtractor={(item, index) => item.id + index}
               />
             </>

@@ -24,11 +24,13 @@ const CARD_DATA = {
   name: 'Stunning Stunfisk',
   condition: 'Literally GOLD',
   url: stunfiskImage,
+  image: 'https://assets.pokemon.com/assets/cms2/img/cards/web/SM8/SM8_EN_83.png',
   owner_of_card: USER_DATA,
 };
 
 const OFFER_DATA = {
   id: 0,
+  type: 'trade',
   cards: [CARD_DATA, CARD_DATA],
   user_id: USER_DATA,
   user: USER_DATA_FOR_OFFERJS,
