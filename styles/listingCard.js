@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
+  imgWrapper: {
+    paddingBottom: 20,
+    paddingTop: 10,
+  },
   mainImg: {
     width: '100%',
     height: 'auto',
@@ -48,13 +52,19 @@ const styles = StyleSheet.create({
     // no aspectRatio
   },
   offerBttn: {
-    // position: 'absolute',
+    position: 'absolute',
     bottom: 0,
     right: 0,
+    width: '45%',
+    padding: 3,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 8,
     backgroundColor: 'grey',
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
   },
 });
 

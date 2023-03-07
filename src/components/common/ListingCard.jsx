@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import {
-  View, Image, Text,
+  View, Image, Text, Pressable,
 } from 'react-native';
 import styles from '../../../styles/listingCard';
 
@@ -9,12 +9,19 @@ import styles from '../../../styles/listingCard';
 // functionality available on HomePage only
 // listing prop will be passed down
 function ListingCard({ listing, homePage }) {
+  const handleOffer = () => {
+    // handle offer functionality goes here
+    console.log('They\'re pressing me');
+  };
+
   return (
     // pressing on listing card opens up the listing page
     <View
       style={styles.wrapper}
     >
-      <Image source={listing.cards[0].url} style={styles.mainImg} />
+      <View style={styles.imgWrapper}>
+        <Image source={listing.cards[0].url} style={styles.mainImg} />
+      </View>
       <View style={styles.titleWrapper}>
         <Text
           style={styles.title}
@@ -24,14 +31,13 @@ function ListingCard({ listing, homePage }) {
           {listing.title}
         </Text>
       </View>
-      {/* {homePage && (
-      <Text>
-        Make an offer
-      </Text>
-      )} */}
-      <Text style={styles.offerBttn}>
-        Make an offer
-      </Text>
+      {homePage && (
+      <Pressable style={styles.offerBttnWrapper} onPress={handleOffer}>
+        <Text style={styles.offerBttn}>
+          Make an offer
+        </Text>
+      </Pressable>
+      )}
     </View>
   );
 }
