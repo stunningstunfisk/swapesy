@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#a6502c',
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
-    width: '50%',
+    width: '100%',
     height: '70%',
     top: '10%',
     right: '5%',
@@ -89,9 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
   },
-  hidden: {
-    height: 0,
-  },
+
 });
 
 function Offer({ offer, sellerId }) {
@@ -99,7 +97,7 @@ function Offer({ offer, sellerId }) {
     user, cards, type, price,
   } = offer;
 
-  const [userObj, setUserObj] = useState({});
+  const [userObj, setUserObj] = useState(user);
   const [show, setShow] = useState(false);
   const toggle = () => {
     setShow(!show);
@@ -107,8 +105,14 @@ function Offer({ offer, sellerId }) {
   };
 
   useEffect(() => {
-
+    const userRef = doc(db, `user/${user}`);
+    const userQ = query(userRef);
+    getDoc(userQ)
+      .then((x) => setUserObj(x.data()))
+      .catch((err) => console.error(err));
   }, []);
+
+  console.log('uo', userObj);
 
   const currUser = { id: '1' };
 

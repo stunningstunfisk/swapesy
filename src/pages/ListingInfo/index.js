@@ -47,9 +47,6 @@ function ListingInfo({ userId, listingId }) {
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);
 
-  console.log('?!?!?listingOffers', listingOffers);
-  console.log('listingCards', listingCards);
-
   userId = 'AshKetchum';
   listingId = 'TEST';
 
@@ -85,7 +82,6 @@ function ListingInfo({ userId, listingId }) {
         getDocs(offersQ)
           .then((x) => x.forEach((y) => {
             offers.push(y.data());
-            console.log('offers', offers);
           }))
           .then(() => setListingOffers(offers))
           .catch((err) => console.error(err));
