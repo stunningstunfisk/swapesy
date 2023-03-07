@@ -13,7 +13,7 @@ const exampleOffers = [
     },
     cards: [
       {
-        image: 'https://images.unsplash.com/photo-1470116892389-0de5d9770b2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80',
+        image: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTy9LncvjAiVbrTdUv-gOeb8COkqWJu_mudeKiVbYweWbVutwtAUbu3-_NrijfUAGXOrJiq__rv24Jkc-f_AWeWULuKB9hNQWzpxod80Vg',
       },
       {
         image: 'https://images.unsplash.com/photo-1470116892389-0de5d9770b2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80',
@@ -129,7 +129,7 @@ function Offers({ offers, sellerId }) {
     >
       <FlatList
         style={{ flex: 1 }}
-        data={exampleOffers}
+        data={offers}
         ListEmptyComponent={<Text>NO DATA</Text>}
         renderItem={({ item }) => (
           <Offer

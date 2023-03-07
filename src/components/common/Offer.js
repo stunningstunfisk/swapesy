@@ -1,7 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, Image, FlatList, TouchableOpacity, LayoutAnimation, StyleSheet,
 } from 'react-native';
+import {
+  getFirestore,
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  doc,
+  where,
+} from 'firebase/firestore';
+import firebase from '../../config/firebase';
+
+const db = getFirestore(firebase);
 
 const styles = StyleSheet.create({
   button: {
@@ -87,24 +99,29 @@ function Offer({ offer, sellerId }) {
     user, cards, type, price,
   } = offer;
 
+  const [userObj, setUserObj] = useState({});
   const [show, setShow] = useState(false);
   const toggle = () => {
     setShow(!show);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
+  useEffect(() => {
+
+  }, []);
+
   const currUser = { id: '1' };
 
   return (
     <View style={styles.offer}>
       <View style={styles.offerCard}>
-        <Image style={styles.smallPfp} source={{ uri: user.profile_picture }} />
+        <Image style={styles.smallPfp} source={{ uri: userObj.profile_picture }} />
         <TouchableOpacity style={styles.offerDetails} onPress={toggle}>
           <Text style={styles.offerText}>
-            {user.name}
+            {userObj.name}
             {' \n'}
             {' '}
-            {user.rep || '0'}
+            {userObj.rep || '0'}
             {' '}
             PokeStars
             {' '}
