@@ -17,7 +17,13 @@ module.exports = {
     'react',
   ],
   rules: {
+    'no-multiple-empty-lines': [
+      'error', {
+        max: 2,
+      },
+    ],
     'react/jsx-filename-extension': 'off',
+    'react/jsx-props-no-spreading': 'warn',
     'react/prop-types': 'off',
     'react/no-array-index-key': 'off',
   },

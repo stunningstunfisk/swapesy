@@ -7,7 +7,7 @@ const USER_DATA = {
   reputation: randomInteger(5),
   cards: [],
   name: 'Ash',
-  bio: 'I\'m having a major hat crisis'
+  bio: 'I\'m having a major hat crisis',
 };
 
 const USER_DATA_FOR_OFFERJS ={
@@ -16,7 +16,7 @@ const USER_DATA_FOR_OFFERJS ={
   reputation: randomInteger(5),
   cards: [],
   name: 'Ash',
-  bio: 'I\'m having a major hat crisis'
+  bio: 'I\'m having a major hat crisis',
 };
 
 const CARD_DATA = {
