@@ -15,7 +15,7 @@ import {
 const screenHeight = Dimensions.get('screen').height;
 const modalHeight = screenHeight / 2;
 
-export default function ModalView({ modalVisible, handleModal }) {
+export default function ModalView({ modalVisible, handleModal, children }) {
   const pan = useRef(new Animated.ValueXY()).current;
 
   const panResponder = PanResponder.create({
@@ -64,6 +64,7 @@ export default function ModalView({ modalVisible, handleModal }) {
         >
           <Text>Hello World!</Text>
           <Button title="Close Modal" onPress={handleModal} />
+          <View>{children}</View>
         </View>
       </Animated.View>
     </Modal>
