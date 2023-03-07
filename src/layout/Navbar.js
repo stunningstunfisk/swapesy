@@ -21,6 +21,7 @@ function Navbar({ pages }) {
             tabBarStyle: [
               {
                 display: 'flex',
+                backgroundColor: '#e9e7e4',
               },
               null,
             ],
