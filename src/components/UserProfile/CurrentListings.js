@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import ListingCard from '../common/ListingCard';
 
 const { LISTINGS } = require('../../../dev/test_data/data_profile');

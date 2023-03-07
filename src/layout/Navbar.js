@@ -5,29 +5,29 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
-const Navbar = ({pages}) => {
+function Navbar({ pages }) {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName='Home'
+        initialRouteName="Home"
         screenOptions={
           ({ route }) => ({
             tabBarActiveTintColor: '#7d311d',
             tabBarInactiveTintColor: 'grey',
             tabBarLabelStyle: {
               paddingBottom: 3,
-              fontSize: 10
+              fontSize: 10,
             },
             tabBarStyle: [
               {
-                display: 'flex'
+                display: 'flex',
               },
-              null
+              null,
             ],
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
-              let rn = route.name;
-              switch(route.name){
+              const rn = route.name;
+              switch (route.name) {
                 case 'Home':
                   iconName = focused ? 'home' : 'home-outline';
                   break;
@@ -51,8 +51,8 @@ const Navbar = ({pages}) => {
             },
           })
         }
-        >
-          {pages}
+      >
+        {pages}
       </Tab.Navigator>
     </NavigationContainer>
   );

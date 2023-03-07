@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import {
   View, Image, Text, Pressable,
 } from 'react-native';

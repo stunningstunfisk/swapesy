@@ -1,9 +1,7 @@
-import React from "react";
-import { Animated, Pressable, StyleSheet } from "react-native";
+import React from 'react';
+import { Animated, Pressable, StyleSheet } from 'react-native';
 
-
-
-const PressableOpacity = ({ children, ...props }) => {
+function PressableOpacity({ children, ...props }) {
   const opacityAnimated = new Animated.Value(1);
 
   const fadeOut = () => {
@@ -31,9 +29,8 @@ const PressableOpacity = ({ children, ...props }) => {
       <Animated.View style={{ opacity: opacityAnimated }}>
         {children}
       </Animated.View>
-    </Pressable >
+    </Pressable>
   );
-};
-
+}
 
 export default PressableOpacity;
