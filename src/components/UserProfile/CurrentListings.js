@@ -21,7 +21,7 @@ const listings = LISTINGS;
 function CurrentListings() { // listings props will be passed down
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {listings.length ? (
+      {listings ? (
         <FlatList
           columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
           // contentContainerStyle={{marginTop: 10, paddingBottom: 50}}

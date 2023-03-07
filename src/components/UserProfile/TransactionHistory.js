@@ -3,63 +3,45 @@ import { useState, useEffect } from 'react';
 import {
   View, Text, FlatList, TouchableOpacity,
 } from 'react-native';
+import TransactionInfo from './TransactionInfo';
 import styles from '../../../styles/userProfile';
 
-const cards = [
-  {
-    title: 'cake',
-    price: '24',
-    id: 0,
-  },
-  {
-    title: 'muffin',
-    price: '12',
-    id: 1,
-  },
-  {
-    title: 'cookie',
-    price: '19',
-    id: 2,
-  },
-];
+const getTransactions = (userId) => {
+  // for the current user
+  // get listings with completed: true
+  // get offers with accepted: true
+  // listings: listing.title, listing.price, listing.date, listing.rating ?
+  // offers: find listing in listings by listing_id from the offer, get all
+  // the info that was written out in listings
+};
 
-function Item({
-  title, cost, counterparty, date, rating,
-}) {
-  const rateTransaction = () => {
-
-  };
-
+function Item({ item }) {
   return (
-    <View style={styles.transactionWrapper}>
-      <Text style={styles.transaction}>{title}</Text>
-      <Text style={styles.transaction}>{cost}</Text>
-      <Text style={styles.transaction}>{counterparty}</Text>
-      <Text style={styles.transaction}>{date}</Text>
-      <Text
-        style={styles.transaction}
-        onPress={rateTransaction}
-      >
-        {rating}
-      </Text>
-    </View>
+    <TransactionInfo transaction={item} />
   );
 }
+
 function TransactionHistory({ userId }) {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-
+    const pastTransactions = getTransactions();
+    setTransactions(pastTransactions);
   }, []);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {transactions ? (
         <FlatList
           data={transactions}
-          renderItem={({ item }) => <Item title={item.title} />}
+          renderItem={({ item }) => <Item item={item} />}
           keyExtreactor={(item) => item.id}
         />
-      ) : <Text style={styles.noData}>Woops! There are no cards</Text>}
+      ) : (
+        <Text style={styles.noData}>
+          Woops! There are no tranasactions yet
+        </Text>
+      )}
     </View>
   );
 }
