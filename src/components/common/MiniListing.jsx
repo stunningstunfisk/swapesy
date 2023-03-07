@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
+import HorizontalDivider from './spacers/HorizontalDivider';
 import MiniOffer from './MiniOffer';
 import MiniListingTitle from './MiniListingTitle';
 import PressableOpacity from './buttons/PressableOpacity';
@@ -123,7 +124,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
 
         </ListItem.Accordion>
 
-        <View style={{ margin: 12, borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth }} />
+        <HorizontalDivider />
       </>
     );
   }
@@ -132,7 +133,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
       <View style={[styles.container, { margin: 6 }]}>
         <MiniListingTitle listing={listing} />
       </View>
-      <View style={{ margin: 12, borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth }} />
+      <HorizontalDivider />
     </>
   );
 };
