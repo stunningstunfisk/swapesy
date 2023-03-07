@@ -24,7 +24,9 @@ function Main() {
           <Tab.Screen name="Chat" component={ChatPage} />
           <Tab.Screen name="Trades" component={TradesPage} />
           <Tab.Screen name="Upload" component={UploadPage} />
-          <Tab.Screen name="Profile" component={UserProfilePage} />
+          <Tab.Screen name="Profile">
+            {() => <UserProfilePage user={user} />}
+          </Tab.Screen>
         </>
       )}
     />
