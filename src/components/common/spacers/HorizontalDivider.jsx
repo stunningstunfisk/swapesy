@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   pokeball: {
+    color: 'rgba(128,128,128,0.5)',
     position: 'relative',
   },
   line: {
@@ -24,7 +25,6 @@ const HorizontalDivider = function CreateHorizontalDivider() {
         name="pokeball"
         size={24}
         style={styles.pokeball}
-        color="rgba(128,128,128,0.5)"
       />
       <View style={styles.line} />
     </View>
