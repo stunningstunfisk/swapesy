@@ -14,9 +14,15 @@ import AuthStack from './src/stack/AuthStack';
 export default function App() {
   const { user } = useAuthentication();
 
+  const isHermes = () => !!global.HermesInternal;
+  console.info('Using the Hermes Engine:', isHermes());
+
+
   return (
     <ThemeProvider>
-      {user ? <Main user={user} /> : <AuthStack />}
+      {/* {user ? <Main user={user}/> : <AuthStack />} */}
+      {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
+      <Main />
     </ThemeProvider>
   );
 }
