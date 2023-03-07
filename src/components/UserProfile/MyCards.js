@@ -1,45 +1,39 @@
 import * as React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import {
+  View, Text, FlatList, Image,
+} from 'react-native';
+import styles from '../../../styles/userProfile';
+import Placeholder from '../../../dev/test_data/stunfisk.png';
 
-const cards = [
-  {
-    title: 'pineapple',
-    price: '24',
-    id: 0,
-  },
-  {
-    title: 'apple',
-    price: '12',
-    id: 1,
-  },
-  {
-    title: 'orange',
-    price: '19',
-    id: 2,
-  },
-];
+const { CARDS } = require('../../../dev/test_data/data_profile');
 
-function Item({ title }) {
+const cards = CARDS;
+// let cards;
+
+function Item({ name }) {
   return (
-    <View style={{ color: 'pink' }}>
-      <Text style={{ fontSize: 15 }}>{title}</Text>
+    <View style={{ borderWidth: 1, width: 70, height: 90 }}>
+      <Text style={{ fontSize: 15 }}>{name}</Text>
     </View>
   );
 }
-function MyCards() {
+function MyCards() { // cards prop will go here
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text
-        onPress={() => alert('MyCards')}
-        style={{ fontSize: 26, fontWeight: 'bold' }}
-      >
-        My Cards
-      </Text>
-      <FlatList
-        data={cards}
-        renderItem={({ item }) => <Item title={item.title} />}
-        keyExtreactor={(item) => item.id}
-      />
+      {cards ? (
+        <FlatList
+          data={cards}
+          renderItem={({ item }) => <Item name={item.name} />}
+          numColumns={4}
+          columnWrapperStyle={{ justifyContent: 'flex-start', marginBottom: 15, gap: 15 }}
+          keyExtreactor={(item) => item.id}
+        />
+      ) : (
+        <>
+          <Image source={Placeholder} style={{ height: 70, width: 70 }} />
+          <Text style={styles.noData}>Woops! There are no cards</Text>
+        </>
+      )}
     </View>
   );
 }

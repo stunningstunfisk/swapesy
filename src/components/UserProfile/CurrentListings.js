@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { View, FlatList } from 'react-native';
+import {
+  View, Text, FlatList, Image,
+} from 'react-native';
 import ListingCard from '../common/ListingCard';
+import Placeholder from '../../../dev/test_data/stunfisk.png';
+import styles from '../../../styles/userProfile';
 
 const { LISTINGS } = require('../../../dev/test_data/data_profile');
 
@@ -27,7 +31,12 @@ function CurrentListings() { // listings props will be passed down
           keyExtreactor={(item) => item.id}
           numColumns={2}
         />
-      ) : 'No listings'}
+      ) : (
+        <>
+          <Image source={Placeholder} style={{ height: 70, width: 70 }} />
+          <Text style={styles.noData}>Woops! There are no listings</Text>
+        </>
+      )}
     </View>
   );
 }
