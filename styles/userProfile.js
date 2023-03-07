@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   reputation: {
     fontSize: 13,
     fontWeight: 'bold',
-    color: 'dark-grey',
+    color: 'darkgrey',
     padding: 2,
   },
   bio: {
