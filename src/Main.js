@@ -8,14 +8,14 @@ import Navbar from './layout/Navbar';
 import HomePage from './pages/Home';
 import ChatPage from './stack/ChatStack';
 import TradesPage from './pages/Trades';
-import UploadPage from './pages/Upload';
+import UploadPage from './stack/UploadStack';
 import UserProfilePage from './pages/UserProfile';
 
 import ListingInfo from './pages/ListingInfo/index.js';
 
 const Tab = createBottomTabNavigator();
 
-function Main() {
+function Main({ user }) {
   return (
     <Navbar
       pages={(
@@ -25,7 +25,8 @@ function Main() {
             {() => <ChatPage user={user} />}
           </Tab.Screen>
           <Tab.Screen name="Trades" component={TradesPage} />
-          <Tab.Screen name="Upload" component={UploadPage} />
+          {/* <Tab.Screen name="Upload" component={UploadPage} /> */}
+          <Tab.Screen name="Upload">{() => <UploadPage user={user} />}</Tab.Screen>
           <Tab.Screen name="Profile" component={UserProfilePage} />
         </>
       )}
