@@ -9,6 +9,7 @@ import HomePage from './pages/Home';
 import ChatPage from './stack/ChatStack';
 import TradesPage from './pages/Trades';
 import UploadPage from './pages/Upload';
+import UserProfilePage from './pages/UserProfile';
 
 import ListingInfo from './pages/ListingInfo/index.js';
 
@@ -25,6 +26,7 @@ function Main() {
           </Tab.Screen>
           <Tab.Screen name="Trades" component={TradesPage} />
           <Tab.Screen name="Upload" component={UploadPage} />
+          <Tab.Screen name="Profile" component={UserProfilePage} />
         </>
       )}
     />
