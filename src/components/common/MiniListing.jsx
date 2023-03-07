@@ -54,74 +54,86 @@ const styles = StyleSheet.create({
 
 const MiniListing = function CreateMiniListing({ listing }) {
   const [expanded, setExpanded] = useState(false);
-  const offerIndent = 40;
 
   if (listing.offers.length > 0) {
     return (
-      <ListItem.Accordion
-        containerStyle={[styles.container, styles.shadow, { width: '100%' }]}
-        content={
-          // LIST TITLE AREA
-          <MiniListingTitle listing={listing} />
-        }
-        icon={<FontAwesome style={{ margin: 12 }} name="chevron-down" size={24} color="black" />}
-        isExpanded={expanded}
-        onPress={() => {
-          setExpanded(!expanded);
-        }}
-        style={styles.listTitle}
-      >
+      <>
+        <ListItem.Accordion
+          containerStyle={[styles.container, styles.shadow, { width: '100%' }]}
+          content={
+            // LIST TITLE AREA
+            <MiniListingTitle listing={listing} />
+          }
+          icon={<FontAwesome style={{ margin: 12 }} name="chevron-down" size={24} color="black" />}
+          isExpanded={expanded}
+          onPress={() => {
+            setExpanded(!expanded);
+          }}
+          style={styles.listTitle}
+        >
 
-        {/* Collapsable Content */}
-        {listing.offers.map((offer) => (
-          <ListItem.Swipeable
-            containerStyle={[styles.container, { marginLeft: offerIndent }]}
-            leftContent={(reset) => (
-              <View style={styles.buttonView}>
-                <PressableOpacity
-                  onLongPress={() => reset()}
-                  style={[styles.button, { marginLeft: offerIndent, backgroundColor: 'red', width: 48 }]}
-                >
-                  <FontAwesome name="trash-o" size={48} color="black" />
-                </PressableOpacity>
-              </View>
-            )}
-            leftWidth={60}
-            rightContent={(reset) => (
-              <View style={styles.buttonView}>
-                <PressableOpacity
-                  onLongPress={() => reset()}
-                  style={[styles.button, { backgroundColor: 'lightgrey' }]}
-                >
-                  <Text style={styles.buttonText}>ACCEPT OFFER</Text>
-                </PressableOpacity>
-                <PressableOpacity
-                  onLongPress={() => reset()}
-                  style={[styles.button, { backgroundColor: 'lightgrey' }]}
-                >
-                  <Text style={styles.buttonText}>MORE INFO</Text>
-                </PressableOpacity>
-              </View>
-            )}
-          >
-
-            {/* Offer List Item */}
-            <View style={styles.offer}>
-              <FontAwesome style={{ margin: 12 }} name="chevron-left" size={24} color="black" />
-              <MiniOffer offer={offer} />
-              <FontAwesome style={{ margin: 12 }} name="chevron-right" size={24} color="black" />
+          {/* Collapsable Content */}
+          <PressableOpacity style={{ backgroundColor: 'red', height: 48 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <Text>DELETE LISTING</Text>
             </View>
+          </PressableOpacity>
 
-          </ListItem.Swipeable>
-        ))}
+          {listing.offers.map((offer) => (
+            <ListItem.Swipeable
+              containerStyle={styles.container}
+              leftContent={(reset) => (
+                <View style={styles.buttonView}>
+                  <PressableOpacity
+                    onLongPress={() => reset()}
+                    style={[styles.button, { backgroundColor: 'red', width: 48 }]}
+                  >
+                    <FontAwesome name="trash-o" size={48} color="black" />
+                  </PressableOpacity>
+                </View>
+              )}
+              leftWidth={60}
+              rightContent={(reset) => (
+                <View style={styles.buttonView}>
+                  <PressableOpacity
+                    onLongPress={() => reset()}
+                    style={[styles.button, { backgroundColor: 'lightgrey' }]}
+                  >
+                    <Text style={styles.buttonText}>ACCEPT OFFER</Text>
+                  </PressableOpacity>
+                  <PressableOpacity
+                    onLongPress={() => reset()}
+                    style={[styles.button, { backgroundColor: 'lightgrey' }]}
+                  >
+                    <Text style={styles.buttonText}>MORE INFO</Text>
+                  </PressableOpacity>
+                </View>
+              )}
+            >
 
-      </ListItem.Accordion>
+              {/* Offer List Item */}
+              <View style={styles.offer}>
+                <FontAwesome style={{ margin: 12 }} name="chevron-left" size={24} color="black" />
+                <MiniOffer offer={offer} />
+                <FontAwesome style={{ margin: 12 }} name="chevron-right" size={24} color="black" />
+              </View>
+
+            </ListItem.Swipeable>
+          ))}
+
+        </ListItem.Accordion>
+
+        <View style={{ margin: 12, borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth }} />
+      </>
     );
   }
   return (
-    <View style={[styles.container, { margin: 6 }]}>
-      <MiniListingTitle listing={listing} />
-    </View>
+    <>
+      <View style={[styles.container, { margin: 6 }]}>
+        <MiniListingTitle listing={listing} />
+      </View>
+      <View style={{ margin: 12, borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth }} />
+    </>
   );
 };
 
