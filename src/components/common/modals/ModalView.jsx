@@ -64,7 +64,7 @@ export default function ModalView({ modalVisible, handleModal, children }) {
         >
           <Text>Hello World!</Text>
           <Button title="Close Modal" onPress={handleModal} />
-          <View>{children}</View>
+          {children}
         </View>
       </Animated.View>
     </Modal>
