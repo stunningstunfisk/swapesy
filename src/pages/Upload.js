@@ -49,14 +49,18 @@ function UploadHome({ user }) {
         <ImagePickerComponent />
         <Button title="Take a picture" onPress={() => navigation.navigate('CameraView')} />
       </View>
+      </View>
 
-      {/* <ModalView handleModal={handleModal} modalVisible={modalVisible} />
-      <Pressable onPress={handleModal}>
-        <Text>Show Modal</Text>
-      </Pressable> */}
-    </View>
+
   );
 }
+
+
+    // <ModalView handleModal={handleModal} modalVisible={modalVisible} />
+    //   <Pressable onPress={handleModal}>
+    //     <Text>Show Modal</Text>
+    //   </Pressable>
+
 
 export default UploadHome;
 

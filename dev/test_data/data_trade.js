@@ -3,11 +3,20 @@ import stunfiskImage from './stunfisk.png';
 
 const USER_DATA = {
   id: 0,
-  profile_url: ashImage,
+  profile_picture: ashImage,
   reputation: randomInteger(5),
   cards: [],
   name: 'Ash',
-  bio: 'I\'m having a major hat crisis'
+  bio: 'I\'m having a major hat crisis',
+};
+
+const USER_DATA_FOR_OFFERJS ={
+  id: 0,
+  profile_picture: 'https://avatarfiles.alphacoders.com/175/thumb-175691.png',
+  reputation: randomInteger(5),
+  cards: [],
+  name: 'Ash',
+  bio: 'I\'m having a major hat crisis',
 };
 
 const CARD_DATA = {
@@ -15,18 +24,20 @@ const CARD_DATA = {
   name: 'Stunning Stunfisk',
   condition: 'Literally GOLD',
   url: stunfiskImage,
+  image: 'https://assets.pokemon.com/assets/cms2/img/cards/web/SM8/SM8_EN_83.png',
   owner_of_card: USER_DATA,
 };
 
 const OFFER_DATA = {
   id: 0,
+  type: 'trade',
   cards: [CARD_DATA, CARD_DATA],
   user_id: USER_DATA,
+  user: USER_DATA_FOR_OFFERJS,
   completed: false,
-}
+};
 
-const TRADE_DATA =
-{
+const TRADE_DATA = {
   id: 0,
   title: 'Most Amazing Card EVER!',
   user_id: USER_DATA,
