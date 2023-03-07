@@ -27,6 +27,7 @@ const exampleCards = [
 function ListingInfo({ listingId }) {
   const [seller, setSeller] = useState({
     name: 'Ash Catchum',
+    id: '1',
     profile_picture: 'https://freeyourmindexperience.com/wp-content/uploads/person-icon-person-icon-clipart-image-from-our-icon-clipart-category-9-500x500.png',
     reputation: 23,
   });
@@ -34,7 +35,7 @@ function ListingInfo({ listingId }) {
   return (
     <View style={styles.container}>
       <FancyCarousel cards={exampleCards} seller={seller} />
-      <Offers offers={[]} />
+      <Offers offers={[]} sellerId={seller.id} />
     </View>
   );
 }

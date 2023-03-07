@@ -1,9 +1,25 @@
-import React from "react";
-import { Animated, Pressable, StyleSheet } from "react-native";
+import React from 'react';
+import { Animated, Pressable, StyleSheet } from 'react-native';
 
 
+const styles = StyleSheet.create({
+  button: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'rgba(128,128,128,0.25)',
+    borderRadius: 16,
+    elevation: 4, // for Android only
+    shadowColor: '#c3b2a0',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+  },
+});
 
-const PressableOpacity = ({ children, ...props }) => {
+const PressableOpacity = function CreatePressableOpacityButton({ children, ...props }) {
   const opacityAnimated = new Animated.Value(1);
 
   const fadeOut = () => {
@@ -27,11 +43,12 @@ const PressableOpacity = ({ children, ...props }) => {
       onPressIn={fadeOut}
       onPressOut={fadeIn}
       {...props}
+      style={[props.style, styles.button]}
     >
       <Animated.View style={{ opacity: opacityAnimated }}>
         {children}
       </Animated.View>
-    </Pressable >
+    </Pressable>
   );
 };
 
