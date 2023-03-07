@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {
   View, Text,
 } from 'react-native';
-import styles from '../../../styles/userProfile';
+import styles from '../../../styles/userProfile/userProfile';
 
 function Transaction({ transaction }) {
   const [rating, setRating] = useState();

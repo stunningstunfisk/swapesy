@@ -4,7 +4,7 @@ import {
   View, Text, FlatList, TouchableOpacity,
 } from 'react-native';
 import TransactionInfo from './TransactionInfo';
-import styles from '../../../styles/userProfile';
+import styles from '../../../styles/userProfile/userProfile';
 
 const getTransactions = (userId) => {
   // for the current user
@@ -39,7 +39,7 @@ function TransactionHistory({ userId }) {
         />
       ) : (
         <Text style={styles.noData}>
-          Woops! There are no tranasactions yet
+          Woops! There are no transactions yet
         </Text>
       )}
     </View>

@@ -4,7 +4,8 @@ import {
   View, Text, FlatList, Image, TouchableOpacity,
 } from 'react-native';
 import { SpeedDial } from '@rneui/themed';
-import styles from '../../../styles/userProfile';
+import styles from '../../../styles/userProfile/userProfile';
+import cardStyles from '../../../styles/userProfile/inventoryCard';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
 import ModalView from '../common/modals/ModalView';
 
@@ -35,32 +36,35 @@ function Item({ name, card }) {
   };
 
   return (
-    <TouchableOpacity
-      style={{ borderWidth: 1, width: 70, height: 90 }}
-      onPress={handleModal}
-      onLongPress={handleLongPress}
-    >
-      <Text style={{ fontSize: 15 }}>{name}</Text>
-      {/* <SpeedDial
-        isOpen={speedDialVisible}
-        icon={{ name: 'edit', color: 'grey' }}
-        openIcon={{ name: 'close', color: 'grey' }}
-        onOpen={() => setSpeedDialVisible(!speedDialVisible)}
-        onClose={() => setSpeedDialVisible(!speedDialVisible)}
+    <View style={cardStyles.wrapper}>
+      <TouchableOpacity
+
+        onPress={handleModal}
+        onLongPress={handleLongPress}
       >
-        <SpeedDial.Action
+        <Image source={card.url} style={cardStyles.mainImg} />
+        {/* <SpeedDial
+          isOpen={speedDialVisible}
           icon={{ name: 'edit', color: 'grey' }}
-          title="Edit"
-          onPress={handleEdit}
-        />
-        <SpeedDial.Action
-          icon={{ name: 'delete', color: 'grey' }}
-          title="Delete"
-          onPress={handleDelete}
-        />
-      </SpeedDial> */}
-      {modalVisible && <ModalView />}
-    </TouchableOpacity>
+          openIcon={{ name: 'close', color: 'grey' }}
+          onOpen={() => setSpeedDialVisible(!speedDialVisible)}
+          onClose={() => setSpeedDialVisible(!speedDialVisible)}
+        >
+          <SpeedDial.Action
+            icon={{ name: 'edit', color: 'grey' }}
+            title="Edit"
+            onPress={handleEdit}
+          />
+          <SpeedDial.Action
+            icon={{ name: 'delete', color: 'grey' }}
+            title="Delete"
+            onPress={handleDelete}
+          />
+        </SpeedDial> */}
+        {modalVisible && <ModalView />}
+      </TouchableOpacity>
+
+    </View>
   );
 }
 function MyCards() { // cards prop will go here

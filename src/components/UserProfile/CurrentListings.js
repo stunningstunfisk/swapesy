@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import ListingCard from '../common/ListingCard';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
-import styles from '../../../styles/userProfile';
+import styles from '../../../styles/userProfile/userProfile';
 
 const { LISTINGS } = require('../../../dev/test_data/data_profile');
 

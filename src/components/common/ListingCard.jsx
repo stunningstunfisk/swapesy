@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   View, Image, Text, Pressable, TouchableOpacity,
 } from 'react-native';
-import styles from '../../../styles/listingCard';
+import styles from '../../../styles/userProfile/listingCard';
 
 // homePage is a prop passed in HomePage view to conditionally render views and
 // functionality available on HomePage only
