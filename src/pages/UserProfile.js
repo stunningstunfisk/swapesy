@@ -1,52 +1,39 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Animated } from 'react-native';
-import MyCards from '.././components/MyCards';
-import CurrentListings from '.././components/CurrentListings';
-import Transactions from '.././components/TransactionHistory';
+import {
+  View, Text, Image,
+} from 'react-native';
+import MyCards from '../components/UserProfile/MyCards';
+import CurrentListings from '../components/UserProfile/CurrentListings';
+import Transactions from '../components/UserProfile/TransactionHistory';
+import SegmentSelect from '../components/common/SegmentSelect';
+import styles from '../../styles/userProfile';
 
-const width = Dimensions.get('screen').width - 32;
+const { USER_DATA } = require('../../dev/test_data/data_profile');
 
-const UserProfile = ({ navigation }) => {
-  const selections = ['Cards', 'Listings', 'History'];
-  const [select, setSelect] = useState(0);
-  let component;
-
-  const segmentSelect = (select) => {
-    switch(select) {
-      case 'Cards':
-        return <MyCards />
-        break;
-      case 'Listings':
-        return <CurrentListings />
-        break;
-      case 'Transactions':
-        return <Transactions />
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleSelection = () => {
-    setSelect()
-  };
-
-  const selectOne = (selection) => {
-    return (
-      <TouchableOpacity onPress={handleSelection}>
-        <Text>{selection}</Text>
-      </TouchableOpacity>
-    );
-  };
+function UserProfile({ navigation }) {
+  const buttons = ['Cards', 'Listings', 'Past Transactions'];
+  const views = [<MyCards />, <CurrentListings />, <Transactions />];
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text
-            onPress={() => alert('This is the User Profile.')}
-            style={{ fontSize: 26, fontWeight: 'bold' }}>User Profile</Text>
-        {selections.map((selection) => <Text>{selection}</Text>)}
-        {segmentSelect(select)}
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <Image source={USER_DATA.profile_url} style={styles.profileImg} />
+        <View style={styles.userInfoContainer}>
+          <Text style={styles.userName}>{USER_DATA.name}</Text>
+          <Text style={styles.reputation}>
+            REP:
+            {' '}
+            {USER_DATA.reputation}
+          </Text>
+          <Text style={styles.bio}>
+            {USER_DATA.bio}
+          </Text>
+        </View>
+      </View>
+      <SegmentSelect
+        buttons={buttons}
+        views={views}
+      />
     </View>
   );
 }
