@@ -8,30 +8,30 @@ import Navbar from './layout/Navbar';
 import HomePage from './pages/Home';
 import ChatPage from './stack/ChatStack';
 import TradesStack from './stack/TradeStack';
-import UploadPage from './stack/UploadStack';
+import UploadStack from './stack/UploadStack';
 import UserProfilePage from './pages/UserProfile';
-
-import ListingInfo from './pages/ListingInfo/index.js';
 
 const Tab = createBottomTabNavigator();
 
 function Main({ user }) {
   return (
     <Navbar
-      pages={(
-        <>
-          <Tab.Screen name="Home" component={HomePage} />
-          <Tab.Screen name="Chat">
-            {() => <ChatPage user={user} />}
-          </Tab.Screen>
-          <Tab.Screen name="Trades" component={TradesStack} user={user} />
-          {/* <Tab.Screen name="Upload" component={UploadPage} /> */}
-          <Tab.Screen name="Upload">{() => <UploadPage user={user} />}</Tab.Screen>
-          <Tab.Screen name="Profile" component={UserProfilePage} />
-        </>
-      )}
+      pages={
+        (
+          <>
+            <Tab.Screen name="Home" component={HomePage} />
+            <Tab.Screen name="Chat">{() => <ChatPage user={user} />}</Tab.Screen>
+            <Tab.Screen name="Trades" component={TradesStack} user={user} />
+            <Tab.Screen name="Upload">
+              {() => <UploadStack user={user} />}
+            </Tab.Screen>
+            <Tab.Screen name="Profile">
+              {() => <UserProfilePage user={user} owner={user} />}
+            </Tab.Screen>
+          </>
+        )
+      }
     />
-
   );
 }
 

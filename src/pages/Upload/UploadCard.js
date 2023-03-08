@@ -1,17 +1,16 @@
-/* eslint-disable */
+// /* eslint-disable */
 import React, { useState } from 'react';
 import { StyleSheet, Image, View, Text, Pressable, TextInput, Button } from 'react-native';
-import ModalView from '../components/common/modals/ModalView';
-import DropdownComponent from '../components/common/Dropdown.js';
-import ImagePickerComponent from '../components/upload_page/ImagePicker.js';
+import DropdownComponent from '../../components/common/Dropdown.js';
+import ImagePickerComponent from '../../components/upload_page/ImagePicker.js';
 import CameraView from './CameraView.js';
-// import styles from '../../styles/upload.js';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-function UploadHome({ user }) {
+function UploadCard({ user }) {
   const [name, onChangeName] = useState('');
   const navigation = useNavigation();
+  const [uri, setUri] = useState(null);
 
   const conditions = [
     { label: 'Near Mint', value: '1' },
@@ -20,12 +19,6 @@ function UploadHome({ user }) {
     { label: 'Heavily Played', value: '4' },
     { label: 'Damaged', value: '5' },
   ];
-
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const handleModal = () => {
-    setModalVisible(!modalVisible);
-  };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -38,31 +31,41 @@ function UploadHome({ user }) {
 
       <TextInput
         style={styles.input}
-        placeholder='Card Name...'
+        placeholder="Card Name..."
         onChangeText={onChangeName}
         value={name}
       />
 
       <DropdownComponent data={conditions} />
+
+      {uri ? (
+      <View>
+        <Image
+          style={styles.displayImage}
+          source={{ uri: uri }}
+        />
+      </View>
+      ) : (
       <View style={styles.imageBox}>
         <AntDesign name="camera" size={20} color="black" />
-        <ImagePickerComponent />
-        <Button title="Take a picture" onPress={() => navigation.navigate('CameraView')} />
+        <ImagePickerComponent uri={uri} setUri={setUri} />
+        <Button
+          title="Take a picture"
+          onPress={() => { navigation.navigate('CameraView', { setUri: setUri }); }}
+        />
       </View>
-      </View>
+      )}
 
-
+      <Button title="Upload" onPress={() => setUri(null)} />
+      <Button
+        title="Create listing"
+        onPress={() => navigation.navigate('CreateListing')}
+      />
+    </View>
   );
 }
 
-
-    // <ModalView handleModal={handleModal} modalVisible={modalVisible} />
-    //   <Pressable onPress={handleModal}>
-    //     <Text>Show Modal</Text>
-    //   </Pressable>
-
-
-export default UploadHome;
+export default UploadCard;
 
 const styles = StyleSheet.create({
   imageBox: {
@@ -71,6 +74,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 3,
     backgroundColor: '#dcdcdc',
+    width: 300,
+    height: 350,
+  },
+  displayImage: {
+    // justifyContent: 'center',
+    borderRadius: 30,
     width: 300,
     height: 350,
   },
