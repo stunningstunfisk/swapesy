@@ -7,7 +7,7 @@ import Navbar from './layout/Navbar';
 // Screens
 import HomePage from './pages/Home';
 import ChatPage from './stack/ChatStack';
-import TradesPage from './pages/Trades';
+import TradesStack from './stack/TradeStack';
 import UploadPage from './stack/UploadStack';
 import UserProfilePage from './pages/UserProfile';
 
@@ -24,7 +24,7 @@ function Main({ user }) {
           <Tab.Screen name="Chat">
             {() => <ChatPage user={user} />}
           </Tab.Screen>
-          <Tab.Screen name="Trades" component={TradesPage} />
+          <Tab.Screen name="Trades" component={TradesStack} />
           {/* <Tab.Screen name="Upload" component={UploadPage} /> */}
           <Tab.Screen name="Upload">{() => <UploadPage user={user} />}</Tab.Screen>
           <Tab.Screen name="Profile" component={UserProfilePage} />

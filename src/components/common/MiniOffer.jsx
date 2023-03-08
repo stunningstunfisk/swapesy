@@ -80,6 +80,7 @@ function MiniOffer({ offer }) {
             <TrashButton onLongPress={() => { handleTrashLongPress(); reset(); }} />
           )}
           leftWidth={60}
+          rightWidth={0}
         >
           {/* Offer List Item */}
           <View style={styles.offer}>
