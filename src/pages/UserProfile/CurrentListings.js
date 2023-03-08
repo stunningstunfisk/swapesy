@@ -4,7 +4,7 @@ import ListingCard from '../../components/common/ListingCard';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
 import styles from '../../../styles/userProfile/userProfile';
 
-const { LISTINGS } = require('../../../dev/test_data/data_profile');
+// const { LISTINGS } = require('../../../dev/test_data/data_profile');
 
 function Item({ listing }) {
   return (
@@ -14,7 +14,7 @@ function Item({ listing }) {
   );
 }
 
-const listings = LISTINGS;
+// const listings = LISTINGS;
 
 function CurrentListings({ listings }) { // listings props will be passed down
   return (
