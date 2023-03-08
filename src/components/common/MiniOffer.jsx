@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Avatar, ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
+import {
+  collection,
+  doc,
+  docs,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
+import firebase from '../../config/firebase';
+
+const database = getFirestore(firebase);
+
+import ashImage from '../../../dev/test_data/ash.jpg';
 import HorizontalDivider from './spacers/HorizontalDivider';
 import TrashButton from './buttons/TrashButton';
 
@@ -54,9 +69,35 @@ const styles = StyleSheet.create({
 });
 
 function MiniOffer({ offer }) {
+  const [sellerPic, setSellerPic] = useState(ashImage);
+  const [offerCards, setOfferCards] = useState([]);
+
   function handleUserPress() { }
   function handleListingPress() { }
   function handleTrashLongPress() { }
+
+  useEffect(() => {
+    // PASSED offer -> GET offer's listing -> SET seller TO listing.user
+    const listingRef = doc(database, `listing/${offer.listing}`);
+    const listingQuery = query(listingRef);
+    getDoc(listingQuery)
+      .then((data) => {
+        const listing = data.data();
+        const userRef = doc(database, `user/${listing.user}`);
+        const userQuery = query(userRef);
+        let foundUser = ashImage;
+        getDoc(userQuery)
+          .then((data2) => {
+            foundUser = data2.data();
+          })
+          .then(() => {
+            console.log('seller is', foundUser);
+            setSellerPic({ uri: foundUser.profile_picture });
+          })
+          .catch((error) => console.error(error));
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <>
@@ -66,7 +107,7 @@ function MiniOffer({ offer }) {
             <Avatar
               rounded
               size="large"
-              source={offer.user_id.profile_picture}
+              source={sellerPic} // the seller user picture
             />
           </Pressable>
           <Pressable style={styles.titleBar} onPress={handleListingPress}>
@@ -82,15 +123,19 @@ function MiniOffer({ offer }) {
           leftWidth={60}
           rightWidth={0}
         >
+
           {/* Offer List Item */}
-          <View style={styles.offer}>
+          {/* <View style={styles.offer}>
             <View style={{ flexDirection: 'row' }}>
-              {offer.cards.map((card) => (
+              {offerCards.map((card) => (
                 <Image style={styles.cardImage} source={{ uri: card.image }} />
               ))}
             </View>
           </View>
-          <FontAwesome style={styles.chevron} name="chevron-right" size={24} color="black" />
+          <FontAwesome style={styles.chevron} name="chevron-right" size={24} color="black" /> */}
+
+          <Text>CARD</Text>
+
         </ListItem.Swipeable>
 
       </View>

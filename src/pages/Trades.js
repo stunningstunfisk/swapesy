@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+
+import {
+  collection,
+  doc,
+  docs,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
+import firebase from '../config/firebase';
+
+const database = getFirestore(firebase);
 
 import MiniListing from '../components/common/MiniListing';
 import MiniOffer from '../components/common/MiniOffer';
-import Offer from '../components/common/Offer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
-import TEST_DATA from '../../dev/test_data/data_trade';
 
-console.log('TEST DATA BEING USED', TEST_DATA[0]);
+// TODO: Remove hardcoded magic strings and test data!!
+import LOCAL_TEST_DATA from '../../dev/test_data/data_trade';
+const TEST_USER_ID = 'AshKetchum';
+
+
+console.log('TEST DATA BEING USED');
 
 const styles = StyleSheet.create({
   navbarView: {
@@ -20,8 +37,38 @@ const styles = StyleSheet.create({
   },
 });
 
-function Trades({ navigation }) {
+function Trades({ navigation, user }) {
   const [currentView, setCurrentView] = useState(0);
+  const [userListings, setUserListings] = useState([]);
+  const [incomingOffers, setIncomingOffers] = useState([]);
+
+  useEffect(() => {
+    const listingDocRef = collection(database, 'listing');
+    const listingQuery = query(listingDocRef, where('user', '==', TEST_USER_ID)); // TODO: REMOVE HARDCODED TEST DATA
+    const listings = [];
+    getDocs(listingQuery)
+      .then((data) => {
+        data.forEach((item) => listings.push(item.data()));
+      })
+      .then(() => {
+        console.log('listing data', listings);
+        setUserListings(listings);
+      })
+      .catch((error) => console.error(error));
+
+    const offerDocRef = collection(database, 'offer');
+    const offerQuery = query(offerDocRef, where('user', '==', TEST_USER_ID));
+    const offers = [];
+    getDocs(offerQuery)
+      .then((data) => {
+        data.forEach((item) => offers.push(item.data()));
+      })
+      .then(() => {
+        console.log('offer data', offers);
+        setIncomingOffers(offers);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -48,9 +95,10 @@ function Trades({ navigation }) {
               </Text>
               <FlatList
                 style={{ flex: 1 }}
-                data={TEST_DATA}
+                data={userListings}
                 ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <MiniListing listing={item} />}
+                // renderItem={({ item }) => <MiniListing listing={item} />}
+                renderItem={({ item }) => <Text>LISTING FOUND</Text>}
                 keyExtractor={(listing, index) => listing.id + index}
               />
             </>
@@ -64,9 +112,10 @@ function Trades({ navigation }) {
 
               <FlatList
                 style={{ flex: 1 }}
-                data={TEST_DATA[0].offers}
+                data={incomingOffers}
                 ListEmptyComponent={<Text>NO DATA</Text>}
                 renderItem={({ item }) => <MiniOffer offer={item} />}
+                // renderItem={({ item }) => <Text>OFFER FOUND</Text>}
                 keyExtractor={(item, index) => item.id + index}
               />
             </>

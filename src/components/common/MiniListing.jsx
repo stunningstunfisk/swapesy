@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
 
 const MiniListing = function CreateMiniListing({ listing }) {
   const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+
+  }, []);
 
   function handleTrashLongPress() {
     console.warn('deleting');
