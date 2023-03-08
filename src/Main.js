@@ -12,8 +12,6 @@ import UploadPage from './stack/UploadStack';
 import CreateListing from './stack/UploadStack';
 import UserProfilePage from './pages/UserProfile';
 
-import ListingInfo from './pages/ListingInfo/index.js';
-
 const Tab = createBottomTabNavigator();
 
 function Main({ user }) {
