@@ -89,15 +89,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
   },
-
 });
 
-function Offer({ offer, sellerId }) {
+function Offer({ offer, sellerId, currUserId }) {
   const {
     user, cards, type, price,
   } = offer;
 
   const [userObj, setUserObj] = useState(user);
+  const [extractedCards, setExtracted] = useState(user);
   const [show, setShow] = useState(false);
   const toggle = () => {
     setShow(!show);
@@ -105,16 +105,25 @@ function Offer({ offer, sellerId }) {
   };
 
   useEffect(() => {
+    // Get User
     const userRef = doc(db, `user/${user}`);
     const userQ = query(userRef);
     getDoc(userQ)
       .then((x) => setUserObj(x.data()))
       .catch((err) => console.error(err));
+
+    // Get Cards
+    if (cards) {
+      Promise.all(cards.map((cardData) => {
+        const cardRef = doc(db, `card/${cardData}`);
+        const cardQ = query(cardRef);
+        return getDoc(cardQ)
+          .then((da) => da.data())
+          .catch((err) => console.error(err));
+      }))
+        .then((x) => setExtracted(x));
+    }
   }, []);
-
-  console.log('uo', userObj);
-
-  const currUser = { id: '1' };
 
   return (
     <View style={styles.offer}>
@@ -146,15 +155,15 @@ function Offer({ offer, sellerId }) {
                 width: 220,
               }}
               horizontal
-              data={cards}
+              data={extractedCards}
               ListEmptyComponent={<Text>NO DATA</Text>}
               renderItem={({ item }) => (
-                <Image style={styles.miniCard} source={{ uri: item.image }} />
+                <Image style={styles.miniCard} source={{ uri: item.uri }} />
               )}
               keyExtractor={(item, index) => index}
             />
           ) : null}
-          {currUser.id === sellerId ? (
+          {currUserId === sellerId ? (
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Accept</Text>
             </TouchableOpacity>

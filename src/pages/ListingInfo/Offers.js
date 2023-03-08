@@ -101,7 +101,7 @@ const exampleOffers = [
   },
 ];
 
-function Offers({ offers, sellerId }) {
+function Offers({ offers, sellerId, currUserId }) {
   return (
     <View style={{
       backgroundColor: '#e9e7e4', flex: 1, alignItems: 'stretch', justifyContent: 'center', width: '100%',
@@ -115,6 +115,7 @@ function Offers({ offers, sellerId }) {
           <Offer
             sellerId={sellerId}
             offer={item}
+            currUserId={currUserId}
           />
         )}
         keyExtractor={(item, index) => index}

@@ -47,7 +47,7 @@ function ListingInfo({ userId, listingId }) {
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);
 
-  userId = 'AshKetchum';
+  // GET RID OF THIS AFTER DEV
   listingId = 'TEST';
 
   useEffect(() => {
@@ -92,7 +92,7 @@ function ListingInfo({ userId, listingId }) {
   return (
     <View style={styles.container}>
       <FancyCarousel cards={listingCards} seller={seller} />
-      <Offers offers={listingOffers} sellerId={userId} />
+      <Offers offers={listingOffers} sellerId={seller.id} currUserId={userId} />
     </View>
   );
 }
