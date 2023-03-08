@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
   navbarView: {
     flexDirection: 'row',
   },
+  fontVT323: {
+    fontFamily: 'VT323',
+    fontSize: 20,
+  },
 });
 
 function Trades({ navigation }) {
@@ -26,13 +30,13 @@ function Trades({ navigation }) {
           onPress={() => setCurrentView(0)}
           style={{ height: 48, backgroundColor: currentView === 0 ? 'green' : 'lightgrey' }}
         >
-          <Text>MY ACTIVE LISTINGS</Text>
+          <Text style={styles.fontVT323}>MY OPEN LISTINGS</Text>
         </PressableOpacity>
         <PressableOpacity
           onPress={() => setCurrentView(1)}
           style={{ height: 48, backgroundColor: currentView === 0 ? 'lightgrey' : 'green' }}
         >
-          <Text>OUTGOING OFFERS</Text>
+          <Text style={styles.fontVT323}>OUTGOING OFFERS</Text>
         </PressableOpacity>
       </View>
       <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
