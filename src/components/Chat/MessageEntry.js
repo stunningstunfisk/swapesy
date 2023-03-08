@@ -4,11 +4,25 @@ import { StyleSheet, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 
 const styles = StyleSheet.create({
+  item: {
+    width: window.width,
+  },
   toUser: {
     backgroundColor: '#C9C9C9',
+    maxWidth: 250,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
   },
   fromUser: {
+    // flexDirections: 'row-reverse',
+    // alignItemsArr: 'center',
+    // justifyContents: 'center',
+    maxWidth: 250,
     backgroundColor: '#72BEE9',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
   },
 });
 
@@ -18,9 +32,9 @@ function MessageEntry({ message, messageWith }) {
     <View>
       <ListItem
         key={message.created_at.seconds}
-        style={message.from === messageWith ? styles.toUser : styles.fromUser}
+        containerStyle={message.from === messageWith ? styles.toUser : styles.fromUser}
       >
-        <ListItem.Content>
+        <ListItem.Content containerStyle={{ width: 30 }}>
           <ListItem.Title>{message.text}</ListItem.Title>
           <ListItem.Subtitle>
             {new Date(message.created_at.seconds * 1000).toUTCString()}

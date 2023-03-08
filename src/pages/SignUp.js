@@ -44,6 +44,9 @@ function SignUp({ navigation }) {
   const [value, setValue] = useState({
     email: '',
     password: '',
+    name: '',
+    bio: '',
+    location: '',
     error: '',
   });
 
@@ -61,9 +64,11 @@ function SignUp({ navigation }) {
 
       // Create new user document
       await setDoc(doc(db, 'user', newUser.user.uid), {
-        bio: '',
-        name: newUser.user.email,
-        profile_picture: '',
+        email: newUser.user.email,
+        name: newUser.user.name,
+        bio: newUser.user.bio,
+        profile_picture: newUser.user.profile_picture,
+        location: newUser.user.location,
         reputation: 0,
       });
 
@@ -79,7 +84,7 @@ function SignUp({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Signup screen!</Text>
+      <Text>Signup screen</Text>
 
       {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
 
@@ -94,9 +99,22 @@ function SignUp({ navigation }) {
               name="envelope"
               size={16}
             />
-)}
+          )}
         />
 
+        <Input
+          placeholder="Username"
+          containerStyle={styles.control}
+          value={value.password}
+          onChangeText={(text) => setValue({ ...value, name: text })}
+          secureTextEntry
+          leftIcon={(
+            <Icon
+              name="key"
+              size={16}
+            />
+          )}
+        />
         <Input
           placeholder="Password"
           containerStyle={styles.control}
@@ -108,7 +126,33 @@ function SignUp({ navigation }) {
               name="key"
               size={16}
             />
-)}
+          )}
+        />
+        <Input
+          placeholder="About You"
+          containerStyle={styles.control}
+          value={value.password}
+          onChangeText={(text) => setValue({ ...value, bio: text })}
+          secureTextEntry
+          leftIcon={(
+            <Icon
+              name="key"
+              size={16}
+            />
+            )}
+        />
+        <Input
+          placeholder="Your Location"
+          containerStyle={styles.control}
+          value={value.password}
+          onChangeText={(text) => setValue({ ...value, location: text })}
+          secureTextEntry
+          leftIcon={(
+            <Icon
+              name="key"
+              size={16}
+            />
+          )}
         />
 
         <Button title="Sign Up" buttonStyle={styles.control} onPress={signUp} />
