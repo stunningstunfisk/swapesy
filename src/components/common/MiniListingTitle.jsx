@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 
 import {
   collection,
@@ -58,15 +59,20 @@ const MiniListingTitle = function CreateMiniListingTitle({ listing, offers }) {
 
   return (
     <View style={styles.listing}>
-      {cards.map((card) => (
-        <View style={styles.cardImageView}>
-          <Image
-            style={styles.cardImage}
-            key={card.id}
-            source={{ uri: card.uri }}
-          />
-        </View>
-      ))}
+      <View style={styles.cardImageView}>
+        <Carousel
+          autoplay
+          layout="stack"
+          data={cards}
+          renderItem={({ item }) => (
+            <View>
+              <Image style={styles.cardImage} source={{ uri: item.uri }} />
+            </View>
+          )}
+          sliderWidth={180}
+          itemWidth={80}
+        />
+      </View>
       <View>
         <Text>{listing.title}</Text>
         <Text>{`${offers.length} OFFERS`}</Text>
