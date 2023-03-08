@@ -1,7 +1,7 @@
 import { Camera, CameraType } from 'expo-camera';
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ImageBackground, Alert } from 'react-native';
-import CameraButton from '../components/upload_page/CameraButtons.js';
+import CameraButton from '../../components/upload_page/CameraButtons.js';
 import { useNavigation } from '@react-navigation/native';
 // import { fireStorage } from "../config/firebase";
 

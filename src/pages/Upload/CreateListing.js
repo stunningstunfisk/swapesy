@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Input, View, Text, TextInput, Pressable, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ModalView from '../components/common/modals/ModalView';
+import ModalView from '../../components/common/modals/ModalView';
 import ToggleSwitch from 'toggle-switch-react-native';
 import CurrencyInput from 'react-currency-input-field';
 
