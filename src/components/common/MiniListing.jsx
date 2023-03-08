@@ -63,6 +63,10 @@ const styles = StyleSheet.create({
 const MiniListing = function CreateMiniListing({ listing }) {
   const [expanded, setExpanded] = useState(false);
 
+  function handleTrashLongPress() {
+    console.warn('deleting');
+  }
+
   if (listing.offers.length > 0) {
     return (
       <>
@@ -91,7 +95,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
             <ListItem.Swipeable
               containerStyle={styles.container}
               leftContent={(reset) => (
-                <TrashButton onLongPress={() => reset()} />
+                <TrashButton onLongPress={() => { handleTrashLongPress(); reset(); }} />
               )}
               leftWidth={60}
               rightContent={(reset) => (
