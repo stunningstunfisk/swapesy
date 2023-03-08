@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  text: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 18,
+    marginBottom: '15%',
+  },
   container: {
     flex: 1,
     alignItems: 'center',

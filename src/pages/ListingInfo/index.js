@@ -44,6 +44,7 @@ function ListingInfo({ userId, listingId }) {
     profile_picture: 'https://freeyourmindexperience.com/wp-content/uploads/person-icon-person-icon-clipart-image-from-our-icon-clipart-category-9-500x500.png',
     reputation: 23,
   });
+  const [sellerId, setSellerId] = useState('1');
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);
 
@@ -56,6 +57,7 @@ function ListingInfo({ userId, listingId }) {
     getDoc(q)
       .then((data) => {
         const { cards, user } = data.data();
+        setSellerId(user);
 
         // Getting Cards
         Promise.all(cards.map((cardData) => {
@@ -92,7 +94,7 @@ function ListingInfo({ userId, listingId }) {
   return (
     <View style={styles.container}>
       <FancyCarousel cards={listingCards} seller={seller} />
-      <Offers offers={listingOffers} sellerId={seller.id} currUserId={userId} />
+      <Offers offers={listingOffers} sellerId={sellerId} currUserId={userId} />
     </View>
   );
 }
