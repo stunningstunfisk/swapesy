@@ -1,22 +1,15 @@
 import React from 'react';
 import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import { Avatar } from '@rneui/themed';
+import { Avatar, ListItem } from '@rneui/themed';
+
+import HorizontalDivider from './spacers/HorizontalDivider';
+import Offer from './Offer';
+import TrashButton from './buttons/TrashButton';
+import PressableOpacity from './buttons/PressableOpacity';
+
 
 
 const styles = StyleSheet.create({
-  cardImage: {
-    height: 35,
-    width: 25,
-    borderWidth: 1,
-    borderRadius: 2,
-  },
-  cardView: {
-    flexDirection: 'row',
-  },
-  profileImage: {
-    height: 40,
-    width: 40,
-  },
   offer: {
     borderWidth: 1,
     flex: 1,
@@ -26,24 +19,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const MiniOffer = ({ offer }) => {
+function MiniOffer({ offer }) {
   return (
-    <View style={styles.offer}>
-      <Avatar
-        rounded
-        source={offer.user_id.profile_picture}
-        style={styles.profileImage}
-      />
-      <View style={styles.cardView}>
-        {offer.cards.map((card) =>
-          <Image
-            style={styles.cardImage}
-            key={card.id}
-            source={card.url}
-          />
-        )}
+    <>
+      <View>
+        <Text>{offer.listing.title}</Text>
       </View>
-    </View>
+      <ListItem.Swipeable
+        containerStyle={styles.container}
+        leftContent={(reset) => (
+          <TrashButton onLongPress={() => reset()} />
+        )}
+        leftWidth={60}
+      >
+
+        {/* Offer List Item */}
+        <View style={styles.offer}>
+          <Text>TEST</Text>
+        </View>
+
+      </ListItem.Swipeable>
+      <HorizontalDivider />
+    </>
   );
 }
 

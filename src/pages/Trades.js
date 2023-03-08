@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import MiniListing from '../components/common/MiniListing';
+import MiniOffer from '../components/common/MiniOffer';
 import Offer from '../components/common/Offer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
@@ -61,7 +62,7 @@ function Trades({ navigation }) {
                 style={{ flex: 1 }}
                 data={TEST_DATA[0].offers}
                 ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <Offer offer={item} sellerId={2} />}
+                renderItem={({ item }) => <MiniOffer offer={item} />}
                 keyExtractor={(item, index) => item.id + index}
               />
             </>
