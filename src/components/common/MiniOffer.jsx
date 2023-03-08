@@ -59,7 +59,9 @@ const styles = StyleSheet.create({
     borderRadius: 500,
   },
   title: {
+    fontFamily: 'VT323',
     fontSize: 32,
+    width: '90%',
   },
   titleBar: {
     flexDirection: 'row',
@@ -69,8 +71,9 @@ const styles = StyleSheet.create({
 });
 
 function MiniOffer({ offer }) {
-  const [sellerPic, setSellerPic] = useState(ashImage);
+  const [listing, setListing] = useState({});
   const [offerCards, setOfferCards] = useState([]);
+  const [sellerPic, setSellerPic] = useState(ashImage);
 
   function handleUserPress() { }
   function handleListingPress() { }
@@ -81,22 +84,37 @@ function MiniOffer({ offer }) {
     const listingRef = doc(database, `listing/${offer.listing}`);
     const listingQuery = query(listingRef);
     getDoc(listingQuery)
-      .then((data) => {
-        const listing = data.data();
-        const userRef = doc(database, `user/${listing.user}`);
+      .then((listingData) => {
+        const foundListing = listingData.data();
+        const userRef = doc(database, `user/${foundListing.user}`);
         const userQuery = query(userRef);
         let foundUser = ashImage;
         getDoc(userQuery)
-          .then((data2) => {
-            foundUser = data2.data();
+          .then((userData) => {
+            foundUser = userData.data();
           })
           .then(() => {
-            console.log('seller is', foundUser);
             setSellerPic({ uri: foundUser.profile_picture });
+            setListing(foundListing);
           })
           .catch((error) => console.error(error));
       })
       .catch((error) => console.error(error));
+
+    // noSQL database allows for missing fields
+    if (offer.cards) {
+      Promise.all(offer.cards.map((cardId) => {
+        const cardRef = doc(database, `card/${cardId}`);
+        const cardQuery = query(cardRef);
+        return getDoc(cardQuery)
+          .then((data) => data.data())
+          .catch((err) => console.error(err));
+      }))
+        .then((cards) => {
+          console.log('cards are', cards);
+          setOfferCards(cards);
+        });
+    }
   }, []);
 
   return (
@@ -111,7 +129,7 @@ function MiniOffer({ offer }) {
             />
           </Pressable>
           <Pressable style={styles.titleBar} onPress={handleListingPress}>
-            <Text style={styles.title}>{offer.listing.title}</Text>
+            <Text style={styles.title}>{listing.title}</Text>
           </Pressable>
 
         </View>
@@ -125,16 +143,15 @@ function MiniOffer({ offer }) {
         >
 
           {/* Offer List Item */}
-          {/* <View style={styles.offer}>
+          <View style={styles.offer}>
             <View style={{ flexDirection: 'row' }}>
               {offerCards.map((card) => (
-                <Image style={styles.cardImage} source={{ uri: card.image }} />
+                <Image style={styles.cardImage} source={{ uri: card.uri }} />
               ))}
             </View>
           </View>
-          <FontAwesome style={styles.chevron} name="chevron-right" size={24} color="black" /> */}
-
-          <Text>CARD</Text>
+          <FontAwesome style={styles.chevron} name="chevron-right" size={24} color="black" />
+          {/* <Text>CARD PLACEHOLDER</Text> */}
 
         </ListItem.Swipeable>
 
