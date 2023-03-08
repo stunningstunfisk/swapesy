@@ -20,9 +20,6 @@ import firebase from '../../config/firebase';
 
 const { CARDS } = require('../../../dev/test_data/data_profile');
 
-// const cards = CARDS;
-// let cards;
-
 const db = getFirestore(firebase);
 const cardRef = collection(db, 'card');
 
@@ -52,7 +49,6 @@ function Item({ card }) {
         onPress={handleModal}
       >
         <Image source={{ uri: card.uri }} style={cardStyles.mainImg} />
-        {/* <Text */}
         {modalVisible && <ModalView />}
       </TouchableOpacity>
 

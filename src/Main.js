@@ -11,8 +11,6 @@ import TradesPage from './pages/Trades';
 import UploadPage from './stack/UploadStack';
 import UserProfilePage from './pages/UserProfile';
 
-import ListingInfo from './pages/ListingInfo/index.js';
-
 const Tab = createBottomTabNavigator();
 
 function Main({ user }) {
@@ -25,10 +23,9 @@ function Main({ user }) {
             {() => <ChatPage user={user} />}
           </Tab.Screen>
           <Tab.Screen name="Trades" component={TradesPage} />
-          {/* <Tab.Screen name="Upload" component={UploadPage} /> */}
           <Tab.Screen name="Upload">{() => <UploadPage user={user} />}</Tab.Screen>
           <Tab.Screen name="Profile">
-            {() => <UserProfilePage user={user} />}
+            {() => <UserProfilePage user={user} owner={user} />}
           </Tab.Screen>
         </>
       )}
