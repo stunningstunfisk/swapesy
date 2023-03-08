@@ -30,13 +30,21 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
+    zIndex: 100,
+  },
+  fontVT323: {
+    fontFamily: 'VT323',
+    fontSize: 20,
   },
   listing: {
     borderRadius: 8,
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
     padding: 4,
+    margin: 4,
+  },
+  titleView: {
+    width: '80%',
   },
 });
 
@@ -59,23 +67,26 @@ const MiniListingTitle = function CreateMiniListingTitle({ listing, offers }) {
 
   return (
     <View style={styles.listing}>
-      <View style={styles.cardImageView}>
+      <View>
         <Carousel
           autoplay
+          autoplayDelay={50}
+          autoplayInterval={500}
           layout="stack"
+          layoutCardOffset={12}
           data={cards}
           renderItem={({ item }) => (
-            <View>
-              <Image style={styles.cardImage} source={{ uri: item.uri }} />
+            <View style={styles.cardImageView}>
+              <Image style={[styles.cardImage]} source={{ uri: item.uri }} />
             </View>
           )}
-          sliderWidth={180}
-          itemWidth={80}
+          sliderWidth={styles.cardImage.width * 1.25}
+          itemWidth={styles.cardImage.width}
         />
       </View>
-      <View>
-        <Text>{listing.title}</Text>
-        <Text>{`${offers.length} OFFERS`}</Text>
+      <View style={styles.titleView}>
+        <Text style={[styles.fontVT323, { fontSize: 32 }]}>{listing.title}</Text>
+        <Text style={styles.fontVT323}>{`${offers.length} OFFERS`}</Text>
       </View>
     </View>
   );
