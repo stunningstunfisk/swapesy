@@ -39,8 +39,7 @@ function ListingInfo({ userId, listingId = 'TEST' }) {
 
         // Getting Cards
         Promise.all(cards.map((cardData) => {
-          const cardId = cardData;
-          const cardRef = doc(db, `card/${cardId}`);
+          const cardRef = doc(db, `card/${cardData}`);
           const cardQ = query(cardRef);
           return getDoc(cardQ)
             .then((da) => da.data())
