@@ -3,14 +3,14 @@ import StarRating from './StarRating';
 import CardInfo from './CardInfo';
 import UserCards from './UserCards';
 
-function ModalRoute({ handleModal, route }) {
+function ModalRoute({ handleModal, route, content }) {
   switch (route) {
     case 'StarRating':
-      return <StarRating handleModal={handleModal} />;
+      return <StarRating handleModal={handleModal} content={content} />;
     case 'UserCards':
-      return <UserCards handleModal={handleModal} />;
+      return <UserCards handleModal={handleModal} content={content} />;
     case 'CardInfo':
-      return <CardInfo handleModal={handleModal} />;
+      return <CardInfo handleModal={handleModal} content={content} />;
     default:
       return <h5>Undefined Path</h5>;
   }
