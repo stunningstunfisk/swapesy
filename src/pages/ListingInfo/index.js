@@ -18,26 +18,7 @@ import firebase from '../../config/firebase';
 
 const db = getFirestore(firebase);
 
-const exampleCards = [
-  {
-    name: 'Charizard',
-    uri: 'https://images.unsplash.com/photo-1470116892389-0de5d9770b2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80',
-  },
-  {
-    name: 'Charizard',
-    uri: 'https://images.unsplash.com/photo-1470116892389-0de5d9770b2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80',
-  },
-  {
-    name: 'Charizard',
-    uri: 'https://images.unsplash.com/photo-1470116892389-0de5d9770b2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80',
-  },
-  {
-    name: 'Charizard',
-    uri: 'https://images.unsplash.com/photo-1470116892389-0de5d9770b2c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80',
-  },
-];
-
-function ListingInfo({ userId, listingId }) {
+function ListingInfo({ userId, listingId = 'TEST' }) {
   const [seller, setSeller] = useState({
     name: 'Ash Catchum',
     id: '1',
@@ -47,9 +28,6 @@ function ListingInfo({ userId, listingId }) {
   const [sellerId, setSellerId] = useState('1');
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);
-
-  // GET RID OF THIS AFTER DEV
-  listingId = 'TEST';
 
   useEffect(() => {
     const ref = doc(db, `listing/${listingId}`);

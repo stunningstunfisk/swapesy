@@ -4,12 +4,9 @@ import {
 } from 'react-native';
 import {
   getFirestore,
-  collection,
   getDoc,
-  getDocs,
   query,
   doc,
-  where,
 } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
