@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
-const Welcome = ({navigation}) => {
+function Welcome({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text
-          style={{ fontSize: 26, fontWeight: 'bold' }}
+        style={{ fontSize: 26, fontWeight: 'bold' }}
       >
         Splash
       </Text>
@@ -22,4 +23,4 @@ const Welcome = ({navigation}) => {
   );
 }
 
-export default Welcome
+export default Welcome;

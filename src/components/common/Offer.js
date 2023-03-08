@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View, Text, Image, FlatList, TouchableOpacity, LayoutAnimation, StyleSheet,
-} from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 import {
   getFirestore,
   getDoc,
@@ -30,7 +28,7 @@ const styles = StyleSheet.create({
   details: {
     marginTop: '15%',
     flex: 1,
-    flexDirection: 'collumn',
+    flexDirection: 'column',
     alignItems: 'center',
     right: '11%',
   },
