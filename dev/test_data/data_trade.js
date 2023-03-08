@@ -10,7 +10,7 @@ const USER_DATA = {
   bio: 'I\'m having a major hat crisis',
 };
 
-const USER_DATA_FOR_OFFERJS ={
+const USER_DATA_FOR_OFFERJS = {
   id: 0,
   profile_picture: 'https://avatarfiles.alphacoders.com/175/thumb-175691.png',
   reputation: randomInteger(5),
@@ -26,17 +26,7 @@ const CARD_DATA = {
   url: stunfiskImage,
   image: 'https://assets.pokemon.com/assets/cms2/img/cards/web/SM8/SM8_EN_83.png',
   owner_of_card: USER_DATA,
-};
-
-const OFFER_DATA = {
-  id: 0,
-  type: 'trade',
-  cards: [CARD_DATA, CARD_DATA],
-  user_id: USER_DATA,
-  user: USER_DATA_FOR_OFFERJS,
-  completed: false,
-};
-
+}
 const TRADE_DATA = {
   id: 0,
   title: 'Most Amazing Card EVER!',
@@ -46,6 +36,16 @@ const TRADE_DATA = {
   completed: false,
   accepted_offer: null,
   rating: null,
+};
+
+const OFFER_DATA = {
+  id: 0,
+  type: 'trade',
+  cards: [CARD_DATA, CARD_DATA],
+  user_id: USER_DATA,
+  user: USER_DATA_FOR_OFFERJS,
+  completed: false,
+  listing: TRADE_DATA,
 };
 
 

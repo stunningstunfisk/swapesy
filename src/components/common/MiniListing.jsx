@@ -4,10 +4,10 @@ import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
 import HorizontalDivider from './spacers/HorizontalDivider';
-// import MiniOffer from './MiniOffer';
 import Offer from './Offer';
 import MiniListingTitle from './MiniListingTitle';
 import PressableOpacity from './buttons/PressableOpacity';
+import TrashButton from './buttons/TrashButton';
 
 
 const styles = StyleSheet.create({
@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 4,
     margin: 1,
+  },
+  chevronRight: {
+    right: 4,
+    position: 'absolute',
+    zIndex: 10,
+    margin: 4,
   },
   container: {
     backgroundColor: 'white',
@@ -57,6 +63,10 @@ const styles = StyleSheet.create({
 const MiniListing = function CreateMiniListing({ listing }) {
   const [expanded, setExpanded] = useState(false);
 
+  function handleTrashLongPress() {
+    console.warn('deleting');
+  }
+
   if (listing.offers.length > 0) {
     return (
       <>
@@ -85,14 +95,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
             <ListItem.Swipeable
               containerStyle={styles.container}
               leftContent={(reset) => (
-                <View style={styles.buttonView}>
-                  <PressableOpacity
-                    onLongPress={() => reset()}
-                    style={[styles.button, { backgroundColor: 'red', width: 48 }]}
-                  >
-                    <FontAwesome name="trash-o" size={48} color="black" />
-                  </PressableOpacity>
-                </View>
+                <TrashButton onLongPress={() => { handleTrashLongPress(); reset(); }} />
               )}
               leftWidth={60}
               rightContent={(reset) => (
@@ -115,9 +118,11 @@ const MiniListing = function CreateMiniListing({ listing }) {
 
               {/* Offer List Item */}
               <View style={styles.offer}>
-                <FontAwesome style={{ margin: 12 }} name="chevron-left" size={24} color="black" />
                 <Offer offer={offer} sellerId={1} />
-                <FontAwesome style={{ margin: 12 }} name="chevron-right" size={24} color="black" />
+                <View style={styles.chevronRight}>
+                  <FontAwesome name="chevron-left" size={24} color="black" />
+                  <FontAwesome name="chevron-right" size={24} color="black" />
+                </View>
               </View>
 
             </ListItem.Swipeable>

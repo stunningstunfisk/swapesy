@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
+import {
+  getFirestore,
+  getDoc,
+  query,
+  doc,
+} from 'firebase/firestore';
+import firebase from '../../config/firebase';
+
+const db = getFirestore(firebase);
 
 const styles = StyleSheet.create({
   button: {
@@ -55,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#a6502c',
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
-    width: '50%',
+    width: '100%',
     height: '70%',
     top: '10%',
     right: '5%',
@@ -75,34 +84,52 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
   },
-  hidden: {
-    height: 0,
-  },
 });
 
-function Offer({ offer, sellerId }) {
+function Offer({ offer, sellerId, currUserId }) {
   const {
     user, cards, type, price,
   } = offer;
 
+  const [userObj, setUserObj] = useState(user);
+  const [extractedCards, setExtracted] = useState(user);
   const [show, setShow] = useState(false);
   const toggle = () => {
     setShow(!show);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
-  const currUser = { id: '1' };
+  useEffect(() => {
+    // Get User
+    const userRef = doc(db, `user/${user}`);
+    const userQ = query(userRef);
+    getDoc(userQ)
+      .then((x) => setUserObj(x.data()))
+      .catch((err) => console.error(err));
+
+    // Get Cards
+    if (cards) {
+      Promise.all(cards.map((cardData) => {
+        const cardRef = doc(db, `card/${cardData}`);
+        const cardQ = query(cardRef);
+        return getDoc(cardQ)
+          .then((da) => da.data())
+          .catch((err) => console.error(err));
+      }))
+        .then((x) => setExtracted(x));
+    }
+  }, []);
 
   return (
     <View style={styles.offer}>
       <View style={styles.offerCard}>
-        <Image style={styles.smallPfp} source={{ uri: user.profile_picture }} />
+        <Image style={styles.smallPfp} source={{ uri: userObj.profile_picture }} />
         <TouchableOpacity style={styles.offerDetails} onPress={toggle}>
           <Text style={styles.offerText}>
-            {user.name}
+            {userObj.name}
             {' \n'}
             {' '}
-            {user.rep || '0'}
+            {userObj.rep || '0'}
             {' '}
             PokeStars
             {' '}
@@ -123,15 +150,15 @@ function Offer({ offer, sellerId }) {
                 width: 220,
               }}
               horizontal
-              data={cards}
+              data={extractedCards}
               ListEmptyComponent={<Text>NO DATA</Text>}
               renderItem={({ item }) => (
-                <Image style={styles.miniCard} source={{ uri: item.image }} />
+                <Image style={styles.miniCard} source={{ uri: item.uri }} />
               )}
               keyExtractor={(item, index) => index}
             />
           ) : null}
-          {currUser.id === sellerId ? (
+          {currUserId === sellerId ? (
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Accept</Text>
             </TouchableOpacity>
