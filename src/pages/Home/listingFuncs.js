@@ -73,7 +73,11 @@ export default {
         const userRef = doc(db, `user/${listing.user === 'id' ? 'AshKetchum' : listing.user}`);
         const userQ = query(userRef);
         return getDoc(userQ)
-          .then((x) => { listing.reputation = x.data().reputation; return listing; })
+          .then((x) => {
+            const copy = { ...listing };
+            copy.reputation = x.data().reputation;
+            return copy;
+          })
           .catch((err) => console.error(err));
       })))
       .then((data) => {
