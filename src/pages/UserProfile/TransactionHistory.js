@@ -1,10 +1,24 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import {
-  View, Text, FlatList, TouchableOpacity,
-} from 'react-native';
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+  limit,
+  orderBy,
+} from 'firebase/firestore';
 import TransactionInfo from './TransactionInfo';
 import styles from '../../../styles/userProfile/userProfile';
+import firebase from '../../config/firebase';
+
+const db = getFirestore(firebase);
+const listingRef = collection(db, 'listing');
+const offerRef = collection(db, 'offer');
 
 const getTransactions = (userId) => {
   // for the current user
@@ -15,18 +29,31 @@ const getTransactions = (userId) => {
   // the info that was written out in listings
 };
 
-function Item({ item }) {
+function Item({ item, owner }) {
   return (
-    <TransactionInfo transaction={item} />
+    <TransactionInfo transaction={item} owner={owner} />
   );
 }
 
-function TransactionHistory({ userId }) {
+function TransactionHistory({ owner }) {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    const pastTransactions = getTransactions();
-    setTransactions(pastTransactions);
+    console.log('Transactions');
+    const listings = [];
+    const setFetched = async (transactionsData) => {
+      setTransactions(transactionsData);
+    };
+    const q = query(listingRef, where('user', '==', owner.uid), where('completed', '==', true)); // add a limit ?
+    const fetchTransactions = async () => {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => {
+        listings.push(doc.data());
+        console.log('listings ', listings);
+        await setFetched(listings);
+      });
+    };
+    fetchTransactions();
   }, []);
 
   return (
@@ -34,8 +61,10 @@ function TransactionHistory({ userId }) {
       {transactions ? (
         <FlatList
           data={transactions}
-          renderItem={({ item }) => <Item item={item} />}
+          renderItem={({ item }) => <Item item={item} owner={owner} />}
           keyExtreactor={(item) => item.id}
+          style={styles.transactions}
+          contentContainerStyle={{ marginTop: 10, paddingBottom: 50 }}
         />
       ) : (
         <Text style={styles.noData}>
