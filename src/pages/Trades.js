@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+// TODO: all this is a utility file worthy extract
 import {
   collection,
   doc,
@@ -21,11 +22,8 @@ import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
 
 // TODO: Remove hardcoded magic strings and test data!!
-import LOCAL_TEST_DATA from '../../dev/test_data/data_trade';
 const TEST_USER_ID = 'AshKetchum';
 
-
-console.log('TEST DATA BEING USED');
 
 const styles = StyleSheet.create({
   navbarView: {
@@ -39,33 +37,36 @@ const styles = StyleSheet.create({
 
 function Trades({ navigation, user }) {
   const [currentView, setCurrentView] = useState(0);
+  const [myOffers, setMyOffers] = useState([]);
   const [userListings, setUserListings] = useState([]);
-  const [incomingOffers, setIncomingOffers] = useState([]);
+
+
+  user = TEST_USER_ID; // TODO: REMOVE HARDCODED TEST DATA
+
 
   useEffect(() => {
     const listingDocRef = collection(database, 'listing');
-    const listingQuery = query(listingDocRef, where('user', '==', TEST_USER_ID)); // TODO: REMOVE HARDCODED TEST DATA
+    const listingQuery = query(listingDocRef, where('user', '==', user));
     const listings = [];
     getDocs(listingQuery)
       .then((data) => {
+        console.log('listing data', data);
         data.forEach((item) => listings.push(item.data()));
       })
       .then(() => {
-        console.log('listing data', listings);
         setUserListings(listings);
       })
       .catch((error) => console.error(error));
 
     const offerDocRef = collection(database, 'offer');
-    const offerQuery = query(offerDocRef, where('user', '==', TEST_USER_ID));
+    const offerQuery = query(offerDocRef, where('user', '==', user));
     const offers = [];
     getDocs(offerQuery)
       .then((data) => {
         data.forEach((item) => offers.push(item.data()));
       })
       .then(() => {
-        console.log('offer data', offers);
-        setIncomingOffers(offers);
+        setMyOffers(offers);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -97,8 +98,7 @@ function Trades({ navigation, user }) {
                 style={{ flex: 1 }}
                 data={userListings}
                 ListEmptyComponent={<Text>NO DATA</Text>}
-                // renderItem={({ item }) => <MiniListing listing={item} />}
-                renderItem={({ item }) => <Text>LISTING FOUND</Text>}
+                renderItem={({ item }) => <MiniListing listing={item} user={user} />}
                 keyExtractor={(listing, index) => listing.id + index}
               />
             </>
@@ -112,9 +112,9 @@ function Trades({ navigation, user }) {
 
               <FlatList
                 style={{ flex: 1 }}
-                data={incomingOffers}
+                data={myOffers}
                 ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <MiniOffer offer={item} />}
+                renderItem={({ item }) => <MiniOffer user={user} offer={item} />}
                 // renderItem={({ item }) => <Text>OFFER FOUND</Text>}
                 keyExtractor={(item, index) => item.id + index}
               />

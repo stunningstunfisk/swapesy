@@ -3,6 +3,19 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
+import {
+  collection,
+  doc,
+  docs,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
+import firebase from '../../config/firebase';
+const database = getFirestore(firebase);
+
 import HorizontalDivider from './spacers/HorizontalDivider';
 import Offer from './Offer';
 import MiniListingTitle from './MiniListingTitle';
@@ -60,25 +73,35 @@ const styles = StyleSheet.create({
   },
 });
 
-const MiniListing = function CreateMiniListing({ listing }) {
+const MiniListing = function CreateMiniListing({ listing, user }) {
   const [expanded, setExpanded] = useState(false);
+  const [incomingOffers, setIncomingOffers] = useState([]);
 
   useEffect(() => {
+    console.log('listing offers are', listing.offers);
 
+    Promise.all(listing.offers.map((offerId) => {
+      const offerRef = doc(database, `offer/${offerId}`);
+      const offerQuery = query(offerRef);
+      return getDoc(offerQuery)
+        .then((da) => da.data())
+        .catch((err) => console.error(err));
+    }))
+      .then((offers) => setIncomingOffers(offers));
   }, []);
 
   function handleTrashLongPress() {
     console.warn('deleting');
   }
 
-  if (listing.offers.length > 0) {
+  if (incomingOffers.length > 0) {
     return (
       <>
         <ListItem.Accordion
           containerStyle={[styles.container, styles.shadow, { width: '100%' }]}
           content={
             // LIST TITLE AREA
-            <MiniListingTitle listing={listing} />
+            <MiniListingTitle listing={listing} offers={incomingOffers} />
           }
           icon={<FontAwesome style={{ margin: 12 }} name="chevron-down" size={24} color="black" />}
           isExpanded={expanded}
@@ -95,7 +118,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
             </View>
           </PressableOpacity>
 
-          {listing.offers.map((offer) => (
+          {incomingOffers.map((offer) => (
             <ListItem.Swipeable
               containerStyle={styles.container}
               leftContent={(reset) => (
@@ -122,7 +145,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
 
               {/* Offer List Item */}
               <View style={styles.offer}>
-                <Offer offer={offer} sellerId={1} />
+                <Offer currUserId={user} offer={offer} sellerId={1} />
                 <View style={styles.chevronRight}>
                   <FontAwesome name="chevron-left" size={24} color="black" />
                   <FontAwesome name="chevron-right" size={24} color="black" />
@@ -141,7 +164,7 @@ const MiniListing = function CreateMiniListing({ listing }) {
   return (
     <>
       <View style={[styles.container, { margin: 6 }]}>
-        <MiniListingTitle listing={listing} />
+        <MiniListingTitle listing={listing} offers={incomingOffers} />
       </View>
       <HorizontalDivider />
     </>
