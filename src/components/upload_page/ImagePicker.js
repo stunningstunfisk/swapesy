@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Image, View, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-function ImagePickerComponent() {
+function ImagePickerComponent({ setUri }) {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
@@ -10,21 +10,20 @@ function ImagePickerComponent() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [5, 3],
       quality: 1,
     });
 
-    console.log(result);
+    console.log('result: ', result);
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
+    setUri(result.assets[0].uri);
+    setImage(result.assets[0].uri);
   };
-  //  style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+
   return (
     <View>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 300 }} />}
     </View>
   );
 }
