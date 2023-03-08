@@ -15,7 +15,12 @@ import {
 const screenHeight = Dimensions.get('screen').height;
 const modalHeight = screenHeight / 2;
 
-export default function ModalView({ modalVisible, handleModal, children }) {
+export default function ModalView({
+  modalVisible,
+  handleModal,
+  children,
+  pictureView = false,
+}) {
   const pan = useRef(new Animated.ValueXY()).current;
 
   const panResponder = PanResponder.create({
@@ -47,8 +52,8 @@ export default function ModalView({ modalVisible, handleModal, children }) {
     >
       <Animated.View
         style={{
-          height: '100%',
-          marginTop: screenHeight / 2,
+          height: pictureView ? '100%' : '50%',
+          marginTop: screenHeight / (pictureView ? 2 : 5),
           transform: [{ translateY: pan.y }],
         }}
         {...panResponder.panHandlers}
@@ -59,7 +64,7 @@ export default function ModalView({ modalVisible, handleModal, children }) {
             backgroundColor: 'grey',
             alignItems: 'center',
             padding: 35,
-            borderRadius: 20,
+            borderRadius: 5,
           }}
         >
           <Text>Hello World!</Text>
