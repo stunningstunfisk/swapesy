@@ -1,6 +1,9 @@
 import React from 'react';
 import {
-  Dimensions, View, Image, Text,
+  Dimensions,
+  View,
+  Image,
+  Text,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
