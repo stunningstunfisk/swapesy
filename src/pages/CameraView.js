@@ -2,17 +2,21 @@ import { Camera, CameraType } from 'expo-camera';
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ImageBackground, Alert } from 'react-native';
 import CameraButton from '../components/upload_page/CameraButtons.js';
+import { useNavigation } from '@react-navigation/native';
 // import { fireStorage } from "../config/firebase";
 
 // import firebase from '../config/firebase';
 // import { getFirestore, doc, setDoc } from "firebase/firestore";
 // const db = getFirestore(firebase);
 
-function CameraView({ navigation }) {
+function CameraView({ user, state }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [showCamera, setShowCamera] = useState(true);
-  const [uri, setUri] = useState(null);
+  const [image, setImage] = useState(null);
   const cameraRef = useRef(null);
+  const navigation = useNavigation();
+
+  const setUri = state.route.params.setUri;
 
   useEffect(() => {
     (async () => {
@@ -33,7 +37,7 @@ function CameraView({ navigation }) {
       try {
         const photo = await cameraRef.current.takePictureAsync({
           allowsEditing: true,
-          aspect: [4, 3],
+          aspect: [5, 3],
           quality: 1,
         });
         return photo;
@@ -42,37 +46,6 @@ function CameraView({ navigation }) {
       }
     }
   };
-
-  // async function uploadImageAsync(uri) {
-  //   const blob = await new Promise((resolve, reject) => {
-  //     const xhr = new XMLHttpRequest();
-  //     xhr.onload = function () {
-  //       resolve(xhr.response);
-  //     };
-  //     xhr.onerror = function (e) {
-  //       console.log(e);
-  //       reject(new TypeError("Network request failed"));
-  //     };
-  //     xhr.responseType = "blob";
-  //     xhr.open("GET", uri, true);
-  //     xhr.send(null);
-  //   });
-
-  //   const ref = fireStorage.ref().child(new Date().toISOString());
-  //   const snapshot = await ref.put(blob);
-  //   blob.close();
-  // }
-
-  // {previewVisible ? (
-  //   <ImageBackground source={{ uri: capturedImage && capturedImage.uri }} style={{ flex: 1 }}>
-  //     <View style={styles.preview}>
-  //       <TouchableOpacity onPress={() => setPreviewVisible(false)}>
-  //         <CameraButton title="Re-take" icon="retweet" />
-  //         {/* <CameraButton title="Save" icon="check" /> */}
-  //       </TouchableOpacity>
-  //     </View>
-  //   </ImageBackground>
-  // ) : (
 
   return (
     <View style={{ flex: 1 }}>
@@ -83,6 +56,7 @@ function CameraView({ navigation }) {
               onPress={async () => {
                 const r = await takePicture();
                 if (!r.cancelled) {
+                  setImage(r.uri);
                   setUri(r.uri);
                 }
                 // Alert.alert('DEBUG', JSON.stringify(r));
@@ -91,40 +65,32 @@ function CameraView({ navigation }) {
             >
               <Text style={styles.text}>Take a Picture</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}
-              onPress={async () => {
-                navigation.navigate('UploadHome');
-              }}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={async () => { navigation.navigate('UploadHome'); }}
             >
               <Text style={styles.text}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </Camera>
       ) : (
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, width: '100%', height: '100%', alignItems: 'center' }}>
-            {uri && (
-              <Image
-                source={{ uri: uri }}
-                style={{ width: '100%', height: '100%', backgroundColor: 'blue' }}
-                // style={{ width: 200, height: 200, backgroundColor: 'blue' }}
-              />
-            )}
-          </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+        <View style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <ImageBackground
+            source={{ uri: image }}
+            style={{ flex: 1 }}
           >
-            <TouchableOpacity style={styles.button} onPress={() => setShowCamera(true)}>
-              <Text style={styles.button}>Re-take</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => setShowCamera(true)}>
-              <Text style={styles.button}>Done</Text>
-            </TouchableOpacity>
-          </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={() => setShowCamera(true)}>
+                <Text style={styles.text}>Re-take</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={async () => { navigation.navigate('UploadHome'); }}
+              >
+                <Text style={styles.text}>Done</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
         </View>
       )}
     </View>
@@ -144,13 +110,28 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: 'transparent',
     margin: 64,
   },
   button: {
-    flex: 1,
+    // flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    position: 'relative',
     alignSelf: 'flex-end',
     alignItems: 'center',
+    // zIndex: 10,
+    // backgroundColor: 'blue',
+  },
+  reTakeButton: {
+    margin: 5,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 25,
+    height: 25,
+    color: "tomato",
   },
   text: {
     fontSize: 20,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../../../styles/upload.js';
+import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -21,7 +21,7 @@ function DropdownComponent({ data }) {
       placeholder="Condition"
       searchPlaceholder="Search..."
       value={value}
-      onChange={item => {
+      onChange={(item) => {
         setValue(item);
       }}
       renderLeftIcon={() => (
@@ -32,3 +32,30 @@ function DropdownComponent({ data }) {
 }
 
 export default DropdownComponent;
+
+const styles = StyleSheet.create({
+  dropdown: {
+    margin: 16,
+    height: 50,
+    width: 200,
+    borderBottomColor: 'gray',
+    borderBottomWidth: 0.5,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+});
