@@ -50,7 +50,7 @@ const filterFuncs = {
 };
 
 export default {
-  getRecentListings: (set, filter, filterVal) => {
+  recent: (set, filter, filterVal) => {
     const ref = collection(db, 'listing');
     const q = query(ref, orderBy('timestamp'), where('completed', '==', false));
     const extracted = [];
@@ -61,7 +61,7 @@ export default {
       .then(() => (filter ? filterFuncs[filter](extracted, filterVal, set) : set(extracted)))
       .catch((err) => console.error(err));
   },
-  getReputableListings: (set, filter, filterVal) => {
+  reputable: (set, filter, filterVal) => {
     const ref = collection(db, 'listing');
     const q = query(ref, where('completed', '==', false));
     let extracted = [];

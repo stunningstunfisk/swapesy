@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 
 import AllListings from '../UserProfile/CurrentListings';
-import listingFuncs from './listingFuncs.js';
+import Options from './Options';
+import listingFuncs from './listingFuncs';
 
-const { getRecentListings, getReputableListings } = listingFuncs;
+const sorts = listingFuncs;
 
 function Home({ navigation }) {
   const [listings, setListings] = useState(undefined);
+  const [sort, setSort] = useState('recent');
+  const [filter, setFilter] = useState([undefined, undefined]);
 
-  useEffect(() => { getReputableListings(setListings); }, []);
+  useEffect(() => { sorts[sort](setListings, filter[0], filter[1]); }, [sort, filter]);
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1 }}>
+      <Options setSort={setSort} setFilter={setFilter} />
       <AllListings listings={listings} />
     </View>
   );
