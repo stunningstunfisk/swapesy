@@ -1,13 +1,13 @@
 // /* eslint-disable */
 import React, { useState } from 'react';
 import { StyleSheet, Image, View, Text, Pressable, TextInput, Button } from 'react-native';
-import DropdownComponent from '../components/common/Dropdown.js';
-import ImagePickerComponent from '../components/upload_page/ImagePicker.js';
+import DropdownComponent from '../../components/common/Dropdown.js';
+import ImagePickerComponent from '../../components/upload_page/ImagePicker.js';
 import CameraView from './CameraView.js';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-function UploadHome({ user }) {
+function UploadCard({ user }) {
   const [name, onChangeName] = useState('');
   const navigation = useNavigation();
   const [uri, setUri] = useState(null);
@@ -31,7 +31,7 @@ function UploadHome({ user }) {
 
       <TextInput
         style={styles.input}
-        placeholder='Card Name...'
+        placeholder="Card Name..."
         onChangeText={onChangeName}
         value={name}
       />
@@ -42,7 +42,8 @@ function UploadHome({ user }) {
       <View>
         <Image
           style={styles.displayImage}
-          source={{ uri: uri }}/>
+          source={{ uri: uri }}
+        />
       </View>
       ) : (
       <View style={styles.imageBox}>
@@ -55,12 +56,16 @@ function UploadHome({ user }) {
       </View>
       )}
 
-      <Button title='Upload' onPress={() => setUri(null)} />
+      <Button title="Upload" onPress={() => setUri(null)} />
+      <Button
+        title="Create listing"
+        onPress={() => navigation.navigate('CreateListing')}
+      />
     </View>
   );
 }
 
-export default UploadHome;
+export default UploadCard;
 
 const styles = StyleSheet.create({
   imageBox: {
