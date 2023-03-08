@@ -24,6 +24,7 @@ export default function App() {
   return (
     <ThemeProvider>
       {user ? <Main user={user} /> : <AuthStack />}
+      {user ? <Main user={user} /> : <AuthStack />}
       {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
       {/* <Main /> */}
     </ThemeProvider>

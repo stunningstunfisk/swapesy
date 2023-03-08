@@ -24,7 +24,9 @@ function Main({ user }) {
           <Tab.Screen name="Upload">
             {() => <UploadStack user={user} />}
           </Tab.Screen>
-          <Tab.Screen name="Profile" component={UserProfilePage} />
+          <Tab.Screen name="Profile">
+            {() => <UserProfilePage user={user} owner={user} />}
+          </Tab.Screen>
         </>
       }
     />
