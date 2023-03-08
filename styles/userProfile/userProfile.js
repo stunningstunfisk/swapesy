@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const width = Dimensions.get('window').width - 10;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -64,18 +66,46 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
   },
-  transactionWrapper: {
-    flex: 1,
-    paddingTop: 5,
-    flexDirection: 'row',
-  },
-  transaction: {
+  transactions: {
+    gap: 10,
+    // flex: 1,
+    flexDirection: 'column',
     fontSize: 15,
     padding: 2,
+  },
+  transactionWrapper: {
+    flex: 1,
+    width: width,
+    flexDirection: 'row',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 8,
-    paddingTop: 20,
+    padding: 5,
+    gap: 5,
+    alignItems: 'center',
+  },
+  transaction: {
+    gap: 10,
+    fontSize: 15,
+    padding: 5,
+  },
+  transactionPrice: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    padding: 5,
+    color: 'blue',
+  },
+  transactionTitle: {
+    flex: 1,
+    fontSize: 18,
+    padding: 5,
+    fontWeight: 'bold',
+  },
+  transactionCounterparty: {
+    fontSize: 18,
+    padding: 5,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
   },
 });
 
