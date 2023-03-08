@@ -9,6 +9,7 @@ import HomePage from './pages/Home';
 import ChatPage from './stack/ChatStack';
 import TradesPage from './pages/Trades';
 import UploadPage from './stack/UploadStack';
+import CreateListing from './stack/UploadStack';
 import UserProfilePage from './pages/UserProfile';
 
 import ListingInfo from './pages/ListingInfo/index.js';
@@ -25,8 +26,8 @@ function Main({ user }) {
             {() => <ChatPage user={user} />}
           </Tab.Screen>
           <Tab.Screen name="Trades" component={TradesPage} />
-          {/* <Tab.Screen name="Upload" component={UploadPage} /> */}
-          <Tab.Screen name="Upload">{() => <UploadPage user={user} />}</Tab.Screen>
+          {/* <Tab.Screen name="Upload">{() => <UploadPage user={user} />}</Tab.Screen> */}
+          <Tab.Screen name="Upload">{() => <CreateListing user={user} />}</Tab.Screen>
           <Tab.Screen name="Profile" component={UserProfilePage} />
         </>
       )}
