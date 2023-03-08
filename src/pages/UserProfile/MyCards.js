@@ -1,22 +1,33 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import {
-  View, Text, FlatList, Image, TouchableOpacity,
-} from 'react-native';
-import { SpeedDial } from '@rneui/themed';
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+  limit,
+  orderBy,
+} from 'firebase/firestore';
 import styles from '../../../styles/userProfile/userProfile';
 import cardStyles from '../../../styles/userProfile/inventoryCard';
-import Placeholder from '../../../dev/test_data/stunfisk.png';
+import placeholder from '../../../dev/test_data/stunfisk.png';
 import ModalView from '../../components/common/modals/ModalView';
+import firebase from '../../config/firebase';
 
 const { CARDS } = require('../../../dev/test_data/data_profile');
 
-const cards = CARDS;
+// const cards = CARDS;
 // let cards;
 
-function Item({ name, card }) {
+const db = getFirestore(firebase);
+const cardRef = collection(db, 'card');
+
+function Item({ card }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [speedDialVisible, setSpeedDialVisible] = useState(false);
 
   const handleModal = () => {
     console.log('Pressed');
@@ -38,42 +49,41 @@ function Item({ name, card }) {
   return (
     <View style={cardStyles.wrapper}>
       <TouchableOpacity
-
         onPress={handleModal}
-        onLongPress={handleLongPress}
       >
-        <Image source={card.url} style={cardStyles.mainImg} />
-        {/* <SpeedDial
-          isOpen={speedDialVisible}
-          icon={{ name: 'edit', color: 'grey' }}
-          openIcon={{ name: 'close', color: 'grey' }}
-          onOpen={() => setSpeedDialVisible(!speedDialVisible)}
-          onClose={() => setSpeedDialVisible(!speedDialVisible)}
-        >
-          <SpeedDial.Action
-            icon={{ name: 'edit', color: 'grey' }}
-            title="Edit"
-            onPress={handleEdit}
-          />
-          <SpeedDial.Action
-            icon={{ name: 'delete', color: 'grey' }}
-            title="Delete"
-            onPress={handleDelete}
-          />
-        </SpeedDial> */}
+        <Image source={{ uri: card.uri }} style={cardStyles.mainImg} />
+        {/* <Text */}
         {modalVisible && <ModalView />}
       </TouchableOpacity>
 
     </View>
   );
 }
-function MyCards() { // cards prop will go here
+function MyCards({ owner }) { // cards prop will go here
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    const fetched = [];
+    const setFetched = async (cardsData) => {
+      setCards(cardsData);
+    };
+    const q = query(cardRef, where('user', '==', owner.uid));
+    const fetchCards = async () => {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => {
+        fetched.push(doc.data());
+        await setFetched(fetched);
+      });
+    };
+    fetchCards();
+  }, []);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {cards ? (
         <FlatList
           data={cards}
-          renderItem={({ item }) => <Item name={item.name} card={item} />}
+          renderItem={({ item }) => <Item card={item} />}
           numColumns={4}
           columnWrapperStyle={{
             justifyContent: 'flex-start',
@@ -84,7 +94,7 @@ function MyCards() { // cards prop will go here
         />
       ) : (
         <>
-          <Image source={Placeholder} style={{ height: 70, width: 70 }} />
+          <Image source={placeholder} style={{ height: 70, width: 70 }} />
           <Text style={styles.noData}>Woops! There are no cards</Text>
         </>
       )}
