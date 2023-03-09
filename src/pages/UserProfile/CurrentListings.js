@@ -64,7 +64,7 @@ function CurrentListings({ owner }) { // listings props will be passed down
           // contentContainerStyle={{marginTop: 10, paddingBottom: 50}}
           showsVerticalScrollIndicator={false}
           data={listings}
-          renderItem={({ item }) => <Item listing={item} user={owner}/>}
+          renderItem={({ item }) => <Item listing={item} user={owner} />}
           keyExtreactor={(item) => item.id}
           numColumns={2}
         />
