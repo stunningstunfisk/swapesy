@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import colors from '../../styles/globalColors';
+
 const Tab = createBottomTabNavigator();
 
 function Navbar({ pages }) {
@@ -12,7 +14,10 @@ function Navbar({ pages }) {
         initialRouteName="Home"
         screenOptions={
           ({ route }) => ({
-            tabBarActiveTintColor: '#7d311d',
+            headerStyle: {
+              backgroundColor: colors.background,
+            },
+            tabBarActiveTintColor: colors.primary,
             tabBarInactiveTintColor: 'grey',
             tabBarLabelStyle: {
               paddingBottom: 3,
@@ -20,8 +25,9 @@ function Navbar({ pages }) {
             },
             tabBarStyle: [
               {
+                backgroundColor: colors.darkBackground,
                 display: 'flex',
-                backgroundColor: '#e9e7e4',
+                height: 64,
               },
               null,
             ],
