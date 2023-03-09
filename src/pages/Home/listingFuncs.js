@@ -63,7 +63,7 @@ export default {
       .then((x) => x.forEach((y) => {
         extracted.push(y.data());
       }))
-      .then(() => (filter[0] ? filterFuncs[filter[0]](extracted, args, set) : set(extracted)))
+      .then(() => (filter ? filterFuncs[filter](extracted, args, set) : set(extracted)))
       .catch((err) => console.error('ERROR:', err));
   },
   reputable: (set, filter) => {
@@ -93,7 +93,7 @@ export default {
       .then((data) => {
         extracted = data.sort((a, b) => a.reputation + b.reputation);
       })
-      .then(() => (filter[0] ? filterFuncs[filter[0]](extracted, args, set) : set(extracted)))
+      .then(() => (filter ? filterFuncs[filter[0]](extracted, args, set) : set(extracted)))
       .catch((err) => console.error('ERROR:', err));
   },
 };
