@@ -27,6 +27,10 @@ const TEST_USER_ID = 'AshKetchum';
 
 
 const styles = StyleSheet.create({
+  button: {
+    height: 48,
+    margin: 4,
+  },
   navbarView: {
     flexDirection: 'row',
   },
@@ -82,13 +86,13 @@ function Trades({ navigation, user }) {
       <View style={styles.navbarView}>
         <PressableOpacity
           onPress={() => setCurrentView(0)}
-          style={{ height: 48, backgroundColor: currentView === 0 ? colors.primary : 'lightgrey' }}
+          style={[styles.button, { backgroundColor: currentView === 0 ? colors.primary : 'lightgrey' }]}
         >
           <Text style={styles.fontVT323}>MY OPEN LISTINGS</Text>
         </PressableOpacity>
         <PressableOpacity
           onPress={() => setCurrentView(1)}
-          style={{ height: 48, backgroundColor: currentView === 0 ? 'lightgrey' : colors.primary }}
+          style={[styles.button, { backgroundColor: currentView === 0 ? 'lightgrey' : colors.primary }]}
         >
           <Text style={styles.fontVT323}>OUTGOING OFFERS</Text>
         </PressableOpacity>

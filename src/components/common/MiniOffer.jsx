@@ -24,6 +24,10 @@ import TrashButton from './buttons/TrashButton';
 import colors from '../../../styles/globalColors';
 
 const styles = StyleSheet.create({
+  avatar: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+  },
   cardImage: {
     height: 75,
     width: 50,
@@ -38,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkBackground,
     borderRadius: 16,
     padding: 0,
-    margin: 2,
+    margin: 4,
     borderWidth: 2,
     borderColor: colors.darkBackgroundAlpha,
     elevation: 4, // for Android only
@@ -127,6 +131,7 @@ function MiniOffer({ offer }) {
               rounded
               size="large"
               source={sellerPic} // the seller user picture
+              containerStyle={styles.avatar}
             />
           </Pressable>
           <Pressable style={styles.titleBar} onPress={handleListingPress}>
