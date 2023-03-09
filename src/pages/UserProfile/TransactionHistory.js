@@ -18,16 +18,6 @@ import firebase from '../../config/firebase';
 
 const db = getFirestore(firebase);
 const listingRef = collection(db, 'listing');
-const offerRef = collection(db, 'offer');
-
-const getTransactions = (userId) => {
-  // for the current user
-  // get listings with completed: true
-  // get offers with accepted: true
-  // listings: listing.title, listing.price, listing.date, listing.rating ?
-  // offers: find listing in listings by listing_id from the offer, get all
-  // the info that was written out in listings
-};
 
 function Item({ item, owner }) {
   return (
@@ -43,15 +33,24 @@ function TransactionHistory({ owner }) {
     const setFetched = async (transactionsData) => {
       setTransactions(transactionsData);
     };
-    const q = query(listingRef, where('user', '==', owner.uid), where('completed', '==', true)); // add a limit ?
+    const q1 = query(listingRef, where('user', '==', owner.uid), where('completed', '==', true)); // add a limit ?
     const fetchTransactions = async () => {
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(q1);
+      querySnapshot.forEach(async (doc) => {
+        listings.push(doc.data());
+        await setFetched(listings);
+      });
+    };
+    const q2 = query(listingRef, where('buyer', '==', owner.uid), where('completed', '==', true)); // add a limit ?
+    const fetchBuys = async () => {
+      const querySnapshot = await getDocs(q2);
       querySnapshot.forEach(async (doc) => {
         listings.push(doc.data());
         await setFetched(listings);
       });
     };
     fetchTransactions();
+    fetchBuys();
   }, []);
 
   return (
