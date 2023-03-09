@@ -15,7 +15,7 @@ import AuthStack from './src/stack/AuthStack';
 export default function App() {
   const { user } = useAuthentication();
   const [fontsLoaded] = useFonts({
-    'VT323': require('./assets/fonts/VT323-Regular.ttf'),
+    VT323: require('./assets/fonts/VT323-Regular.ttf'),
   });
 
   const isHermes = () => !!global.HermesInternal;

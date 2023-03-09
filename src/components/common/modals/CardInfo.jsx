@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 
-function CardInfo() {
+function CardInfo({ content }) {
   return (
     <View>
-      <Image />
+      <Image source={content.uri} />
       <View>
-        <Text>Name</Text>
-        <Text>Condition</Text>
-        <Text>Description</Text>
+        <Text>{content.name}</Text>
+        <Text>{content.condition}</Text>
       </View>
     </View>
   );
