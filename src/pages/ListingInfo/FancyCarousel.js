@@ -9,11 +9,15 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import styles from './styles';
 
-function FancyCarousel({ cards, seller, sellerId }) {
+function FancyCarousel({ cards, seller, sellerId, listingId }) {
   const { width } = Dimensions.get('window');
 
   const navigateToSellerProfile = () => {
     alert(sellerId);
+  };
+
+  const navigateToMakeOffer = () => {
+    alert(listingId);
   };
 
   return (
@@ -35,8 +39,8 @@ function FancyCarousel({ cards, seller, sellerId }) {
         sliderWidth={(width / 10) * 5}
         itemWidth={width}
       />
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <TouchableOpacity onPress={navigateToSellerProfile} style={styles.details}>
+      <View style={styles.details}>
+        <TouchableOpacity onPress={navigateToSellerProfile}>
           <Image style={styles.pfp} source={{ uri: seller.profile_picture }} />
           <Text style={styles.text}>{seller.name}</Text>
           <Text style={styles.text}>
@@ -45,8 +49,9 @@ function FancyCarousel({ cards, seller, sellerId }) {
             Stars
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>X</Text>
+
+        <TouchableOpacity onPress={navigateToMakeOffer} style={styles.offerButton}>
+          <Text style={styles.offerButtonText}>Make an Offer</Text>
         </TouchableOpacity>
       </View>
     </View>
