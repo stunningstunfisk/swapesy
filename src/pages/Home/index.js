@@ -20,13 +20,13 @@ function Home({ navigation }) {
   const [sort, setSort] = useState('recent');
   const [filter, setFilter] = useState([undefined, undefined]);
 
-  useEffect(() => { sorts[sort](setListings); }, [sort, filter]);
+  useEffect(() => { sorts[sort](setListings, filter); }, [sort, filter]);
+
   return (
     <View style={{ flex: 1 }}>
       <Options setSort={setSort} setFilter={setFilter} />
       <FlatList
         columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
-          // contentContainerStyle={{marginTop: 10, paddingBottom: 50}}
         showsVerticalScrollIndicator={false}
         data={listings}
         renderItem={({ item }) => <Item listing={item} />}

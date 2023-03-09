@@ -32,8 +32,7 @@ function ListingCard({ listing, homePage, user }) {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
-  const cardImg = card.uri && card.uri !== 11 ? card.uri : 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg';
-  console.log('x', cardImg, placeholderImg, card.uri);
+  const cardImg = card.uri ? card.uri : 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg';
 
   useEffect(() => {
     const cardRef = doc(db, `card/${listing.cards[0]}`);
@@ -41,7 +40,6 @@ function ListingCard({ listing, homePage, user }) {
     getDoc(q)
       .then((data) => {
         setCard(data.data());
-        console.log('data', data.data());
       })
       // eslint-disable-next-line no-console
       .catch((err) => console.error(err));
