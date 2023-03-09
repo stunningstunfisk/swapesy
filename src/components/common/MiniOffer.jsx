@@ -13,6 +13,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 import firebase from '../../config/firebase';
 
 const database = getFirestore(firebase);
@@ -71,12 +72,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function MiniOffer({ offer }) {
+function MiniOffer({ offer, user }) {
   const [listing, setListing] = useState({});
   const [offerCards, setOfferCards] = useState([]);
   const [sellerPic, setSellerPic] = useState(ashImage);
+  const [owner, setOwner] = useState({});
+  const navigation = useNavigation();
 
-  function handleUserPress() { }
+  function handleUserPress() {
+    navigation.navigate('Profile', { user, owner });
+  }
+
   function handleListingPress() { }
   function handleTrashLongPress() { }
 
@@ -97,6 +103,8 @@ function MiniOffer({ offer }) {
           .then(() => {
             setSellerPic({ uri: foundUser.profile_picture });
             setListing(foundListing);
+            console.log('foundUser', foundUser);
+            setOwner(foundUser);
           })
           .catch((error) => console.error(error));
       })
