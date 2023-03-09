@@ -59,7 +59,7 @@ function CameraView({ user, state }) {
                   setImage(r.uri);
                   setUri(r.uri);
                 }
-                // Alert.alert('DEBUG', JSON.stringify(r));
+                Alert.alert('DEBUG', JSON.stringify(r));
                 setShowCamera(false);
               }}
             >
@@ -67,7 +67,7 @@ function CameraView({ user, state }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={async () => { navigation.navigate('UploadHome'); }}
+              onPress={async () => { navigation.navigate('UploadCard'); }}
             >
               <Text style={styles.text}>Cancel</Text>
             </TouchableOpacity>
@@ -85,7 +85,7 @@ function CameraView({ user, state }) {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                onPress={async () => { navigation.navigate('UploadHome'); }}
+                onPress={async () => { navigation.navigate('UploadCard'); }}
               >
                 <Text style={styles.text}>Done</Text>
               </TouchableOpacity>

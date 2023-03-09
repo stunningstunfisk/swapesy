@@ -7,6 +7,9 @@ import CameraView from './CameraView.js';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+// import { getFirestore, doc, setDoc } from 'firebase/firestore';
+// import firebase from '../config/firebase';
+
 function UploadCard({ user }) {
   const [name, onChangeName] = useState('');
   const navigation = useNavigation();
@@ -19,6 +22,12 @@ function UploadCard({ user }) {
     { label: 'Heavily Played', value: '4' },
     { label: 'Damaged', value: '5' },
   ];
+
+  const handleUpload = () => {
+    // if ()
+
+    setUri(null);
+  };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -56,7 +65,8 @@ function UploadCard({ user }) {
       </View>
       )}
 
-      <Button title="Upload" onPress={() => setUri(null)} />
+      <Button title="Remove Image" onPress={() => setUri(null)} />
+      <Button title="Upload" onPress={handleUpload} />
       <Button
         title="Create listing"
         onPress={() => navigation.navigate('CreateListing')}
