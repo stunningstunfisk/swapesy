@@ -12,16 +12,16 @@ const Stack = createStackNavigator();
 
 export default function ProfileStack({ user, listing }) {
   return (
-      <Stack.Navigator>
-        <Stack.Screen name="UserProfile">
-          {() => <UserProfile user={user} />}
-        </Stack.Screen>
-        <Stack.Screen name="EditProfile">
-          {() => <EditProfile user={user} />}
-        </Stack.Screen>
-        {/* <Stack.Screen name="ListingInfo">
+    <Stack.Navigator>
+      <Stack.Screen name="UserProfile">
+        {() => <UserProfile user={user} />}
+      </Stack.Screen>
+      <Stack.Screen name="EditProfile">
+        {() => <EditProfile user={user} />}
+      </Stack.Screen>
+      {/* <Stack.Screen name="ListingInfo">
           {() => <ListingInfo user={user} listing={listing} />}
         </Stack.Screen> */}
-      </Stack.Navigator>
+    </Stack.Navigator>
   );
 }
