@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Navbar from './layout/Navbar';
 
 // Screens
-import HomePage from './pages/Home';
+import HomePage from './pages/ListingInfo';
 import ChatPage from './stack/ChatStack';
 import TradesStack from './stack/TradeStack';
 import UploadStack from './stack/UploadStack';

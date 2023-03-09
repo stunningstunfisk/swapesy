@@ -70,7 +70,7 @@ function ListingInfo({ userId, listingId = 'TEST' }) {
 
   return (
     <View style={styles.container}>
-      <FancyCarousel cards={listingCards} seller={seller} />
+      <FancyCarousel cards={listingCards} seller={seller} sellerId={sellerId} />
       <Offers offers={listingOffers} sellerId={sellerId} currUserId={userId} />
     </View>
   );
