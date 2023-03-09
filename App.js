@@ -24,13 +24,16 @@ export default function App() {
   console.info('Using the Hermes Engine:', isHermes());
 
   // TODO: user should live in a React context
-  return (
-    <ThemeProvider>
-      {user ? <Main user={user} /> : <AuthStack />}
-      {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
-      {/* <Main /> */}
-    </ThemeProvider>
-  );
+
+  if (fontsLoaded) {
+    return (
+      <ThemeProvider>
+        {user ? <Main user={user} /> : <AuthStack />}
+        {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
+        {/* <Main /> */}
+      </ThemeProvider>
+    );
+  }
 }
 
 // const styles = StyleSheet.create({
