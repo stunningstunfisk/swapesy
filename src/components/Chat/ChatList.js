@@ -100,12 +100,14 @@ function ChatList({ user }) {
       return user;
     };
 
-    const q = query(conversationRef, where('users', 'array-contains', user.uid), limit(10));
 
+    const q = query(conversationRef, where('users', 'array-contains', user.uid), limit(10));
     const unsuscribe = onSnapshot(q, async (querySnapshot) => {
       // eslint-disable-next-line no-shadow
       const fetched = [];
-      querySnapshot.forEach(async (docu) => {
+
+      // console.log(querySnapshot.docs.map((doc) => doc));
+      Promise.all(querySnapshot.docs.map(async (docu) => {
         const msg = await fetchMessage(docu.id);
         console.log('lastmsg', msg);
         const { users } = docu.data();
@@ -120,12 +122,10 @@ function ChatList({ user }) {
           },
         };
         fetched.push(newObj);
-        console.log('fetched', fetched);
+        return () => { };
+      })).then(() => {
+        setConversations(fetched);
       });
-      if (fetched.length) {
-        console.log('setting...');
-        await setConversations(fetched);
-      }
     });
 
 
@@ -156,7 +156,7 @@ function ChatList({ user }) {
               keyExtractor={(item) => item.chatId}
             />
           )
-          : <Text>null</Text>
+          : null
       }
     </View>
   );
