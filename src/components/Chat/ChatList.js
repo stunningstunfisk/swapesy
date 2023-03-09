@@ -5,8 +5,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
+  Text,
   View,
   StatusBar,
+  FlatList,
 } from 'react-native';
 
 import {
@@ -19,6 +21,7 @@ import {
   where,
   limit,
   orderBy,
+  onSnapshot,
 } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
@@ -47,6 +50,17 @@ const styles = StyleSheet.create({
   },
 });
 
+function Item({ item, viewMessages }) {
+  console.log('in item', item, viewMessages);
+  return (
+    <ChatEntry
+      chat={item}
+      viewMessages={viewMessages}
+    />
+  );
+}
+
+
 // eslint-disable-next-line react/prop-types
 function ChatList({ user }) {
   const navigation = useNavigation();
@@ -62,34 +76,6 @@ function ChatList({ user }) {
 
   useEffect(() => {
     console.log('ChatList');
-    const fetched = [];
-    const setFetched = async (convos) => {
-      setConversations(convos);
-    };
-    const q = query(conversationRef, where('users', 'array-contains', user.uid), limit(10));
-    const fetchConversations = async () => {
-      const querySnapshot = await getDocs(q);
-
-      // eslint-disable-next-line no-shadow
-      querySnapshot.forEach(async (doc) => {
-        const msg = await fetchMessage(doc.id);
-        const { users } = doc.data();
-        // eslint-disable-next-line react/prop-types
-        const messageWith = await fetchUser(users[0] === user.uid ? users[1] : users[0]);
-        const newObj = {
-          chatId: doc.id,
-          lastMsg: msg,
-          messageWith: {
-            ...messageWith,
-            uid: users[0] === user.uid ? users[1] : users[0],
-          },
-        };
-        fetched.push(newObj);
-        // console.log('fetching chats...', fetched);
-        await setFetched(fetched);
-      });
-    };
-
     const fetchMessage = async (id) => {
       const messagesRef = collection(db, `conversation/${id}/messages`);
       const qmsg = query(messagesRef, orderBy('created_at'), limit(1));
@@ -114,19 +100,63 @@ function ChatList({ user }) {
       return user;
     };
 
-    fetchConversations();
+    const q = query(conversationRef, where('users', 'array-contains', user.uid), limit(10));
+
+    const unsuscribe = onSnapshot(q, async (querySnapshot) => {
+      // eslint-disable-next-line no-shadow
+      const fetched = [];
+      querySnapshot.forEach(async (docu) => {
+        const msg = await fetchMessage(docu.id);
+        console.log('lastmsg', msg);
+        const { users } = docu.data();
+        console.log('users', users);
+        const messageWith = await fetchUser(users[0] === user.uid ? users[1] : users[0]);
+        const newObj = {
+          chatId: docu.id,
+          lastMsg: msg,
+          messageWith: {
+            ...messageWith,
+            uid: users[0] === user.uid ? users[1] : users[0],
+          },
+        };
+        fetched.push(newObj);
+        console.log('fetched', fetched);
+      });
+      if (fetched.length) {
+        console.log('setting...');
+        await setConversations(fetched);
+      }
+    });
+
+
+    return () => {
+      console.log('unmount!');
+      unsuscribe();
+    };
   }, []);
 
   return (
     <View style={styles.container}>
       {
-        conversations.map((chat) => (
-          <ChatEntry
-            key={chat.chatId}
-            viewMessages={viewMessages}
-            chat={chat}
-          />
-        ))
+        conversations.length
+          ? (
+            <FlatList
+              data={conversations}
+              renderItem={
+            ({ item }) => {
+              console.log('creating item', item);
+              return (
+                <Item
+                  item={item}
+                  viewMessages={viewMessages}
+                />
+              );
+            }
+          }
+              keyExtractor={(item) => item.chatId}
+            />
+          )
+          : <Text>null</Text>
       }
     </View>
   );
