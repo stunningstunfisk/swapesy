@@ -10,6 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import styles from '../../../styles/userProfile/listingCard';
 import firebase from '../../config/firebase';
+
 const placeholderImg = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/charizard-star-df-100.jpg?fit=700%2C990&ssl=1';
 
 const db = getFirestore(firebase);
@@ -25,7 +26,6 @@ function ListingCard({ listing, homePage, user }) {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
-  // const cardImg = card.uri ? card.uri : placeholderImg;
 
   useEffect(() => {
     const cardRef = doc(db, `card/${listing.cards[0]}`);
@@ -44,7 +44,10 @@ function ListingCard({ listing, homePage, user }) {
       onPress={() => navigation.navigate('Home', { screen: 'ListingInfo', params: { listingId: listing.id, userId: user.uid } })}
     >
       <View style={styles.imgWrapper}>
-        <Image source={{ uri: card.uri ? card.uri : placeholderImg }} style={styles.mainImg} />
+        <Image
+          source={{ uri: card.uri || placeholderImg }}
+          style={styles.mainImg}
+        />
       </View>
       <View style={styles.titleWrapper}>
         <Text
