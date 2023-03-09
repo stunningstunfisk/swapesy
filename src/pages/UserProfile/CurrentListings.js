@@ -33,7 +33,7 @@ function CurrentListings({ owner }) {
     const setFetched = async (listingsData) => {
       setListings(listingsData);
     };
-    const q = query(listingRef, where('user', '==', owner.uid));
+    const q = query(listingRef, where('user', '==', owner.uid), where('completed', '==', false));
     const fetchListings = async () => {
       const querySnapshot = await getDocs(q);
 
