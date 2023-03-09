@@ -5,7 +5,6 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 18,
-    marginBottom: '15%',
   },
   container: {
     flex: 1,
@@ -44,9 +43,22 @@ export default StyleSheet.create({
   },
   pfp: {
     aspectRatio: 1 / 1,
-    height: '45%',
+    height: '55%',
     borderRadius: 500,
     borderColor: '#54130e',
     borderWidth: 2,
+  },
+  offerButton: {
+    backgroundColor: '#a6502c',
+    width: '140%',
+    height: '10%',
+    padding: 1,
+    borderRadius: 10,
+  },
+  offerButtonText: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
+    color: 'white',
   },
 });

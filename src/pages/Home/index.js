@@ -7,18 +7,10 @@ import ListingCard from '../../components/common/ListingCard';
 
 const sorts = listingFuncs;
 
-function Item({ listing }) {
-  return (
-    <View style={{ color: 'pink' }}>
-      <ListingCard listing={listing} />
-    </View>
-  );
-}
-
 function Home({ navigation }) {
   const [listings, setListings] = useState(undefined);
   const [sort, setSort] = useState('recent');
-  const [filter, setFilter] = useState([undefined, undefined]);
+  const [filter, setFilter] = useState();
 
   useEffect(() => { sorts[sort](setListings, filter); }, [sort, filter]);
 
@@ -29,7 +21,7 @@ function Home({ navigation }) {
         columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
         showsVerticalScrollIndicator={false}
         data={listings}
-        renderItem={({ item }) => <Item listing={item} />}
+        renderItem={({ item }) => <ListingCard listing={item} />}
         keyExtreactor={(item) => item.id}
         numColumns={2}
       />
