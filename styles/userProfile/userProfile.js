@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   transactions: {
-    gap: 10,
+    gap: 20,
     // flex: 1,
     flexDirection: 'column',
     fontSize: 15,
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     padding: 5,
     gap: 5,
     alignItems: 'center',
+    marginBottom: 10,
   },
   transaction: {
     gap: 10,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   transactionTitle: {
-    flex: 1,
+    // flex: 1,
     fontSize: 18,
     padding: 5,
     fontWeight: 'bold',
