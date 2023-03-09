@@ -27,11 +27,16 @@ import fonts from '../../../styles/globalFonts';
 
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center',
+    resizeMode: 'cover',
+  },
   button: {
     margin: 2,
   },
   buttonText: {
-    fontWeight: 'bold',
+    fontFamily: 'VT323',
   },
   buttonView: {
     flex: 1,
@@ -39,8 +44,16 @@ const styles = StyleSheet.create({
     padding: 4,
     margin: 1,
   },
+  chevronLeft: {
+    bottom: 0,
+    left: '40%',
+    position: 'absolute',
+    zIndex: 10,
+    margin: 4,
+  },
   chevronRight: {
-    right: 4,
+    bottom: 0,
+    right: '40%',
     position: 'absolute',
     zIndex: 10,
     margin: 4,
@@ -62,6 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
+    marginBottom: 8,
   },
   listTitle: {
     borderRadius: 8,
@@ -100,11 +114,13 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
       <>
         <ListItem.Accordion
           containerStyle={[styles.container, styles.shadow, { width: '100%' }]}
-          content={
+          content={(
             // LIST TITLE AREA
-            <MiniListingTitle listing={listing} offers={incomingOffers} />
-          }
-          icon={<FontAwesome style={{ margin: 12 }} name="chevron-down" size={24} color="black" />}
+            <View style={{ flex: 1, flexDirection: 'column' }}>
+              <MiniListingTitle listing={listing} offers={incomingOffers} />
+            </View>
+          )}
+          icon={<FontAwesome style={{ color: colors.dark, margin: 12 }} name="chevron-down" size={24} color="black" />}
           isExpanded={expanded}
           onPress={() => {
             setExpanded(!expanded);
@@ -132,9 +148,11 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
                 <View style={styles.buttonView}>
                   <PressableOpacity
                     onLongPress={() => reset()}
-                    style={[styles.button, { backgroundColor: 'lightgrey' }]}
+                    style={[fonts.text, styles.button, { backgroundColor: 'lightgrey' }]}
                   >
-                    <Text style={styles.buttonText}>ACCEPT OFFER</Text>
+                    <View>
+                      <Text style={[styles.buttonText, { fontSize: 24 }]}>ACCEPT</Text>
+                    </View>
                   </PressableOpacity>
                 </View>
               )}
@@ -145,9 +163,11 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
                 <View style={styles.offer}>
                   <Offer currUserId={user} offer={offer} sellerId={1} />
                 </View>
+                <View style={styles.chevronLeft}>
+                  <FontAwesome name="chevron-left" size={12} color={colors.dark} />
+                </View>
                 <View style={styles.chevronRight}>
-                  <FontAwesome name="chevron-left" size={24} color="black" />
-                  <FontAwesome name="chevron-right" size={24} color="black" />
+                  <FontAwesome name="chevron-right" size={12} color={colors.dark} />
                 </View>
               </>
 

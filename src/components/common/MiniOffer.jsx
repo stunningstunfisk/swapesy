@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   chevron: {
+    color: colors.dark,
     margin: 4,
   },
   container: {
@@ -52,6 +53,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
+  },
+  none: {
+    elevation: 0,
+    shadowColor: 'rgba(0,0,0,0)',
+    borderwidth: 0,
   },
   offer: {
     flex: 1,
@@ -146,7 +152,7 @@ function MiniOffer({ offer }) {
 
         </View>
         <ListItem.Swipeable
-          containerStyle={styles.container}
+          containerStyle={[styles.container, styles.none]}
           leftContent={(reset) => (
             <TrashButton onLongPress={() => { handleTrashLongPress(); reset(); }} />
           )}
