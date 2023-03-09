@@ -11,10 +11,11 @@ import MyCards from './MyCards';
 import CurrentListings from './CurrentListings';
 import Transactions from './TransactionHistory';
 import SegmentSelect from '../../components/common/SegmentSelect';
-import placeholder from '../../../dev/test_data/stunfisk.png';
 import styles from '../../../styles/userProfile/userProfile';
 
 import firebase from '../../config/firebase';
+
+const placeholderImg = 'https://avatars.cloudflare.steamstatic.com/52814099e40125301b521935ccca3b5865898777_full.jpg';
 
 const db = getFirestore(firebase);
 
@@ -27,7 +28,8 @@ function createNewChat(currentUserId, otherUserId) {
 function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
   const navigation = useNavigation();
-  console.log('user', user);
+  // console.log('user index', user);
+  // console.log('owner index', owner);
 
   useEffect(() => {
     if (user.uid === owner.uid) {
@@ -35,20 +37,20 @@ function UserProfile({ user, owner }) {
     } else {
       setIsOwner(false);
     }
-  });
+  }, []);
 
   let buttons;
   let views;
-  if (user.uid === owner.uid) {
+  if (isOwner) {
     buttons = ['Cards', 'Listings', 'Past Transactions'];
-    views = [<MyCards owner={user} />, <CurrentListings owner={user} />,
+    views = [<MyCards owner={user} />, <CurrentListings owner={owner} />,
       <Transactions owner={owner} />];
   } else {
     buttons = ['Listings', 'Past Transactions'];
     views = [<CurrentListings owner={owner} />,
       <Transactions owner={owner} />];
   }
-  const profilePic = user.photoURL ? user.photoURL : placeholder;
+  const profilePic = user.photoURL ? user.photoURL : placeholderImg;
 
   const handlePress = () => {
     if (user.uid === owner.uid) {
@@ -70,22 +72,22 @@ function UserProfile({ user, owner }) {
               ellipsizeMode="tail"
               style={styles.userName}
             >
-              {user.name ? user.name : 'Nameless Beautiful Unicorn'}
+              {owner.name ? owner.name : 'Nameless Beautiful Unicorn'}
             </Text>
             <Pressable
               onPress={handlePress}
               style={styles.button}
             >
-              <Text>{user.uid === owner.uid ? 'Edit' : 'Message'}</Text>
+              <Text>{isOwner ? 'Edit' : 'Message'}</Text>
             </Pressable>
           </View>
           <Text style={styles.reputation}>
             REP:
             {' '}
-            {user.reputation ? user.reputation : 0}
+            {owner.reputation ? owner.reputation : 0}
           </Text>
           <Text style={styles.bio}>
-            {user.bio ? user.bio : null}
+            {owner.bio ? owner.bio : null}
           </Text>
         </View>
       </View>
