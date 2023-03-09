@@ -21,6 +21,7 @@ export default function App() {
   const isHermes = () => !!global.HermesInternal;
   console.info('Using the Hermes Engine:', isHermes());
 
+  // TODO: user should live in a React context
   return (
     <ThemeProvider>
       {user ? <Main user={user} /> : <AuthStack />}
