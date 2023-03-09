@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
-  Text,
   View,
   StatusBar,
   FlatList,
@@ -109,9 +108,7 @@ function ChatList({ user }) {
       // console.log(querySnapshot.docs.map((doc) => doc));
       Promise.all(querySnapshot.docs.map(async (docu) => {
         const msg = await fetchMessage(docu.id);
-        console.log('lastmsg', msg);
         const { users } = docu.data();
-        console.log('users', users);
         const messageWith = await fetchUser(users[0] === user.uid ? users[1] : users[0]);
         const newObj = {
           chatId: docu.id,
@@ -130,7 +127,6 @@ function ChatList({ user }) {
 
 
     return () => {
-      console.log('unmount!');
       unsuscribe();
     };
   }, []);
