@@ -61,9 +61,8 @@ export default function ModalView({
         <View
           style={{
             flex: 1,
-            backgroundColor: 'grey',
+            backgroundColor: 'lightgray',
             alignItems: 'center',
-            padding: 35,
             borderRadius: 5,
           }}
         >

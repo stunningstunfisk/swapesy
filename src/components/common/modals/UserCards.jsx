@@ -1,31 +1,45 @@
 import React from 'react';
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
+import selectedCardItem from '../../upload_page/selectedCardItem';
 
 function UserCards({ content }) {
-  const renderItem = ({ item }) => (
-    <View key={item.id} style={{ paddingRight: 10, paddingLeft: 10 }}>
-      <Image
-        source={{ uri: item.uri }}
-        style={{
-          width: '100%',
-          height: 100,
-          aspectRatio: 5 / 7,
-          padding: 5,
-          resizeMode: 'contain',
-        }}
-      />
-      <Text>{item.name}</Text>
-    </View>
-  );
-
   return (
-    <FlatList
-      data={content}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      numColumns={3}
-      style
-    />
+    <View style={{ display: 'flex', flexDirection: 'column', gap: 200 }}>
+      <View style={{ margin: 0, padding: 0 }}>
+        {content.selectedCards.length !== 0 ? (
+          <FlatList
+            data={content.selectedCards}
+            renderItem={(item) =>
+              selectedCardItem(
+                item.item,
+                content.handleSelectedCards,
+                content.selectedCards,
+              )
+            }
+            keyExtractor={(item) => item.id}
+            horizontal
+          />
+        ) : null}
+      </View>
+      <View>
+        <FlatList
+          data={content.cards}
+          renderItem={
+            (item) =>
+              // eslint-disable-next-line implicit-arrow-linebreak
+              selectedCardItem(
+                item.item,
+                content.handleSelectedCards,
+                content.selectedCards,
+              )
+            // eslint-disable-next-line implicit-arrow-linebreak
+          }
+          keyExtractor={(item) => item.id}
+          numColumns={3}
+          style={{ margin: 0, padding: 0 }}
+        />
+      </View>
+    </View>
   );
 }
 

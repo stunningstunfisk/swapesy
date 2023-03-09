@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   StyleSheet,
-  Input,
+  FlatList,
   View,
   Text,
   TextInput,
@@ -14,9 +14,11 @@ import ModalRoute from '../../components/common/modals/ModalRoute';
 import ToggleSwitch from 'toggle-switch-react-native';
 import CurrencyInput from 'react-currency-input-field';
 import fetchUserCards from '../../util/fetchUserCards';
+import selectedCardItem from '../../components/upload_page/selectedCardItem';
 
 function CreateListing({ user }) {
   const [cards, setCards] = useState([]);
+  const [selectedCards, setSelectedCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [name, onChangeName] = useState('');
   const [price, onChangePrice] = useState(0);
@@ -31,6 +33,20 @@ function CreateListing({ user }) {
       })
       .then(() => setModalVisible(!modalVisible))
       .catch((err) => console.error(err));
+  };
+
+  const handleSelectedCards = {
+    handleClick: (item) => {
+      if (!selectedCards.includes(item)) {
+        setSelectedCards([...selectedCards, item]);
+      }
+    },
+    handleRemove: (item) => {
+      const newSelected = selectedCards.filter(
+        (selectedItem) => selectedItem !== item,
+      );
+      setSelectedCards(newSelected);
+    },
   };
 
   const handleChange = (e) => {
@@ -127,6 +143,16 @@ function CreateListing({ user }) {
       <Pressable onPress={handleModal}>
         <Text>Select Cards</Text>
       </Pressable>
+      {selectedCards.length !== 0 ? (
+        <FlatList
+          data={selectedCards}
+          renderItem={(item) =>
+            selectedCardItem(item.item, handleSelectedCards, selectedCards)
+          }
+          keyExtractor={(item) => item.id}
+          horizontal
+        />
+      ) : null}
       <ModalView
         modalVisible={modalVisible}
         handleModal={handleModal}
@@ -135,7 +161,7 @@ function CreateListing({ user }) {
         <ModalRoute
           handleModal={handleModal}
           route="UserCards"
-          content={cards}
+          content={{ cards, handleSelectedCards, selectedCards }}
         />
       </ModalView>
     </View>
