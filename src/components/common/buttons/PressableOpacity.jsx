@@ -1,18 +1,20 @@
 import React from 'react';
 import { Animated, Pressable, StyleSheet } from 'react-native';
 
+import colors from '../../../../styles/globalColors';
 
 const styles = StyleSheet.create({
   button: {
+    color: colors.light,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: 'rgba(128,128,128,0.25)',
+    borderColor: colors.darkBackgroundAlpha,
     borderRadius: 16,
     elevation: 4, // for Android only
-    shadowColor: '#c3b2a0',
+    shadowColor: colors.primary,
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,

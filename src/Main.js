@@ -1,7 +1,8 @@
-import * as React from 'react';
-
-// Navbar
+import React, { useEffect } from 'react';
+import { getFirestore, doc, query, getDoc } from 'firebase/firestore';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import firebase from './config/firebase';
+// Navbar
 import Navbar from './layout/Navbar';
 
 // Screens
@@ -9,12 +10,37 @@ import HomePage from './pages/Home';
 import ChatPage from './stack/ChatStack';
 import TradesStack from './stack/TradeStack';
 import UploadStack from './stack/UploadStack';
-import UserProfilePage from './stack/ProfileStack';
+import UserProfilePage from './pages/UserProfile';
+
+const db = getFirestore(firebase);
 
 const Tab = createBottomTabNavigator();
 
+
 function Main({ user }) {
-  console.log('user in Main', user);
+  const fetchUser = async (id) => {
+    const userRef = doc(db, 'user', id);
+    const quser = query(userRef);
+    const userSnapshot = await getDoc(quser);
+    return userSnapshot.data();
+  };
+
+
+  useEffect(() => {
+    fetchUser(user.uid)
+      .then((userInfo) => {
+        const userAdd = {
+          bio: userInfo.bio,
+          name: userInfo.name,
+          profile_picture: userInfo.profile_picture,
+          reputation: userInfo.reputation,
+        };
+        // eslint-disable-next-line no-param-reassign
+        user = { ...user, ...userAdd };
+      });
+  }, []);
+
+
   return (
     <Navbar
       pages={
