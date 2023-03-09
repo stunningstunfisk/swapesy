@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5,
     width: '100%',
     height: '70%',
-    top: '10%',
+    top: '13%',
     right: '5%',
   },
   offerText: {
