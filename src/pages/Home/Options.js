@@ -55,12 +55,14 @@ function Options({ setSort, setFilter }) {
               <Text style={{ textAlign: 'center', width: '30%', fontSize: 18 }}>Price: </Text>
               <Input
                 placeholder="100"
+                keyboardType="numeric"
                 containerStyle={styles.input}
                 onChangeText={(text) => setPrice1(text)}
               />
               <Text style={styles.between}>---</Text>
               <Input
                 placeholder="100"
+                keyboardType="numeric"
                 containerStyle={styles.input}
                 onChangeText={(text) => setPrice2(text)}
               />
