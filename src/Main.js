@@ -21,12 +21,7 @@ function Main({ user }) {
           <>
             <Tab.Screen name="Home" component={HomePage} />
             <Tab.Screen name="Chat">{() => <ChatPage user={user} />}</Tab.Screen>
-            <Tab.Screen
-              options={{ tabBarOptions: { showIcon: true } }}
-              name="Trades"
-              component={TradesStack}
-              user={user}
-            />
+            <Tab.Screen name="Trades" component={TradesStack} user={user} />
             <Tab.Screen name="Upload">
               {() => <UploadStack user={user} />}
             </Tab.Screen>
