@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 
@@ -55,12 +55,14 @@ function Options({ setSort, setFilter }) {
               <Text style={{ textAlign: 'center', width: '30%', fontSize: 18 }}>Price: </Text>
               <Input
                 placeholder="100"
+                keyboardType="numeric"
                 containerStyle={styles.input}
                 onChangeText={(text) => setPrice1(text)}
               />
               <Text style={styles.between}>---</Text>
               <Input
                 placeholder="100"
+                keyboardType="numeric"
                 containerStyle={styles.input}
                 onChangeText={(text) => setPrice2(text)}
               />

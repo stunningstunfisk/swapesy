@@ -4,13 +4,21 @@ import {
   View,
   Image,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-
 import styles from './styles';
 
-function FancyCarousel({ cards, seller }) {
+function FancyCarousel({ cards, seller, sellerId, listingId }) {
   const { width } = Dimensions.get('window');
+
+  const navigateToSellerProfile = () => {
+    alert(sellerId);
+  };
+
+  const navigateToMakeOffer = () => {
+    alert(listingId);
+  };
 
   return (
     <View style={styles.carousel}>
@@ -32,13 +40,19 @@ function FancyCarousel({ cards, seller }) {
         itemWidth={width}
       />
       <View style={styles.details}>
-        <Image style={styles.pfp} source={{ uri: seller.profile_picture }} />
-        <Text style={styles.text}>{seller.name}</Text>
-        <Text style={styles.text}>
-          {seller.reputation}
-          {' '}
-          Stars
-        </Text>
+        <TouchableOpacity onPress={navigateToSellerProfile}>
+          <Image style={styles.pfp} source={{ uri: seller.profile_picture }} />
+          <Text style={styles.text}>{seller.name}</Text>
+          <Text style={styles.text}>
+            {seller.reputation}
+            {' '}
+            Stars
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={navigateToMakeOffer} style={styles.offerButton}>
+          <Text style={styles.offerButtonText}>Make an Offer</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
