@@ -14,7 +14,6 @@ function Navbar({ pages }) {
         initialRouteName="Home"
         screenOptions={
           ({ route }) => ({
-            tabBarActiveTintColor: 'white',
             headerStyle: {
               backgroundColor: colors.background,
             },
@@ -24,15 +23,11 @@ function Navbar({ pages }) {
               paddingBottom: 0,
               fontSize: 10,
             },
-            headerStyle: {
-              backgroundColor: '#54130e',
-            },
             headerTitleStyle: { color: 'white', fontWeight: 'bold' },
             tabBarStyle: [
               {
                 backgroundColor: colors.darkBackground,
                 display: 'flex',
-                backgroundColor: '#54130e',
               },
               null,
             ],
