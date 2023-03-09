@@ -49,15 +49,19 @@ function UserProfile({ owner, user }) {
   useEffect(() => {
     if (owner.route !== undefined) {
       if (owner.route.params.owner.user === user.uid) {
+        // case where user = owner
         owner.uid = owner.route.params.owner.name;
         console.log('I\'m the owner ', owner);
+        console.log('I\'m the user ', user);
         setIsOwner(false);
-        setOwnerInfo(user);
+        setOwnerInfo(owner); // can use user here
         // owner = user;
       }
     } else {
+      // case where user != owner
       setIsOwner(true);
       console.log('got owner ', owner);
+      console.log('got owner-user', user);
       setOwnerInfo(owner.owner);
     }
   }, []);
@@ -74,7 +78,7 @@ function UserProfile({ owner, user }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Image
+        {/* <Image
           source={{ uri: ownerInfo.profile_picture || placeholderImg }}
           style={styles.profileImg}
         />
@@ -104,7 +108,7 @@ function UserProfile({ owner, user }) {
             {' '}
             {ownerInfo.bio || 'nothing is here yet'}
           </Text>
-        </View>
+        </View> */}
       </View>
       <SegmentSelect
         buttons={isOwner ? ['Cards', 'Listings', 'Past Transactions'] : ['Listings', 'Past Transactions']}
