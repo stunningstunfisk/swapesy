@@ -10,8 +10,8 @@ import {
   ImageBackground,
   Alert,
 } from 'react-native';
-import CameraButton from '../../components/upload_page/CameraButtons.js';
 import { useNavigation } from '@react-navigation/native';
+import CameraButton from '../../components/upload_page/CameraButtons.js';
 // import { fireStorage } from "../config/firebase";
 
 // import firebase from '../config/firebase';
@@ -25,7 +25,7 @@ function CameraView({ user, state }) {
   const cameraRef = useRef(null);
   const navigation = useNavigation();
 
-  const setUri = state.route.params.setUri;
+  const { setUri } = state.route.params;
 
   useEffect(() => {
     (async () => {
