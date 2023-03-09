@@ -3,22 +3,16 @@ import { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import {
   getFirestore,
-  doc,
-  getDoc,
   getDocs,
   collection,
   query,
   where,
-  limit,
-  orderBy,
 } from 'firebase/firestore';
 import styles from '../../../styles/userProfile/userProfile';
 import cardStyles from '../../../styles/userProfile/inventoryCard';
 import placeholder from '../../../dev/test_data/stunfisk.png';
 import ModalView from '../../components/common/modals/ModalView';
 import firebase from '../../config/firebase';
-
-const { CARDS } = require('../../../dev/test_data/data_profile');
 
 const db = getFirestore(firebase);
 const cardRef = collection(db, 'card');
