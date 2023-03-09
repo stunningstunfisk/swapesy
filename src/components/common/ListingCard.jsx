@@ -5,18 +5,12 @@ import {
   getFirestore,
   doc,
   getDoc,
-  getDocs,
-  collection,
   query,
-  where,
-  limit,
-  orderBy,
 } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../../../styles/userProfile/listingCard';
-import placeholderImg from '../../../dev/test_data/stunfisk.png';
 import firebase from '../../config/firebase';
-import ListingInfo from '../../pages/ListingInfo/index';
+const placeholderImg = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/charizard-star-df-100.jpg?fit=700%2C990&ssl=1';
 
 const db = getFirestore(firebase);
 
@@ -25,14 +19,13 @@ const db = getFirestore(firebase);
 // listing prop will be passed down
 function ListingCard({ listing, homePage, user }) {
   const navigation = useNavigation();
-  const [showListing, setShowListing] = useState(false);
   const [card, setCard] = useState({});
 
   const handleOffer = () => {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
-  const cardImg = card.uri ? card.uri : placeholderImg;
+  // const cardImg = card.uri ? card.uri : placeholderImg;
 
   useEffect(() => {
     const cardRef = doc(db, `card/${listing.cards[0]}`);
@@ -46,15 +39,12 @@ function ListingCard({ listing, homePage, user }) {
   }, []);
 
   return (
-    // pressing on listing card opens up the listing page
-    // {showListing ? <ListingInfo listingId={listing.id} userId={user.uid} /> :
     <TouchableOpacity
       style={styles.wrapper}
-      // onPress={() => navigation.navigate('Main', { screen: 'ListingInfo', params: {listingId: listing.id, userId: user.uid }})}
-      onPress={() => setShowListing(!showListing)}
+      onPress={() => navigation.navigate('Home', { screen: 'ListingInfo', params: { listingId: listing.id, userId: user.uid } })}
     >
       <View style={styles.imgWrapper}>
-        <Image source={cardImg} style={styles.mainImg} />
+        <Image source={{ uri: card.uri ? card.uri : placeholderImg }} style={styles.mainImg} />
       </View>
       <View style={styles.titleWrapper}>
         <Text
@@ -66,17 +56,16 @@ function ListingCard({ listing, homePage, user }) {
         </Text>
       </View>
       {homePage && (
-        <Pressable
-          style={styles.offerBttnWrapper}
-          onPress={handleOffer}
-        >
-          <Text style={styles.offerBttn}>
-            Make an offer
-          </Text>
-        </Pressable>
+      <Pressable
+        style={styles.offerBttnWrapper}
+        onPress={handleOffer}
+      >
+        <Text style={styles.offerBttn}>
+          Make an offer
+        </Text>
+      </Pressable>
       )}
     </TouchableOpacity>
-      // }
   );
 }
 
