@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import colors from '../../styles/globalColors';
+import fonts from '../../styles/globalFonts';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,17 +18,15 @@ function Navbar({ pages }) {
             headerStyle: {
               backgroundColor: colors.background,
             },
+            headerTitleStyle: fonts.tabHeader,
             tabBarActiveTintColor: colors.primary,
             tabBarInactiveTintColor: 'grey',
-            tabBarLabelStyle: {
-              paddingBottom: 0,
-              fontSize: 10,
-            },
-            headerTitleStyle: { color: 'white', fontWeight: 'bold' },
+            tabBarLabelStyle: fonts.tabBarLabel,
             tabBarStyle: [
               {
                 backgroundColor: colors.darkBackground,
                 display: 'flex',
+                height: 64,
               },
               null,
             ],
