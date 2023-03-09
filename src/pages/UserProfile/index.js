@@ -6,6 +6,7 @@ import {
   getFirestore,
   doc,
   setDoc,
+  getDoc,
 } from 'firebase/firestore';
 import MyCards from './MyCards';
 import CurrentListings from './CurrentListings';
@@ -25,46 +26,58 @@ function createNewChat(currentUserId, otherUserId) {
   });
 }
 
-function UserProfile({ user, owner }) {
+function UserProfile({ owner, user }) {
+  console.log('owner here ', owner);
+  console.log('user here ', user);
+  // let isOwner;
+  const [ownerInfo, setOwnerInfo] = useState(user);
   const [isOwner, setIsOwner] = useState(true);
+  // if (owner.route !== undefined) {
+  //   if (owner.route.params.owner.user === user.uid) {
+  //     owner.uid = owner.route.params.owner.name;
+  //     console.log('I\'m the owner ', owner);
+  //     isOwner = false;
+  //     // owner = user;
+  //   }
+  // } else {
+  //   isOwner = true;
+  //   console.log('got owner ', owner);
+  //   owner = owner.owner;
+  // }
   const navigation = useNavigation();
-  // console.log('user index', user);
-  // console.log('owner index', owner);
 
   useEffect(() => {
-    if (user.uid === owner.uid) {
-      setIsOwner(true);
+    if (owner.route !== undefined) {
+      if (owner.route.params.owner.user === user.uid) {
+        owner.uid = owner.route.params.owner.name;
+        console.log('I\'m the owner ', owner);
+        setIsOwner(false);
+        setOwnerInfo(user);
+        // owner = user;
+      }
     } else {
-      setIsOwner(false);
+      setIsOwner(true);
+      console.log('got owner ', owner);
+      setOwnerInfo(owner.owner);
     }
   }, []);
 
-  let buttons;
-  let views;
-  if (isOwner) {
-    buttons = ['Cards', 'Listings', 'Past Transactions'];
-    views = [<MyCards owner={user} />, <CurrentListings owner={owner} />,
-      <Transactions owner={owner} />];
-  } else {
-    buttons = ['Listings', 'Past Transactions'];
-    views = [<CurrentListings owner={owner} />,
-      <Transactions owner={owner} />];
-  }
-  const profilePic = user.photoURL ? user.photoURL : placeholderImg;
-
   const handlePress = () => {
-    if (user.uid === owner.uid) {
-      navigation.navigate('Edit', {});
+    if (isOwner) {
+      navigation.navigate('Edit', user);
     } else {
       createNewChat(user.uid, owner.uid);
-      navigation.navigate('Chats', {});
+      navigation.navigate('Chats', {}); // TODO ask Mark what Page to navigate to and what params to pass
     }
   };
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Image source={profilePic} style={styles.profileImg} />
+        <Image
+          source={{ uri: ownerInfo.profile_picture || placeholderImg }}
+          style={styles.profileImg}
+        />
         <View style={styles.userInfoContainer}>
           <View style={styles.subContainer}>
             <Text
@@ -72,7 +85,7 @@ function UserProfile({ user, owner }) {
               ellipsizeMode="tail"
               style={styles.userName}
             >
-              {owner.name ? owner.name : 'Nameless Beautiful Unicorn'}
+              {ownerInfo.name || 'Nameless Beautiful Unicorn'}
             </Text>
             <Pressable
               onPress={handlePress}
@@ -84,16 +97,20 @@ function UserProfile({ user, owner }) {
           <Text style={styles.reputation}>
             REP:
             {' '}
-            {owner.reputation ? owner.reputation : 0}
+            {ownerInfo.reputation || 0}
           </Text>
           <Text style={styles.bio}>
-            {owner.bio ? owner.bio : null}
+            BIO:
+            {' '}
+            {ownerInfo.bio || 'nothing is here yet'}
           </Text>
         </View>
       </View>
       <SegmentSelect
-        buttons={buttons}
-        views={views}
+        buttons={isOwner ? ['Cards', 'Listings', 'Past Transactions'] : ['Listings', 'Past Transactions']}
+        views={isOwner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
+        <Transactions owner={user} />] : [<CurrentListings owner={ownerInfo} />,
+        <Transactions owner={ownerInfo} />]}
       />
     </View>
   );
