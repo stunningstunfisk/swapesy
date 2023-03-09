@@ -1,26 +1,60 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { View, Image, Text, Pressable, TouchableOpacity } from 'react-native';
 import {
-  View, Image, Text, Pressable, TouchableOpacity,
-} from 'react-native';
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+  limit,
+  orderBy,
+} from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 import styles from '../../../styles/userProfile/listingCard';
+import placeholderImg from '../../../dev/test_data/stunfisk.png';
+import firebase from '../../config/firebase';
+import ListingInfo from '../../pages/ListingInfo/index';
+
+const db = getFirestore(firebase);
 
 // homePage is a prop passed in HomePage view to conditionally render views and
 // functionality available on HomePage only
 // listing prop will be passed down
-function ListingCard({ navigation, listing, homePage }) {
+function ListingCard({ listing, homePage, user }) {
+  const navigation = useNavigation();
+  const [showListing, setShowListing] = useState(false);
+  const [card, setCard] = useState({});
+
   const handleOffer = () => {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
+  const cardImg = card.uri ? card.uri : placeholderImg;
+
+  useEffect(() => {
+    const cardRef = doc(db, `card/${listing.cards[0]}`);
+    const q = query(cardRef);
+    getDoc(q)
+      .then((data) => {
+        setCard(data.data());
+      })
+      // eslint-disable-next-line no-console
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     // pressing on listing card opens up the listing page
+    // {showListing ? <ListingInfo listingId={listing.id} userId={user.uid} /> :
     <TouchableOpacity
       style={styles.wrapper}
-      // onPress={() => navigation.navigate('ListingInfo', { listingId: listing.id })}
+      // onPress={() => navigation.navigate('Main', { screen: 'ListingInfo', params: {listingId: listing.id, userId: user.uid }})}
+      onPress={() => setShowListing(!showListing)}
     >
       <View style={styles.imgWrapper}>
-        <Image source={listing.cards[0].url} style={styles.mainImg} />
+        <Image source={cardImg} style={styles.mainImg} />
       </View>
       <View style={styles.titleWrapper}>
         <Text
@@ -28,7 +62,7 @@ function ListingCard({ navigation, listing, homePage }) {
           numberOfLines={2}
           ellipsizeMode="tail"
         >
-          {listing.title}
+          {listing.title ? listing.title : 'Listing title'}
         </Text>
       </View>
       {homePage && (
@@ -42,6 +76,7 @@ function ListingCard({ navigation, listing, homePage }) {
         </Pressable>
       )}
     </TouchableOpacity>
+      // }
   );
 }
 
