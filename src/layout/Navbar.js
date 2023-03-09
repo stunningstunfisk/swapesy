@@ -14,19 +14,19 @@ function Navbar({ pages }) {
         initialRouteName="Home"
         screenOptions={
           ({ route }) => ({
-            headerStyle: {
-              backgroundColor: colors.dark,
-            },
             tabBarActiveTintColor: 'white',
-            tabBarInactiveTintColor: 'gray',
+            tabBarInactiveTintColor: 'grey',
             tabBarLabelStyle: {
               paddingBottom: 0,
               fontSize: 10,
             },
+            headerStyle: {
+              backgroundColor: colors.darkBackground,
+            },
             headerTitleStyle: { color: 'white', fontWeight: 'bold' },
             tabBarStyle: [
               {
-                backgroundColor: colors.dark,
+                backgroundColor: colors.darkBackground,
                 display: 'flex',
               },
               null,
