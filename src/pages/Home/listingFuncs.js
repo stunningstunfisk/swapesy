@@ -63,7 +63,8 @@ export default {
       .then((x) => x.forEach((y) => {
         extracted.push(y.data());
       }))
-      .then(() => (filter ? filterFuncs[filter](extracted, args, set) : set(extracted)))
+      .then(() => console.log('extracted', extracted))
+      .then(() => (filter ? filterFuncs[filter[0]](extracted, args, set) : set(extracted)))
       .catch((err) => console.error('ERROR:', err));
   },
   reputable: (set, filter) => {
