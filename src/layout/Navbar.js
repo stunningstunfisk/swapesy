@@ -12,16 +12,20 @@ function Navbar({ pages }) {
         initialRouteName="Home"
         screenOptions={
           ({ route }) => ({
-            tabBarActiveTintColor: '#7d311d',
+            tabBarActiveTintColor: 'white',
             tabBarInactiveTintColor: 'grey',
             tabBarLabelStyle: {
-              paddingBottom: 3,
+              paddingBottom: 0,
               fontSize: 10,
             },
+            headerStyle: {
+              backgroundColor: '#54130e',
+            },
+            headerTitleStyle: { color: 'white', fontWeight: 'bold' },
             tabBarStyle: [
               {
                 display: 'flex',
-                backgroundColor: '#e9e7e4',
+                backgroundColor: '#54130e',
               },
               null,
             ],

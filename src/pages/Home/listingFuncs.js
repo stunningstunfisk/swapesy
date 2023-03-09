@@ -57,9 +57,10 @@ export default {
     return getDocs(q)
       .then((x) => x.forEach((y) => {
         extracted.push(y.data());
+        console.log('y', y.data());
       }))
       .then(() => (filter ? filterFuncs[filter](extracted, filterVal, set) : set(extracted)))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('ERROR:', err));
   },
   reputable: (set, filter, filterVal) => {
     const ref = collection(db, 'listing');
@@ -78,12 +79,12 @@ export default {
             copy.reputation = x.data().reputation;
             return copy;
           })
-          .catch((err) => console.error(err));
+          .catch((err) => console.error('ERROR:', err));
       })))
       .then((data) => {
         extracted = data.sort((a, b) => a.reputation + b.reputation);
       })
       .then(() => (filter ? filterFuncs[filter](extracted, filterVal, set) : set(extracted)))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('ERROR:', err));
   },
 };
