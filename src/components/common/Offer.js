@@ -8,6 +8,10 @@ import {
 } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
+import colors from '../../../styles/globalColors';
+import fonts from '../../../styles/globalFonts';
+
+
 const db = getFirestore(firebase);
 
 const styles = StyleSheet.create({
@@ -40,10 +44,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   typeText: {
+    fontFamily: fonts.text.fontFamily,
     color: '#e9e7e4',
     left: '10%',
     fontSize: 20,
-    fontWeight: 'bold',
     top: '7%',
   },
   offer: {
@@ -70,6 +74,7 @@ const styles = StyleSheet.create({
     right: '5%',
   },
   offerText: {
+    fontFamily: fonts.text.fontFamily,
     color: '#e9e7e4',
     width: '60%',
     left: '8%',
