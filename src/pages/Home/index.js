@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 
-import AllListings from '../UserProfile/CurrentListings';
+// import AllListings from '../UserProfile/CurrentListings';
 import Options from './Options';
 import listingFuncs from './listingFuncs';
 
@@ -16,7 +16,7 @@ function Home({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <Options setSort={setSort} setFilter={setFilter} />
-      <AllListings listings={listings} />
+      {/* <AllListings listings={listings} /> */}
     </View>
   );
 }
