@@ -22,6 +22,8 @@ import MiniListingTitle from './MiniListingTitle';
 import PressableOpacity from './buttons/PressableOpacity';
 import TrashButton from './buttons/TrashButton';
 
+import colors from '../../../styles/globalColors';
+
 
 const styles = StyleSheet.create({
   button: {
@@ -43,12 +45,12 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: colors.darkBackground,
     borderRadius: 16,
     padding: 0,
     margin: 2,
     borderWidth: 2,
-    borderColor: 'rgba(128,128,128,0.25)',
+    borderColor: colors.darkBackgroundAlpha,
     elevation: 4, // for Android only
     shadowColor: '#c3b2a0',
     shadowOffset: { width: 1, height: 2 },
@@ -78,8 +80,6 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
   const [incomingOffers, setIncomingOffers] = useState([]);
 
   useEffect(() => {
-    console.log('listing offers are', listing.offers);
-
     Promise.all(listing.offers.map((offerId) => {
       const offerRef = doc(database, `offer/${offerId}`);
       const offerQuery = query(offerRef);

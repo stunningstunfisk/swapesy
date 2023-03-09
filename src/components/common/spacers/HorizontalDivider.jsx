@@ -2,15 +2,17 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import colors from '../../../../styles/globalColors';
+
 
 const styles = StyleSheet.create({
   pokeball: {
-    color: 'rgba(128,128,128,0.5)',
+    color: colors.dark,
     position: 'relative',
   },
   line: {
     flex: 1,
-    borderBottomColor: 'rgba(128,128,128,0.5)',
+    borderBottomColor: colors.dark,
     borderBottomWidth: 2,
     margin: 12,
     position: 'relative',
