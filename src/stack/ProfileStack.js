@@ -1,21 +1,27 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+// import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import UserProfile from '../pages/UserProfile/index';
+import EditProfile from '../pages/UserProfile/EditProfile';
 import ListingInfo from '../pages/ListingInfo/index';
 import Chat from '../pages/Chat';
 
 const Stack = createStackNavigator();
 
-export default function ProfileStack() {
+export default function ProfileStack({ user, listing }) {
   return (
-    <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="ListingInfo" component={ListingInfo} />
-        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="UserProfile">
+          {() => <UserProfile user={user} />}
+        </Stack.Screen>
+        <Stack.Screen name="EditProfile">
+          {() => <EditProfile user={user} />}
+        </Stack.Screen>
+        {/* <Stack.Screen name="ListingInfo">
+          {() => <ListingInfo user={user} listing={listing} />}
+        </Stack.Screen> */}
       </Stack.Navigator>
-    </NavigationContainer>
   );
 }

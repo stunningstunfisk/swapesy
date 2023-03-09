@@ -1,24 +1,61 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { View, Text, FlatList, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {
-  View, Text, FlatList, Image,
-} from 'react-native';
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+  limit,
+  orderBy,
+} from 'firebase/firestore';
 import ListingCard from '../../components/common/ListingCard';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
 import styles from '../../../styles/userProfile/userProfile';
 
+import firebase from '../../config/firebase';
+
 const { LISTINGS } = require('../../../dev/test_data/data_profile');
 
-function Item({ listing }) {
+const db = getFirestore(firebase);
+const listingRef = collection(db, 'listing');
+
+function Item({ listing, user }) {
   return (
     <View style={{ color: 'pink' }}>
-      <ListingCard listing={listing} />
+      <ListingCard listing={listing} user={user} />
     </View>
   );
 }
 
-const listings = LISTINGS;
+// const listings = LISTINGS;
 
-function CurrentListings() { // listings props will be passed down
+function CurrentListings({ owner }) { // listings props will be passed down
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    console.log('Listings');
+    const fetched = [];
+    const setFetched = async (listingsData) => {
+      setListings(listingsData);
+    };
+    const q = query(listingRef, where('user', '==', owner.uid)); // add a limit ?
+    const fetchListings = async () => {
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach(async (doc) => {
+        fetched.push(doc.data());
+        console.log('listings ', fetched);
+        await setFetched(fetched);
+      });
+    };
+    fetchListings();
+  }, []);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {listings ? (
@@ -27,7 +64,7 @@ function CurrentListings() { // listings props will be passed down
           // contentContainerStyle={{marginTop: 10, paddingBottom: 50}}
           showsVerticalScrollIndicator={false}
           data={listings}
-          renderItem={({ item }) => <Item listing={item} />}
+          renderItem={({ item }) => <Item listing={item} user={owner}/>}
           keyExtreactor={(item) => item.id}
           numColumns={2}
         />

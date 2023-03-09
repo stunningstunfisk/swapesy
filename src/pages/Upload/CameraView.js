@@ -1,6 +1,15 @@
 import { Camera, CameraType } from 'expo-camera';
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ImageBackground, Alert } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  ImageBackground,
+  Alert,
+} from 'react-native';
 import CameraButton from '../../components/upload_page/CameraButtons.js';
 import { useNavigation } from '@react-navigation/native';
 // import { fireStorage } from "../config/firebase";
@@ -52,7 +61,8 @@ function CameraView({ user, state }) {
       {showCamera ? (
         <Camera style={styles.camera} type={CameraType.back} ref={cameraRef}>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}
+            <TouchableOpacity
+              style={styles.button}
               onPress={async () => {
                 const r = await takePicture();
                 if (!r.cancelled) {
@@ -67,7 +77,9 @@ function CameraView({ user, state }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={async () => { navigation.navigate('UploadCard'); }}
+              onPress={async () => {
+                navigation.navigate('UploadCard');
+              }}
             >
               <Text style={styles.text}>Cancel</Text>
             </TouchableOpacity>
@@ -75,17 +87,19 @@ function CameraView({ user, state }) {
         </Camera>
       ) : (
         <View style={{ width: '100%', height: '100%', position: 'relative' }}>
-          <ImageBackground
-            source={{ uri: image }}
-            style={{ flex: 1 }}
-          >
+          <ImageBackground source={{ uri: image }} style={{ flex: 1 }}>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={() => setShowCamera(true)}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setShowCamera(true)}
+              >
                 <Text style={styles.text}>Re-take</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                onPress={async () => { navigation.navigate('UploadCard'); }}
+                onPress={async () => {
+                  navigation.navigate('UploadCard');
+                }}
               >
                 <Text style={styles.text}>Done</Text>
               </TouchableOpacity>
@@ -126,12 +140,12 @@ const styles = StyleSheet.create({
   },
   reTakeButton: {
     margin: 5,
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     width: 25,
     height: 25,
-    color: "tomato",
+    color: 'tomato',
   },
   text: {
     fontSize: 20,
