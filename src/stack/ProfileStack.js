@@ -12,6 +12,7 @@ const Stack = createStackNavigator();
 
 export default function ProfileStack({ user, listing, owner }) {
   console.log('user in Profilestack', user);
+  console.log('owner in Profilestack', owner);
   return (
     <Stack.Navigator>
       <Stack.Screen name="UserProfile" options={{ headerShown: false, headerBackVisible: true }}>
