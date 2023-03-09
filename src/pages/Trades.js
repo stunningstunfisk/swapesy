@@ -20,6 +20,7 @@ import MiniListing from '../components/common/MiniListing';
 import MiniOffer from '../components/common/MiniOffer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
+import colors from '../../styles/globalColors';
 
 // TODO: Remove hardcoded magic strings and test data!!
 const TEST_USER_ID = 'AshKetchum';
@@ -30,8 +31,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   fontVT323: {
+    color: colors.light,
     fontFamily: 'VT323',
     fontSize: 20,
+  },
+  tradesView: {
+    backgroundColor: colors.background,
+    flex: 1,
   },
 });
 
@@ -72,17 +78,17 @@ function Trades({ navigation, user }) {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.tradesView}>
       <View style={styles.navbarView}>
         <PressableOpacity
           onPress={() => setCurrentView(0)}
-          style={{ height: 48, backgroundColor: currentView === 0 ? 'green' : 'lightgrey' }}
+          style={{ height: 48, backgroundColor: currentView === 0 ? colors.primary : 'lightgrey' }}
         >
           <Text style={styles.fontVT323}>MY OPEN LISTINGS</Text>
         </PressableOpacity>
         <PressableOpacity
           onPress={() => setCurrentView(1)}
-          style={{ height: 48, backgroundColor: currentView === 0 ? 'lightgrey' : 'green' }}
+          style={{ height: 48, backgroundColor: currentView === 0 ? 'lightgrey' : colors.primary }}
         >
           <Text style={styles.fontVT323}>OUTGOING OFFERS</Text>
         </PressableOpacity>
