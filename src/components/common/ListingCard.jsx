@@ -32,7 +32,7 @@ function ListingCard({ listing, homePage, user }) {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
-  const cardImg = card.uri ? card.uri : placeholderImg;
+  const cardImg = card.uri ? card.uri : 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg';
 
   useEffect(() => {
     const cardRef = doc(db, `card/${listing.cards[0]}`);
@@ -54,7 +54,7 @@ function ListingCard({ listing, homePage, user }) {
       onPress={() => setShowListing(!showListing)}
     >
       <View style={styles.imgWrapper}>
-        <Image source={cardImg} style={styles.mainImg} />
+        <Image source={{ uri: cardImg }} style={styles.mainImg} />
       </View>
       <View style={styles.titleWrapper}>
         <Text
@@ -76,7 +76,7 @@ function ListingCard({ listing, homePage, user }) {
         </Pressable>
       )}
     </TouchableOpacity>
-      // }
+  // }
   );
 }
 
