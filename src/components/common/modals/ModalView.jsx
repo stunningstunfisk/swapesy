@@ -53,7 +53,7 @@ export default function ModalView({
       <Animated.View
         style={{
           height: pictureView ? '100%' : '50%',
-          marginTop: screenHeight / (pictureView ? 2 : 5),
+          marginTop: screenHeight / (pictureView ? 3 : 5),
           transform: [{ translateY: pan.y }],
         }}
         {...panResponder.panHandlers}
@@ -67,7 +67,6 @@ export default function ModalView({
             borderRadius: 5,
           }}
         >
-          <Text>Hello World!</Text>
           <Button title="Close Modal" onPress={handleModal} />
           {children}
         </View>
