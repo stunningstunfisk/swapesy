@@ -20,14 +20,14 @@ function Navbar({ pages }) {
             tabBarActiveTintColor: colors.primary,
             tabBarInactiveTintColor: 'grey',
             tabBarLabelStyle: {
-              paddingBottom: 3,
+              paddingBottom: 0,
               fontSize: 10,
             },
+            headerTitleStyle: { color: 'white', fontWeight: 'bold' },
             tabBarStyle: [
               {
                 backgroundColor: colors.darkBackground,
                 display: 'flex',
-                height: 64,
               },
               null,
             ],
