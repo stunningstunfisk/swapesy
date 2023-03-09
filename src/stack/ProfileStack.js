@@ -10,21 +10,24 @@ import Chat from '../pages/Chat';
 
 const Stack = createStackNavigator();
 
-export default function ProfileStack({ user, listing }) {
+export default function ProfileStack({ user, listing, owner }) {
+  console.log('user in Profilestack', user);
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile">
-        {() => <Profile user={user} />}
+      <Stack.Screen name="UserProfile" options={{ headerShown: false, headerBackVisible: true }}>
+        {() => <Profile user={user} owner={owner} />}
       </Stack.Screen>
-      <Stack.Screen name="EditProfile">
+      <Stack.Screen name="Edit" options={{ headerShown: false, headerBackVisible: true }}>
         {() => <EditProfile user={user} />}
       </Stack.Screen>
-      <Stack.Screen name="ListingInfo">
+      <Stack.Screen name="ListingInfo" options={{ headerShown: false }}>
         {() => <ListingInfo user={user} listing={listing} />}
       </Stack.Screen>
-      <Stack.Screen name="Chat">
+      <Stack.Screen name="Chat" options={{ headerShown: false }}>
         {() => <Chat user={user} listing={listing} />}
       </Stack.Screen>
     </Stack.Navigator>
   );
 }
+
+// TODO check with Mark which Page to navigate in Chats to and what params to pass

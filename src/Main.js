@@ -9,11 +9,12 @@ import HomePage from './pages/Home';
 import ChatPage from './stack/ChatStack';
 import TradesStack from './stack/TradeStack';
 import UploadStack from './stack/UploadStack';
-import UserProfilePage from './pages/UserProfile';
+import UserProfilePage from './stack/ProfileStack';
 
 const Tab = createBottomTabNavigator();
 
 function Main({ user }) {
+  console.log('user in Main', user);
   return (
     <Navbar
       pages={
@@ -25,8 +26,13 @@ function Main({ user }) {
             <Tab.Screen name="Upload">
               {() => <UploadStack user={user} />}
             </Tab.Screen>
-            <Tab.Screen name="Profile">
-              {() => <UserProfilePage user={user} owner={user} />}
+            <Tab.Screen name="Profile" options={{ headerBackVisible: true }}>
+              {(state) => (
+                <UserProfilePage
+                  user={user}
+                  owner={state.route.params ? state.route.params : user}
+                />
+              )}
             </Tab.Screen>
           </>
         )
