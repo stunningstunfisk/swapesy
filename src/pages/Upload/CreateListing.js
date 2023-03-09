@@ -110,9 +110,9 @@ function CreateListing({ user }) {
         onToggle={isOn => console.log("changed to : ", isOn)}
       />
       <ModalView handleModal={handleModal} modalVisible={modalVisible} />
-        <Pressable onPress={handleModal}>
-          <Text>Select Cards</Text>
-        </Pressable>
+      <Pressable onPress={handleModal}>
+        <Text>Select Cards</Text>
+      </Pressable>
     </View>
   );
 }

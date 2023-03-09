@@ -21,6 +21,7 @@ import MiniOffer from '../components/common/MiniOffer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
 import colors from '../../styles/globalColors';
+import fonts from '../../styles/globalFonts';
 
 // TODO: Remove hardcoded magic strings and test data!!
 const TEST_USER_ID = 'AshKetchum';
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   },
   fontVT323: {
     color: colors.light,
-    fontFamily: 'VT323',
+    fontFamily: fonts.text.fontFamily,
     fontSize: 20,
   },
   tradesView: {
@@ -60,7 +61,6 @@ function Trades({ navigation, user }) {
     const listings = [];
     getDocs(listingQuery)
       .then((data) => {
-        console.log('listing data', data);
         data.forEach((item) => listings.push(item.data()));
       })
       .then(() => {

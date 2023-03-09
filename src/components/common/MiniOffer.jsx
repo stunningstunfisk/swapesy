@@ -22,6 +22,8 @@ import HorizontalDivider from './spacers/HorizontalDivider';
 import TrashButton from './buttons/TrashButton';
 
 import colors from '../../../styles/globalColors';
+import fonts from '../../../styles/globalFonts';
+
 
 const styles = StyleSheet.create({
   avatar: {
@@ -44,9 +46,9 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 4,
     borderWidth: 2,
-    borderColor: colors.darkBackgroundAlpha,
+    borderColor: colors.darkBackground,
     elevation: 4, // for Android only
-    shadowColor: '#c3b2a0',
+    shadowColor: colors.primary,
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
@@ -57,6 +59,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 16,
   },
+  price: {
+    fontFamily: fonts.text.fontFamily,
+    fontSize: 24,
+  },
   profileImage: {
     height: 100,
     width: 100,
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: 500,
   },
   title: {
-    fontFamily: 'VT323',
+    fontFamily: fonts.text.fontFamily,
     fontSize: 32,
     width: '90%',
   },
@@ -156,8 +162,14 @@ function MiniOffer({ offer }) {
               ))}
             </View>
           </View>
+          {(offer.price > 0)
+            ? (
+              <Text style={styles.price}>{`$${offer.price}`}</Text>
+            )
+            : (
+              null
+            )}
           <FontAwesome style={styles.chevron} name="chevron-right" size={24} color="black" />
-          {/* <Text>CARD PLACEHOLDER</Text> */}
 
         </ListItem.Swipeable>
 

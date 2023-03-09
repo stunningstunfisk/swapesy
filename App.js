@@ -16,6 +16,8 @@ export default function App() {
   const { user } = useAuthentication();
   const [fontsLoaded] = useFonts({
     'VT323': require('./assets/fonts/VT323-Regular.ttf'),
+    'PokemonSolid': require('./assets/fonts/Pokemon-Solid.ttf'),
+    'Ketchum': require('./assets/fonts/Ketchum.otf'),
   });
 
   const isHermes = () => !!global.HermesInternal;

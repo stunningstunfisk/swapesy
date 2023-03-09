@@ -23,6 +23,7 @@ import PressableOpacity from './buttons/PressableOpacity';
 import TrashButton from './buttons/TrashButton';
 
 import colors from '../../../styles/globalColors';
+import fonts from '../../../styles/globalFonts';
 
 
 const styles = StyleSheet.create({
@@ -50,9 +51,9 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 2,
     borderWidth: 2,
-    borderColor: colors.darkBackgroundAlpha,
+    borderColor: colors.darkBackground,
     elevation: 4, // for Android only
-    shadowColor: '#c3b2a0',
+    shadowColor: colors.primary,
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
@@ -114,7 +115,7 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
           {/* Collapsable Content */}
           <PressableOpacity style={{ backgroundColor: 'red', height: 48 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <Text>DELETE LISTING</Text>
+              <Text style={[fonts.text, { fontSize: 24 }]}>DELETE LISTING</Text>
             </View>
           </PressableOpacity>
 
