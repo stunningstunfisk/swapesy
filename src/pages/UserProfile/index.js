@@ -2,18 +2,11 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { View, Text, Image, Pressable } from 'react-native';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
 import {
   getFirestore,
   addDoc,
-  query,
-  where,
   Timestamp,
-  doc,
-  setDoc,
   collection,
-  limit,
-  orderBy,
 } from 'firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
