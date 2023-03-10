@@ -32,28 +32,31 @@ function Item({ listing, user }) {
   );
 }
 
-// const listings = LISTINGS;
+const addUri = (listing) => {
+  const ref = doc(db, 'card', listing.cards[0]);
+  const q = query(ref);
+  return getDoc(q)
+    .then((data) => {
+      const clone = { ...listing };
+      clone.uri = data.data().uri;
+      return clone;
+    })
+    .catch((err) => console.error(err));
+};
 
 function CurrentListings({ owner }) { // listings props will be passed down
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    // console.log('Listings');
-    const fetched = [];
-    const setFetched = async (listingsData) => {
-      setListings(listingsData);
-    };
-    const q = query(listingRef, where('user', '==', owner.uid)); // add a limit ?
-    const fetchListings = async () => {
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach(async (doc) => {
-        fetched.push(doc.data());
-        // console.log('listings ', fetched);
-        await setFetched(fetched);
-      });
-    };
-    fetchListings();
+    const q = query(listingRef, where('user', '==', owner.uid));
+    const extracted = [];
+    getDocs(q)
+      .then((x) => x.forEach((y) => {
+        extracted.push(y.data());
+      }))
+      .then(() => Promise.all(extracted.map((listing) => addUri(listing))))
+      .then((uriAdded) => setListings(uriAdded))
+      .catch((err) => console.error(err));
   }, []);
 
   return (

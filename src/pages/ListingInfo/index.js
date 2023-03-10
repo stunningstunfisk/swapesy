@@ -20,9 +20,9 @@ import fetchUserCards from '../../util/fetchUserCards';
 
 const db = getFirestore(firebase);
 
-function ListingInfo({ user, listingId }) {
+function ListingInfo({ userId, listingId }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [cards, setCards] = useState([]);
+  const [modalCards, setModalCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
 
   const [seller, setSeller] = useState({
@@ -37,12 +37,16 @@ function ListingInfo({ user, listingId }) {
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);
 
+  let user;
+  let cards;
+
   useEffect(() => {
     const ref = doc(db, `listing/${listingId}`);
     const q = query(ref);
     getDoc(q)
       .then((data) => {
-        const { cards, user } = data.data();
+        cards = data.data().cards;
+        user = data.data().user;
         setSellerId(user);
 
         // Getting Cards
@@ -68,11 +72,9 @@ function ListingInfo({ user, listingId }) {
         const offersQ = query(offersRef, where('listing', '==', listingId));
         const offers = [];
         getDocs(offersQ)
-          .then((x) =>
-            x.forEach((y) => {
-              offers.push(y.data());
-            }),
-          )
+          .then((x) => x.forEach((y) => {
+            offers.push(y.data());
+          }))
           .then(() => setListingOffers(offers))
           .catch((err) => console.error(err));
       })
@@ -82,7 +84,7 @@ function ListingInfo({ user, listingId }) {
   const handleModal = async () => {
     await fetchUserCards(user)
       .then((data) => {
-        setCards(data);
+        setModalCards(data);
       })
       .then(() => setModalVisible(!modalVisible))
       .catch((err) => console.error(err));
@@ -117,14 +119,14 @@ function ListingInfo({ user, listingId }) {
       <Offers
         offers={listingOffers}
         sellerId={sellerId}
-        currUserId={user.uid}
+        currUserId={userId}
       />
       <ModalView modalVisible={modalVisible} handleModal={handleModal}>
         <ModalRoute
           handleModal={handleModal}
           route="Offer"
           content={{
-            cards,
+            modalCards,
             handleSelectedCards,
             selectedCards,
             handleModal: handleModalOpen,
