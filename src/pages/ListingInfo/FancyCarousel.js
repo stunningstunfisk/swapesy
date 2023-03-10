@@ -39,7 +39,8 @@ function FancyCarousel({
             <View style={styles.cardCap}>
               <Text
                 style={{
-                  fontWeight: 'bold',
+                  fontFamily: 'VT323',
+                  fontSize: 16,
                   textAlign: 'center',
                   color: '#e9e7e4',
                 }}

@@ -20,16 +20,13 @@ function Offers({ offers, sellerId, currUserId }) {
             <View style={{
               alignItems: 'center',
               justifyContent: 'center',
-              width: '100%',
-              height: '180%',
             }}
             >
               <Text
                 style={{
+                  fontSize: 48,
+                  fontFamily: 'VT323',
                   textAlign: 'center',
-                  width: '60%',
-                  fontSize: 30,
-                  fontWeight: 'bold',
                 }}
               >
                 Be the first to make an offer!
