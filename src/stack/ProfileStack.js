@@ -10,9 +10,9 @@ import Chat from '../pages/Chat';
 
 const Stack = createStackNavigator();
 
-export default function ProfileStack({ user, listing, owner }) {
-  console.log('user in Profilestack', user.name);
-  console.log('owner in Profilestack', owner.name);
+export default function ProfileStack({ user, owner, listing }) {
+  // console.log('user in Profilestack', user);
+  // console.log('owner in Profilestack', owner);
   return (
     <Stack.Navigator>
       <Stack.Screen name="UserProfile" options={{ headerShown: false, headerBackVisible: true }}>
@@ -32,3 +32,37 @@ export default function ProfileStack({ user, listing, owner }) {
 }
 
 // TODO check with Mark which Page to navigate in Chats to and what params to pass
+
+
+/* eslint-disable react/prop-types */
+// import React from 'react';
+// // import { NavigationContainer } from '@react-navigation/native';
+// import { createStackNavigator } from '@react-navigation/stack';
+
+// import Profile from '../pages/UserProfile/index';
+// import EditProfile from '../pages/UserProfile/EditProfile';
+// import ListingInfo from '../pages/ListingInfo/index';
+// import Chat from '../pages/Chat';
+
+// const Stack = createStackNavigator();
+
+// export default function ProfileStack({ navigation }) {
+//   // console.log('user in Profilestack', user);
+//   // console.log('owner in Profilestack', owner);
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name="UserProfile" options={{ headerShown: false, headerBackVisible: true }}>
+//         {() => <Profile />}
+//       </Stack.Screen>
+//       <Stack.Screen name="Edit" options={{ headerShown: false, headerBackVisible: true }}>
+//         {() => <EditProfile />}
+//       </Stack.Screen>
+//       <Stack.Screen name="ListingInfo" options={{ headerShown: false }}>
+//         {() => <ListingInfo />}
+//       </Stack.Screen>
+//       <Stack.Screen name="Chat" options={{ headerShown: false }}>
+//         {() => <Chat />}
+//       </Stack.Screen>
+//     </Stack.Navigator>
+//   );
+// }

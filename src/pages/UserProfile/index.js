@@ -29,57 +29,62 @@ function createNewChat(currentUserId, otherUserId) {
 }
 
 function UserProfile({ owner, user }) {
-  const isFocused = useIsFocused();
-  console.log('owner here ', owner.uid);
-  console.log('user here ', user.uid);
-  // let isOwner;
-  const [ownerInfo, setOwnerInfo] = useState(user);
-  const [isOwner, setIsOwner] = useState(true);
-  // if (owner.route !== undefined) {
-  //   if (owner.route.params.owner.uid === user.uid) {
-  //     // owner.uid = owner.route.params.owner.name;
-  //     console.log('I\'m the owner ', owner);
-  //     isOwner = false;
-  //     // owner = user;
-  //   }
-  // } else {
-  //   isOwner = true;
-  //   console.log('got owner ', owner);
-  //   owner = owner.owner;
+  // const isFocused = useIsFocused();
+  // if (owner !== undefined) {
+  //   console.log('owner here ', owner);
   // }
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    if (isFocused) {
-      const fetchOwner = async () => {
-        const userRef = doc(db, 'user', owner.uid);
-        const quser = query(userRef);
-        const userSnapshot = await getDoc(quser);
-        setOwnerInfo(userSnapshot.data());
-      };
-      if (owner.route !== undefined) {
-        if (owner.route.params.owner.user === user.uid) {
-          // case where user = owner
-          owner.uid = owner.route.params.owner.name;
-          console.log('I\'m the owner ', owner.uid);
-          console.log('I\'m the user ', user.uid);
-          setIsOwner(false);
-          setOwnerInfo(user); // can use user herer
-          // owner = user;
-        }
-      } else {
-        // case where user != owner
-        setIsOwner(true);
-        console.log('got owner ', owner.uid);
-        console.log('got owner-user', user.uid);
-        fetchOwner();
-        // setOwnerInfo(owner.owner);
-      }
+  // console.log('user here ', user);
+  // console.log('in index ', navigation.state.params);
+  // console.log('in index ', route.params);
+  // const [ownerInfo, setOwnerInfo] = useState(user);
+  // const [isOwner, setIsOwner] = useState(true);
+  let isOwner;
+  if (owner.route !== undefined) {
+    if (owner.route.params.owner.uid === user.uid) {
+      // owner.uid = owner.route.params.owner.name;
+      console.log('I\'m the owner ', owner);
+      isOwner = false;
+      // owner = user;
     }
-  }, [isFocused, ownerInfo]);
+  } else {
+    isOwner = true;
+    console.log('got owner ', owner);
+    console.log('got user ', user);
+    owner = user;
+  }
 
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     const fetchOwner = async () => {
+  //       const userRef = doc(db, 'user', owner.uid);
+  //       const quser = query(userRef);
+  //       const userSnapshot = await getDoc(quser);
+  //       setOwnerInfo(userSnapshot.data());
+  //     };
+  //     if (owner.route !== undefined) {
+  //       if (owner.route.params.owner.user === user.uid) {
+  //         // case where user = owner
+  //         owner.uid = owner.route.params.owner.name;
+  //         console.log('I\'m the owner ', owner.uid);
+  //         console.log('I\'m the user ', user.uid);
+  //         setIsOwner(false);
+  //         setOwnerInfo(user); // can use user herer
+  //         // owner = user;
+  //       }
+  //     } else {
+  //       // case where user != owner
+  //       setIsOwner(true);
+  //       console.log('got owner ', owner.uid);
+  //       console.log('got owner-user', user.uid);
+  //       fetchOwner();
+  //       // setOwnerInfo(owner.owner);
+  //     }
+  //   }
+  // }, [isFocused, ownerInfo]);
+
+  const navigation = useNavigation();
   const handlePress = () => {
-    if (isOwner) {
+    if (user.uid === owner.uid) {
       navigation.navigate('Edit', user);
     } else {
       createNewChat(user.uid, owner.uid);
@@ -90,10 +95,7 @@ function UserProfile({ owner, user }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Image
-          source={{ uri: ownerInfo.profile_picture || placeholderImg }}
-          style={styles.profileImg}
-        />
+        <Image source={{ uri: owner.profile_picture || placeholderImg }} style={styles.profileImg} />
         <View style={styles.userInfoContainer}>
           <View style={styles.subContainer}>
             <Text
@@ -101,7 +103,7 @@ function UserProfile({ owner, user }) {
               ellipsizeMode="tail"
               style={styles.userName}
             >
-              {ownerInfo.name || 'Nameless Beautiful Unicorn'}
+              {owner.name ? owner.name : 'Nameless Beautiful Unicorn'}
             </Text>
             <Pressable
               onPress={handlePress}
@@ -113,20 +115,18 @@ function UserProfile({ owner, user }) {
           <Text style={styles.reputation}>
             REP:
             {' '}
-            {ownerInfo.reputation || 0}
+            {owner.reputation ? owner.reputation : 0}
           </Text>
           <Text style={styles.bio}>
-            BIO:
-            {' '}
-            {ownerInfo.bio || 'nothing is here yet'}
+            {owner.bio ? owner.bio : null}
           </Text>
         </View>
       </View>
       <SegmentSelect
-        buttons={isOwner ? ['Cards', 'Listings', 'Past Transactions'] : ['Listings', 'Past Transactions']}
-        views={isOwner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
-        <Transactions owner={user} />] : [<CurrentListings owner={ownerInfo} />,
-        <Transactions owner={ownerInfo} />]}
+        buttons={owner ? ['Cards', 'Listings', 'Past Transactions'] : ['Listings', 'Past Transactions']}
+        views={owner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
+        <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
+        <Transactions owner={owner} />]}
       />
     </View>
   );

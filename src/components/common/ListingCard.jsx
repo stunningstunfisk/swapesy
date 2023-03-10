@@ -20,21 +20,18 @@ const db = getFirestore(firebase);
 // functionality available on HomePage only
 // listing prop will be passed down
 function ListingCard({ listing, homePage, user }) {
-  const [showListing, setShowListing] = useState(false);
   const [card, setCard] = useState({});
   const navigation = useNavigation();
   const handleOffer = () => {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
+
   return (
 
-    // pressing on listing card opens up the listing page
-    // {showListing ? <ListingInfo listingId={listing.id} userId={user.uid} /> :
     <TouchableOpacity
       style={styles.wrapper}
       onPress={() => navigation.navigate('ListingInfo', { listingId: listing.id, userId: user.uid })}
-      // onPress={() => setShowListing(!showListing)}
     >
       <View style={styles.imgWrapper}>
         <Image source={{ uri: listing.uri || 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg' }} style={styles.mainImg} />

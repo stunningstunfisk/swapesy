@@ -18,10 +18,10 @@ import firebase from '../../config/firebase';
 const db = getFirestore(firebase);
 const listingRef = collection(db, 'listing');
 
-function Item({ listing, user }) {
+function Item({ listing, owner }) {
   return (
     <View style={{ color: 'pink' }}>
-      <ListingCard listing={listing} user={user} />
+      <ListingCard listing={listing} user={owner} />
     </View>
   );
 }
@@ -53,7 +53,7 @@ function CurrentListings({ owner }) {
           columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
           showsVerticalScrollIndicator={false}
           data={listings}
-          renderItem={({ item }) => <Item listing={item} user={owner} />}
+          renderItem={({ item }) => <Item listing={item} owner={owner} />}
           keyExtreactor={(item) => item.id}
           numColumns={2}
         />

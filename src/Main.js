@@ -57,6 +57,7 @@ function Main({ user }) {
                 <UserProfilePage
                   user={user}
                   owner={state.route.params ? state.route.params : user}
+                  // owner={user}
                 />
               )}
             </Tab.Screen>
