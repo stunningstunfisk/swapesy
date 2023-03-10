@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
 // eslint-disable-next-line react/prop-types
 function SignUp({ navigation }) {
   const [value, setValue] = useState({
+    uid: '',
     email: '',
     password: '',
     name: '',
@@ -65,6 +66,7 @@ function SignUp({ navigation }) {
 
       // Create new user document
       await setDoc(doc(db, 'user', newUser.user.uid), {
+        uid: newUser.user.uid,
         email: newUser.user.email,
         name: newUser.user.name,
         bio: newUser.user.bio,
@@ -107,7 +109,7 @@ function SignUp({ navigation }) {
           <Input
             placeholder="Username"
             containerStyle={styles.control}
-            value={value.password}
+            value={value.name}
             onChangeText={(text) => setValue({ ...value, name: text })}
             secureTextEntry
             leftIcon={(
@@ -133,7 +135,7 @@ function SignUp({ navigation }) {
           <Input
             placeholder="About You"
             containerStyle={styles.control}
-            value={value.password}
+            value={value.bio}
             onChangeText={(text) => setValue({ ...value, bio: text })}
             secureTextEntry
             leftIcon={(
@@ -146,7 +148,7 @@ function SignUp({ navigation }) {
           <Input
             placeholder="Your Location"
             containerStyle={styles.control}
-            value={value.password}
+            value={value.location}
             onChangeText={(text) => setValue({ ...value, location: text })}
             secureTextEntry
             leftIcon={(
