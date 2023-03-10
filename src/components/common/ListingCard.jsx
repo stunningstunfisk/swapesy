@@ -41,7 +41,7 @@ function ListingCard({ listing, homePage, user }) {
   return (
     <TouchableOpacity
       style={styles.wrapper}
-      onPress={() => navigation.navigate('Home', { screen: 'ListingInfo', params: { listingId: listing.id, userId: user.uid } })}
+      onPress={() => navigation.navigate('ListingInfo', { screen: 'ListingInfo', params: { listingId: listing.id, userId: user.uid } })}
     >
       <View style={styles.imgWrapper}>
         <Image source={{ uri: listing.uri || 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg' }} style={styles.mainImg} />
