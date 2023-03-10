@@ -11,8 +11,8 @@ import Chat from '../pages/Chat';
 const Stack = createStackNavigator();
 
 export default function ProfileStack({ user, listing, owner }) {
-  console.log('user in Profilestack', user);
-  console.log('owner in Profilestack', owner);
+  console.log('user in Profilestack', user.name);
+  console.log('owner in Profilestack', owner.name);
   return (
     <Stack.Navigator>
       <Stack.Screen name="UserProfile" options={{ headerShown: false, headerBackVisible: true }}>
