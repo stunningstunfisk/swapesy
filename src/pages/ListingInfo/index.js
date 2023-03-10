@@ -111,13 +111,13 @@ function ListingInfo({ user, listingId }) {
         seller={seller}
         sellerId={sellerId}
         listingId={listingId}
-        userId={userId}
+        user={user}
         handleModal={handleModal}
       />
       <Offers
         offers={listingOffers}
         sellerId={sellerId}
-        currUserId={user.uid}
+        currUserId={user}
       />
       <ModalView modalVisible={modalVisible} handleModal={handleModal}>
         <ModalRoute

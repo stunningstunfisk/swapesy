@@ -76,10 +76,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// homePage is a prop passed in HomePage view to conditionally render views and
-// functionality available on HomePage only
-// listing prop will be passed down
-function ListingCard({ listing, homePage, user }) {
+function ListingCard({ listing, user }) {
   const [seller, setSeller] = useState({});
   console.log('seller is', seller, listing);
 
@@ -88,7 +85,7 @@ function ListingCard({ listing, homePage, user }) {
   const isPlural = `offer${listing.offers?.length > 1 ? 's' : ''}`;
 
   const handlePress = () => {
-    navigation.navigate('ListingInfo', { listingId: listing.id, userId: user.uid });
+    navigation.navigate('ListingInfo', { listingId: listing.id, user: user.uid });
   };
 
   useEffect(() => {
