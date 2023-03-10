@@ -130,7 +130,8 @@ function MessageList({ user, state }) {
         messages.length
           ? (
             <FlatList
-              data={messages}
+              inverted
+              data={[...messages].reverse()}
               renderItem={
                 ({ item }) => {
                   const { messageWith } = state.route.params;
