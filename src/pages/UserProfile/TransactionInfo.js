@@ -19,8 +19,6 @@ function Transaction({ transaction, owner }) {
     setRating(value);
   };
 
-  // for the field with buyer name: I can either add another query when I'm querying for all the transactions to get the name
-  // or we can store buyer name in the buyer field in listings/offers
   return (
     <View style={styles.transactionWrapper}>
       <Text style={styles.transaction}>{type}</Text>
@@ -32,7 +30,7 @@ function Transaction({ transaction, owner }) {
         style={styles.transaction}
         onPress={rateTransaction}
       >
-        {rating}
+        {transaction.rating}
       </Text>
     </View>
   );
