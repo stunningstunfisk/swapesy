@@ -129,7 +129,7 @@ function Trades({ navigation, user }) {
                   data={userListings}
                   ListEmptyComponent={<Text>NO DATA</Text>}
                   renderItem={({ item }) => <MiniListing listing={item} user={user} />}
-                  keyExtractor={(listing, index) => listing.id + index}
+                  keyExtractor={(item, index) => (item + index)}
                 />
               </>
             )
@@ -148,7 +148,7 @@ function Trades({ navigation, user }) {
                   ListEmptyComponent={<Text>NO DATA</Text>}
                   renderItem={({ item }) => <MiniOffer user={user} offer={item} />}
                   // renderItem={({ item }) => <Text>OFFER FOUND</Text>}
-                  keyExtractor={(item, index) => item.id + index}
+                  keyExtractor={(item, index) => (item + index)}
                 />
               </>
             )}
