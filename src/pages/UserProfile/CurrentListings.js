@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image } from 'react-native';
 import {
+  doc,
+  getDoc,
   getFirestore,
   getDocs,
   collection,
@@ -20,7 +22,7 @@ const listingRef = collection(db, 'listing');
 
 function Item({ listing, owner }) {
   return (
-    <View style={{ color: 'pink' }}>
+    <View>
       <ListingCard listing={listing} user={owner} />
     </View>
   );
