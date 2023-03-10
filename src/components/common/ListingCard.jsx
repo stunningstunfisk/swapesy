@@ -120,7 +120,6 @@ function ListingCard({ listing, user }) {
           value={listing.cards.length}
           status="success"
           containerStyle={{ position: 'absolute', top: 0, right: 0, width: 7, heigth: 7, backgoundColor: colors.light, borderColor: colors.dark}}
-          badgeStyle={{backgroundColor: colors.light}}
           textStyle={{fontFamily: fonts.tabHeader.fontFamily, alignText: 'center', color: '#54130e'}}
         />
       // </View>
