@@ -28,7 +28,7 @@ function FancyCarousel({
   };
 
   return (
-    <View style={styles.carousel}>
+    <View style={[styles.carousel, { backgroundColor: 'rgba(0,0,0,0)' }]}>
       <Carousel
         layout="tinder"
         layoutCardOffset={9}
