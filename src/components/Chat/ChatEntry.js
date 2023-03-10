@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ListItem, Avatar } from '@rneui/themed';
 
@@ -9,9 +9,15 @@ function ChatEntry({ chat, viewMessages }) {
   };
 
   // useEffect(() => { console.log('chatentry', chat.messageWith.uid); }, []);
+  const styles = StyleSheet.create({
+    item: {
+      marginTop: 5,
+      minWidth: window.width,
+    },
+  });
 
   return (
-    <View>
+    <View style={styles.item}>
       <ListItem
         button
         onPress={handlePress}
@@ -24,6 +30,9 @@ function ChatEntry({ chat, viewMessages }) {
         <ListItem.Content>
           <ListItem.Title>{chat.messageWith.name}</ListItem.Title>
           <ListItem.Subtitle>{chat.lastMsg.text}</ListItem.Subtitle>
+          <ListItem.Subtitle>
+            {new Date(chat.lastMsg.created_at.seconds * 1000).toUTCString()}
+          </ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
     </View>

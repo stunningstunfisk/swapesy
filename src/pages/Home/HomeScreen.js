@@ -5,6 +5,9 @@ import Options from './Options';
 import listingFuncs from './listingFuncs';
 import ListingCard from '../../components/common/ListingCard';
 
+import PokeballBackground from '../../components/common/PokeballBackground';
+
+
 const sorts = listingFuncs;
 
 function Home({ user }) {
@@ -14,17 +17,19 @@ function Home({ user }) {
 
   useEffect(() => { sorts[sort](setListings, filter); }, [sort, filter]);
   return (
-    <View style={{ flex: 1 }}>
-      <Options setSort={setSort} setFilter={setFilter} />
-      <FlatList
-        columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
-        showsVerticalScrollIndicator={false}
-        data={listings}
-        renderItem={({ item }) => <ListingCard listing={item} user={user} />}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-      />
-    </View>
+    <PokeballBackground>
+      <View style={{ flex: 1 }}>
+        <Options setSort={setSort} setFilter={setFilter} />
+        <FlatList
+          columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
+          showsVerticalScrollIndicator={false}
+          data={listings}
+          renderItem={({ item }) => <ListingCard listing={item} user={user} />}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+        />
+      </View>
+    </PokeballBackground>
   );
 }
 
