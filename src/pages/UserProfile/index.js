@@ -1,26 +1,27 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { View, Text, Image, Pressable } from 'react-native';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
 import {
   getFirestore,
   addDoc,
+  Timestamp,
+  collection,
   query,
   where,
-  Timestamp,
   doc,
   setDoc,
   getDoc,
   getDocs,
-  collection,
   limit,
   orderBy,
 } from 'firebase/firestore';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MyCards from './MyCards';
 import CurrentListings from './CurrentListings';
 import Transactions from './TransactionHistory';
 import SegmentSelect from '../../components/common/SegmentSelect';
-import placeholder from '../../../dev/test_data/stunfisk.png';
 import styles from '../../../styles/userProfile/userProfile';
 
 import firebase from '../../config/firebase';
@@ -88,26 +89,6 @@ function UserProfile({ user, owner }) {
   }, [isFocused]);
   console.log('transhistory', transactions);
 
-
-  let buttons;
-  let views;
-  if (isOwner) {
-    buttons = ['Cards', 'Listings', 'Past Transactions'];
-
-    views = [
-      <MyCards owner={currentUser} />,
-      <CurrentListings owner={currentUser} />,
-      <Transactions owner={currentUser} transactions={transactions} />,
-    ];
-  } else {
-    buttons = ['Listings', 'Past Transactions'];
-    views = [
-      <CurrentListings owner={owner} />,
-      <Transactions owner={owner} transactions={transactions} />,
-    ];
-  }
-  const profilePic = currentUser.photoURL ? currentUser.photoURL : placeholder;
-
   const handlePress = async () => {
     if (isOwner) {
       navigation.navigate('Edit', {});
@@ -141,7 +122,11 @@ function UserProfile({ user, owner }) {
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <Image
-            source={isOwner ? profilePic : owner.profile_picture}
+            source={{
+              uri:
+              owner.profile_picture
+              || 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg',
+            }}
             style={styles.profileImg}
           />
           <View style={styles.userInfoContainer}>
@@ -153,20 +138,34 @@ function UserProfile({ user, owner }) {
               >
                 {isOwner ? currentUser.name : owner.name}
               </Text>
-
-              <Pressable onPress={handlePress} style={styles.button}>
-                <Text>{isOwner ? 'Edit' : 'Message'}</Text>
+              <Pressable
+                onPress={handlePress}
+                style={styles.button}
+              >
+                <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" />
               </Pressable>
             </View>
-            <Text style={styles.reputation}>
-              REP:
-              {' '}
-              {rep}
+            <View style={styles.rating}>
+              <MaterialCommunityIcons
+                name="pokeball"
+                size={24}
+                style={styles.rating}
+              />
+              <Text style={styles.reputation}>
+                {transactions.length ? transactions.length : 0}
+              </Text>
+            </View>
+            <Text style={styles.bio}>
+              {owner.bio ? owner.bio : 'There\'s nothing here yet'}
             </Text>
-            <Text style={styles.bio}>{user.bio ? user.bio : null}</Text>
           </View>
         </View>
-        <SegmentSelect buttons={buttons} views={views} />
+        <SegmentSelect
+          buttons={isOwner ? ['CARDS', 'LISTINGS', 'PAST TRANSACTIONS'] : ['LISTINGS', 'PAST TRANSACTIONS']}
+          views={isOwner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
+            <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
+              <Transactions owner={owner} />]}
+        />
       </View>
     </PokeballBackground>
   );

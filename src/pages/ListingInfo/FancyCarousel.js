@@ -34,7 +34,7 @@ function FancyCarousel({
         layoutCardOffset={9}
         data={cards}
         renderItem={({ item }) => (
-          <View style={{ top: '-4%' }}>
+          <View style={{ top: '-5%' }}>
             <Image style={styles.card} source={{ uri: item.uri }} />
             <View style={styles.cardCap}>
               <Text

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Badge } from '@rneui/themed';
 
 import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
 import firebase from '../../config/firebase';
@@ -76,9 +77,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// homePage is a prop passed in HomePage view to conditionally render views and
-// functionality available on HomePage only
-// listing prop will be passed down
 function ListingCard({ listing, user }) {
   const [seller, setSeller] = useState({});
 
@@ -115,6 +113,17 @@ function ListingCard({ listing, user }) {
         >
           {listing.title ? listing.title : 'Listing title'}
         </Text>
+        {listing.cards.length > 1
+      && (
+      // <View style={styles.numOfCards}>
+        <Badge
+          value={listing.cards.length}
+          status="success"
+          containerStyle={{ position: 'absolute', top: 0, right: 0, width: 7, heigth: 7, backgoundColor: colors.light, borderColor: colors.dark}}
+          textStyle={{fontFamily: fonts.tabHeader.fontFamily, alignText: 'center', color: '#54130e'}}
+        />
+      // </View>
+      )}
       </View>
 
       <View>

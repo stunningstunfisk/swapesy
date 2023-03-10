@@ -85,7 +85,8 @@ function ListingInfo({ userId, listingId }) {
   }, []);
 
   const handleModal = async () => {
-    await fetchUserCards(user)
+    const u = { uid: userId };
+    await fetchUserCards(u)
       .then((data) => {
         setModalCards(data);
       })
@@ -110,14 +111,14 @@ function ListingInfo({ userId, listingId }) {
   };
 
   return (
-    <PokeballBackground>
+    <PokeballBackground >
       <View style={styles.container}>
         <FancyCarousel
           cards={listingCards}
           seller={seller}
           sellerId={sellerId}
           listingId={listingId}
-          userId={userId}
+          user={user}
           handleModal={handleModal}
         />
         <Offers
@@ -138,7 +139,7 @@ function ListingInfo({ userId, listingId }) {
           />
         </ModalView>
       </View>
-    </PokeballBackground>
+    </PokeballBackground >
   );
 }
 
