@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
-
+import colors from '../globalColors';
+import fonts from '../globalFonts';
 // subtract 40 to account for paddingHorizontal property on wrapper
 const width = Dimensions.get('window').width - 40;
 
@@ -65,6 +66,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
+  },
+  numOfCards: {
+    position: 'absolute',
+    borderWidth: 1,
+    // borderRadius: 50,
+    borderColor: colors.dark,
+    backgroundColor: colors.light,
+    fontFamily: fonts.tabHeader.fontFamily,
   },
 });
 

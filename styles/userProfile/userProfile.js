@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     maxHeight: '20%',
-    marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   subContainer: {
     flexDirection: 'row',

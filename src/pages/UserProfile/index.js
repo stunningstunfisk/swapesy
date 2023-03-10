@@ -104,7 +104,7 @@ function UserProfile({ user, owner }) {
                 onPress={handlePress}
                 style={styles.button}
               >
-                <Text>{isOwner ? <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" /> : 'Message'}</Text>
+                <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" />
               </Pressable>
             </View>
             <View style={styles.rating}>
