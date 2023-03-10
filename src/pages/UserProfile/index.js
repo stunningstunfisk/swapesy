@@ -8,6 +8,12 @@ import {
   query,
   setDoc,
   getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+  limit,
+  orderBy,
 } from 'firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -20,8 +26,12 @@ import styles from '../../../styles/userProfile/userProfile';
 import firebase from '../../config/firebase';
 
 import PokeballBackground from '../../components/common/PokeballBackground';
+import fetchUserCards from '../../util/fetchUserCards';
+import fetchTransactions from '../../util/fetchTransactions';
 
 const db = getFirestore(firebase);
+const listingRef = collection(db, 'listing');
+const offerRef = collection(db, 'offer');
 
 function createNewChat(currentUserId, otherUserId) {
   setDoc(doc(db, 'conversation'), {
@@ -31,6 +41,9 @@ function createNewChat(currentUserId, otherUserId) {
 
 function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
+  const navigation = useNavigation();
+  const [transactions, setTransactions] = useState([]);
+  const [rep, setRep] = useState(0);
 
   useEffect(() => {
     if (user.uid === owner.uid) {
@@ -38,36 +51,29 @@ function UserProfile({ user, owner }) {
     } else {
       setIsOwner(false);
     }
+    fetchTransactions(owner)
+      .then((data) => setTransactions(data))
+      .catch((err) => console.error(err));
   }, []);
+  console.log('transhistory', transactions);
 
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     const fetchOwner = async () => {
-  //       const userRef = doc(db, 'user', owner.uid);
-  //       const quser = query(userRef);
-  //       const userSnapshot = await getDoc(quser);
-  //       setOwnerInfo(userSnapshot.data());
-  //     };
-  //     if (owner.route !== undefined) {
-  //       if (owner.route.params.owner.user === user.uid) {
-  //         // case where user = owner
-  //         owner.uid = owner.route.params.owner.name;
-  //         console.log('I\'m the owner ', owner.uid);
-  //         console.log('I\'m the user ', user.uid);
-  //         setIsOwner(false);
-  //         setOwnerInfo(user); // can use user herer
-  //         // owner = user;
-  //       }
-  //     } else {
-  //       // case where user != owner
-  //       setIsOwner(true);
-  //       console.log('got owner ', owner.uid);
-  //       console.log('got owner-user', user.uid);
-  //       fetchOwner();
-  //       // setOwnerInfo(owner.owner);
-  //     }
-  //   }
-  // }, [isFocused, ownerInfo]);
+  let buttons;
+  let views;
+  if (user.uid === owner.uid) {
+    buttons = ['Cards', 'Listings', 'Past Transactions'];
+    views = [
+      <MyCards owner={user} />,
+      <CurrentListings owner={user} />,
+      <Transactions owner={owner} transactions={transactions} />,
+    ];
+  } else {
+    buttons = ['Listings', 'Past Transactions'];
+    views = [
+      <CurrentListings owner={owner} />,
+      <Transactions owner={owner} transactions={transactions} />,
+    ];
+  }
+  const profilePic = user.photoURL ? user.photoURL : placeholder;
 
   const navigation = useNavigation();
   const handlePress = () => {
@@ -107,19 +113,8 @@ function UserProfile({ user, owner }) {
                 <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" />
               </Pressable>
             </View>
-            <View style={styles.rating}>
-              <MaterialCommunityIcons
-                name="pokeball"
-                size={24}
-                style={styles.rating}
-              />
-              <Text style={styles.reputation}>
-                {owner.reputation ? owner.reputation : 0}
-              </Text>
-            </View>
-            <Text style={styles.bio}>
-              {owner.bio ? owner.bio : null}
-            </Text>
+            <Text style={styles.reputation}>REP: {transactions.length}</Text>
+            <Text style={styles.bio}>{user.bio ? user.bio : null}</Text>
           </View>
         </View>
         <SegmentSelect
