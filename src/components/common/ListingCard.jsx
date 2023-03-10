@@ -79,14 +79,15 @@ const styles = StyleSheet.create({
 
 function ListingCard({ listing, user }) {
   const [seller, setSeller] = useState({});
-  console.log('seller is', seller, listing);
 
   const navigation = useNavigation();
   const defaultImage = 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg';
   const isPlural = `offer${listing.offers?.length > 1 ? 's' : ''}`;
 
+  const { uid } = user;
+
   const handlePress = () => {
-    navigation.navigate('ListingInfo', { listingId: listing.id, user: user.uid });
+    navigation.navigate('ListingInfo', { listingId: listing.id, userId: uid });
   };
 
   useEffect(() => {

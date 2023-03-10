@@ -24,7 +24,7 @@ function Home({ user }) {
           columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
           showsVerticalScrollIndicator={false}
           data={listings}
-          renderItem={({ item }) => <ListingCard listing={item} user={user} />}
+          renderItem={({ item }) => <View><ListingCard listing={item} user={user} /></View>}
           keyExtractor={(item) => item.id}
           numColumns={2}
         />
