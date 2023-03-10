@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     padding: 5,
     gap: 5,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   transaction: {
     gap: 10,
