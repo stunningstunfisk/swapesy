@@ -14,7 +14,7 @@ import ModalRoute from '../../components/common/modals/ModalRoute';
 import ToggleSwitch from 'toggle-switch-react-native';
 import CurrencyInput from 'react-currency-input-field';
 import fetchUserCards from '../../util/fetchUserCards';
-import selectedCardItem from '../../components/upload_page/selectedCardItem';
+import selectedCardItem from '../../components/common/modals/selectedCardItem';
 
 function CreateListing({ user }) {
   const [cards, setCards] = useState([]);
@@ -140,24 +140,24 @@ function CreateListing({ user }) {
         onToggle={(isOn) => console.log('changed to : ', isOn)}
       />
 
-      <Pressable onPress={handleModal}>
-        <Text>Select Cards</Text>
-      </Pressable>
-      {selectedCards.length !== 0 ? (
+      <Button title="Select Cards" onPress={handleModal} />
+
+      {selectedCards.length !== 0 && (
         <FlatList
           data={selectedCards}
-          renderItem={(item) =>
-            selectedCardItem(item.item, handleSelectedCards, selectedCards)
+          renderItem={({ item }) =>
+            selectedCardItem(item, handleSelectedCards, selectedCards)
           }
           keyExtractor={(item) => item.id}
+          contentContainerStyle={{
+            display: 'flex',
+            alignContent: 'center',
+            flexGrow: 0,
+          }}
           horizontal
         />
-      ) : null}
-      <ModalView
-        modalVisible={modalVisible}
-        handleModal={handleModal}
-        pictureView
-      >
+      )}
+      <ModalView modalVisible={modalVisible} handleModal={handleModal}>
         <ModalRoute
           handleModal={handleModal}
           route="UserCards"
