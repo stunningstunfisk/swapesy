@@ -5,15 +5,8 @@ import { View, Text, Image, Pressable } from 'react-native';
 import {
   getFirestore,
   doc,
-  query,
   setDoc,
-  getDoc,
-  getDocs,
   collection,
-  query,
-  where,
-  limit,
-  orderBy,
 } from 'firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -57,25 +50,6 @@ function UserProfile({ user, owner }) {
   }, []);
   console.log('transhistory', transactions);
 
-  let buttons;
-  let views;
-  if (user.uid === owner.uid) {
-    buttons = ['Cards', 'Listings', 'Past Transactions'];
-    views = [
-      <MyCards owner={user} />,
-      <CurrentListings owner={user} />,
-      <Transactions owner={owner} transactions={transactions} />,
-    ];
-  } else {
-    buttons = ['Listings', 'Past Transactions'];
-    views = [
-      <CurrentListings owner={owner} />,
-      <Transactions owner={owner} transactions={transactions} />,
-    ];
-  }
-  const profilePic = user.photoURL ? user.photoURL : placeholder;
-
-  const navigation = useNavigation();
   const handlePress = () => {
     if (user.uid === owner.uid) {
       navigation.navigate('Edit', user);
@@ -113,13 +87,24 @@ function UserProfile({ user, owner }) {
                 <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" />
               </Pressable>
             </View>
-            <Text style={styles.reputation}>REP: {transactions.length}</Text>
-            <Text style={styles.bio}>{user.bio ? user.bio : null}</Text>
+            <View style={styles.rating}>
+              <MaterialCommunityIcons
+                name="pokeball"
+                size={24}
+                style={styles.rating}
+              />
+              <Text style={styles.reputation}>
+                {transactions.length ? transactions.length : 0}
+              </Text>
+            </View>
+            <Text style={styles.bio}>
+              {owner.bio ? owner.bio : 'There\'s nothing here yet'}
+            </Text>
           </View>
         </View>
         <SegmentSelect
-          buttons={owner ? ['CARDS', 'LISTINGS', 'PAST TRANSACTIONS'] : ['LISTINGS', 'PAST TRANSACTIONS']}
-          views={owner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
+          buttons={isOwner ? ['CARDS', 'LISTINGS', 'PAST TRANSACTIONS'] : ['LISTINGS', 'PAST TRANSACTIONS']}
+          views={isOwner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
             <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
               <Transactions owner={owner} />]}
         />

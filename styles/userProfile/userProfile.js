@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   },
   transactions: {
     gap: 20,
-    // flex: 1,
     flexDirection: 'column',
     fontSize: 15,
     padding: 2,
