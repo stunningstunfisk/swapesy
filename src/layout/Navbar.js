@@ -11,7 +11,7 @@ import fonts from '../../styles/globalFonts';
 const Tab = createBottomTabNavigator();
 
 function Navbar({ pages }) {
-  const insets = useSafeAreaInsets();
+  // const insets = useSafeAreaInsets();
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -29,7 +29,7 @@ function Navbar({ pages }) {
               {
                 backgroundColor: colors.darkBackground,
                 display: 'flex',
-                height: 64 + insets.bottom,
+                height: 80,
               },
               null,
             ],

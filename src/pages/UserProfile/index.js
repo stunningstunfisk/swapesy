@@ -7,6 +7,14 @@ import {
   addDoc,
   Timestamp,
   collection,
+  query,
+  where,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
 } from 'firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';

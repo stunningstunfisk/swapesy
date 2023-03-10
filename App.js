@@ -6,7 +6,6 @@ import { useFonts } from 'expo-font';
 // import { StatusBar } from 'expo-status-bar';
 // import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider } from 'react-native-elements';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useAuthentication } from './src/util/hooks/userAuth';
 
@@ -22,21 +21,16 @@ export default function App() {
   });
 
   const isHermes = () => !!global.HermesInternal;
-
   console.info('Using the Hermes Engine:', isHermes());
-  console.disableYellowBox = true;
-  console.disableRedBox = true;
 
   // TODO: user should live in a React context
 
   if (fontsLoaded) {
     return (
       <ThemeProvider>
-        <SafeAreaProvider>
-          {user ? <Main user={user} /> : <AuthStack />}
-          {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
-          {/* <Main /> */}
-        </SafeAreaProvider>
+        {user ? <Main user={user} /> : <AuthStack />}
+        {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
+        {/* <Main /> */}
       </ThemeProvider>
     );
   }
