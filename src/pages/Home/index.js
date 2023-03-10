@@ -8,6 +8,8 @@ import Profile from '../UserProfile';
 const Stack = createNativeStackNavigator();
 
 function HomeStack({ user }) {
+  console.disableYellowBox = true;
+  console.reportErrorsAsExceptions = false;
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Home">
