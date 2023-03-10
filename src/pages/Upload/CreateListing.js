@@ -1,20 +1,41 @@
 import React, { useState } from 'react';
-import { StyleSheet, Input, View, Text, TextInput, Pressable, Button } from 'react-native';
+import {
+  StyleSheet,
+  Input,
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Button,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ModalView from '../../components/common/modals/ModalView';
+import ModalRoute from '../../components/common/modals/ModalRoute';
 import ToggleSwitch from 'toggle-switch-react-native';
 import CurrencyInput from 'react-currency-input-field';
+import fetchUserCards from '../../util/fetchUserCards';
 
 function CreateListing({ user }) {
+  const navigation = useNavigation();
+  const [cards, setCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [name, onChangeName] = useState('');
   const [price, onChangePrice] = useState(0);
   const [description, onChangeDescription] = useState('');
   const [value, setValue] = useState(0);
-  const navigation = useNavigation();
+  const [data, setData] = useState({
+    cards: [],
+    price: null,
 
-  const handleModal = () => {
-    setModalVisible(!modalVisible);
+  });
+
+  const handleModal = async () => {
+    await fetchUserCards(user)
+      .then((data) => {
+        setCards(data);
+      })
+      .then(() => setModalVisible(!modalVisible))
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -40,12 +61,12 @@ function CreateListing({ user }) {
         style={styles.input}
         placeholder="Price..."
         onChangeText={onChangePrice}
-        value={price}
+        value={price.toString()}
         prefix="$"
         delimiter="."
         separator="."
         precision={2}
-        keyboardType='numeric'
+        keyboardType="numeric"
       />
       <TextInput
         style={styles.descriptionInput}
@@ -62,14 +83,25 @@ function CreateListing({ user }) {
         onColor="green"
         offColor="red"
         label="Accepting Trades"
-        labelStyle={{ color: "black", fontWeight: "900" }}
+        labelStyle={{ color: 'black', fontWeight: '900' }}
         size="large"
-        onToggle={isOn => console.log("changed to : ", isOn)}
+        onToggle={(isOn) => console.log('changed to : ', isOn)}
       />
-      <ModalView handleModal={handleModal} modalVisible={modalVisible} />
-        <Pressable onPress={handleModal}>
-          <Text>Select Cards</Text>
-        </Pressable>
+
+      <Pressable onPress={handleModal}>
+        <Text>Select Cards</Text>
+      </Pressable>
+      <ModalView
+        modalVisible={modalVisible}
+        handleModal={handleModal}
+        pictureView
+      >
+        <ModalRoute
+          handleModal={handleModal}
+          route="UserCards"
+          content={cards}
+        />
+      </ModalView>
     </View>
   );
 }

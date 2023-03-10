@@ -12,22 +12,18 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CameraButton from '../../components/upload_page/CameraButtons.js';
-// import { fireStorage } from "../config/firebase";
 
-// import firebase from '../config/firebase';
-// import { getFirestore, doc, setDoc } from "firebase/firestore";
-// const db = getFirestore(firebase);
-
-function CameraView({ user, state }) {
+function CameraView({ user, setUri }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [showCamera, setShowCamera] = useState(true);
   const [image, setImage] = useState(null);
   const cameraRef = useRef(null);
   const navigation = useNavigation();
 
-  const { setUri } = state.route.params;
+  // const setUri = state.route.params.setUri;
 
   useEffect(() => {
+    // console.log('setUri', setUri);
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
@@ -69,7 +65,7 @@ function CameraView({ user, state }) {
                   setImage(r.uri);
                   setUri(r.uri);
                 }
-                Alert.alert('DEBUG', JSON.stringify(r));
+                // Alert.alert('DEBUG', JSON.stringify(r));
                 setShowCamera(false);
               }}
             >

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-function DropdownComponent({ conditions, setCondition, setData }) {
+function DropdownComponent({ conditions, setCondition, data, setData }) {
   const [value, setValue] = useState(null);
 
   return (
@@ -24,7 +24,7 @@ function DropdownComponent({ conditions, setCondition, setData }) {
       onChange={(text) => {
         setValue(text);
         // setCondition(text);
-        setData({ ...data, condition: text });
+        setData({ ...data, condition: text.value });
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />

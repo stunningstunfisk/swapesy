@@ -14,11 +14,11 @@ import firebase from '../../config/firebase';
 const db = getFirestore(firebase);
 
 const filterFuncs = {
-  price: (listings, price, set) => {
-    set(listings.filter((listing) => listing.type === 'buy' && listing.price <= price));
+  price: (listings, args, set) => {
+    set(listings.filter((listing) => listing.type === 'buy' && listing.price > args[0] && listing.price < args[1]));
   },
-  type: (listings, type, set) => {
-    set(listings.filter((listing) => listing.type === type || listing.type === 'both'));
+  type: (listings, args, set) => {
+    set(listings.filter((listing) => listing.type === args[0] || listing.type === 'both'));
   },
   // filterDistance: (set, r, userLoc) => {
   //   const ref = collection(db, 'listing');
@@ -50,21 +50,31 @@ const filterFuncs = {
 };
 
 export default {
-  recent: (set, filter, filterVal) => {
+  recent: (set, filter) => {
     const ref = collection(db, 'listing');
     const q = query(ref, orderBy('timestamp'), where('completed', '==', false));
     const extracted = [];
+    let args;
+    if (filter) {
+      args = [...filter];
+      args.shift();
+    }
     return getDocs(q)
       .then((x) => x.forEach((y) => {
         extracted.push(y.data());
       }))
-      .then(() => (filter ? filterFuncs[filter](extracted, filterVal, set) : set(extracted)))
-      .catch((err) => console.error(err));
+      .then(() => (filter ? filterFuncs[filter](extracted, args, set) : set(extracted)))
+      .catch((err) => console.error('ERROR:', err));
   },
-  reputable: (set, filter, filterVal) => {
+  reputable: (set, filter) => {
     const ref = collection(db, 'listing');
     const q = query(ref, where('completed', '==', false));
     let extracted = [];
+    let args;
+    if (filter) {
+      args = [...filter];
+      args.shift();
+    }
     return getDocs(q)
       .then((x) => x.forEach((y) => {
         extracted.push(y.data());
@@ -78,12 +88,12 @@ export default {
             copy.reputation = x.data().reputation;
             return copy;
           })
-          .catch((err) => console.error(err));
+          .catch((err) => console.error('ERROR:', err));
       })))
       .then((data) => {
         extracted = data.sort((a, b) => a.reputation + b.reputation);
       })
-      .then(() => (filter ? filterFuncs[filter](extracted, filterVal, set) : set(extracted)))
-      .catch((err) => console.error(err));
+      .then(() => (filter ? filterFuncs[filter[0]](extracted, args, set) : set(extracted)))
+      .catch((err) => console.error('ERROR:', err));
   },
 };

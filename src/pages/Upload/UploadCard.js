@@ -11,16 +11,16 @@ import { getFirestore, doc, setDoc, collection } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
 import upload from '../../util/imageUpload.js';
-// const upload = async (imageUri, imageName)
 
 const db = getFirestore(firebase);
 const dbRef = collection(db, 'card');
 
-function UploadCard({ user }) {
+function UploadCard({ user, uri, setUri }) {
   const navigation = useNavigation();
   // const [name, setName] = useState('');
   // const [condition, setCondition] = useState(null);
-  const [uri, setUri] = useState(null);
+  // const [uri, setUri] = useState(null);
+
   const [data, setData] = useState({
     condition: '',
     name: '',
@@ -28,47 +28,65 @@ function UploadCard({ user }) {
     user: '',
   });
 
+  // these could probably get changed to just an array of strings
   const conditions = [
-    { label: 'Near Mint', value: '1' },
-    { label: 'Lightly Played', value: '2' },
-    { label: 'Moderately Played', value: '3' },
-    { label: 'Heavily Played', value: '4' },
-    { label: 'Damaged', value: '5' },
+    { label: 'Near Mint', value: 'Near Mint' },
+    { label: 'Lightly Played', value: 'Lightly Played' },
+    { label: 'Moderately Played', value: 'Moderately Played' },
+    { label: 'Heavily Played', value: 'Heavily Played' },
+    { label: 'Damaged', value: 'Damaged' },
   ];
 
-  // condition, name, uri, user_id
   const handleUpload = async () => {
-    const image = await upload(uri, data.name);
+    const id = (Math.random() + 1).toString(36).substring(7);
+    const image = await upload(uri, id);
 
-    await setData({ ...data, uri: image });
-
-    if (data.uri === null || data.name === '' || data.condition === null) {
-      setData({
-        ...data,
-        error: 'Fields cannot be empty!',
-      });
+    if (image === null || data.name === '' || data.condition === null) {
+      // setData({
+      //   ...data,
+      //   error: 'Fields cannot be empty!',
+      // });
+      console.log('error, missing fields');
       return;
     }
 
+    console.log('image', image);
+    console.log('uid', user.uid);
+    const copyData = { ...data };
+    copyData.uri = image;
+    copyData.user = user.uid;
+    // setData({ ...copyData });
+    // await setData({ ...data, uri: image, user: user.uid });
+    console.log('copy', copyData);
+    console.log('data', data);
+
+
     try {
-      await setDoc(dbRef, {
-        condition: data.condition,
-        name: data.name,
-        uri: image,
-        user: user.uid,
-      });
+      console.log('try');
+      await setDoc(dbRef, copyData);
+      // await setDoc(dbRef, {
+      //   condition: data.condition,
+      //   name: data.name,
+      //   uri: data.uri,
+      //   user: user.uid,
+      // });
 
       setUri(null);
     } catch (error) {
-      setData({
-        ...data,
-        error: error.message,
-      });
+      console.log('setDoc error');
+      // setData({
+      //   ...data,
+      //   error: error.message,
+      // });
     }
   };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Create listing"
+        onPress={() => navigation.navigate('CreateListing')}
+      />
       <Text
         // onPress={() => navigation.navigate('Home')}
         style={{ fontSize: 26, fontWeight: 'bold' }}
@@ -81,11 +99,11 @@ function UploadCard({ user }) {
         placeholder="Card Name..."
         // onChangeText={setName}
         onChangeText={(text) => setData({ ...data, name: text })}
-        value={name}
+        value={data.name}
       />
 
       {/* <DropdownComponent data={conditions} setCondition={setCondition} /> */}
-      <DropdownComponent conditions={conditions} setData={setData} />
+      <DropdownComponent conditions={conditions} data={data} setData={setData} />
 
       {uri ? (
         <View>
@@ -98,19 +116,16 @@ function UploadCard({ user }) {
         <View style={styles.imageBox}>
           <AntDesign name="camera" size={20} color="black" />
           <ImagePickerComponent uri={uri} setUri={setUri} />
+          {/* <ImagePickerComponent data={data} setData={setData} /> */}
           <Button
             title="Take a picture"
-            onPress={() => { navigation.navigate('CameraView', { setUri: setUri }); }}
+            onPress={() => { navigation.navigate('CameraView'); }}
           />
         </View>
       )}
 
       <Button title="Remove Image" onPress={() => setUri(null)} />
       <Button title="Upload" onPress={handleUpload} />
-      <Button
-        title="Create listing"
-        onPress={() => navigation.navigate('CreateListing')}
-      />
     </View>
   );
 }
