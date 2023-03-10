@@ -222,24 +222,23 @@ function CreateListing({ user }) {
             <Pressable onPress={handleModal}>
               <Text>Select Cards</Text>
             </Pressable>
+            {selectedCards.length !== 0 && (
+              <FlatList
+                data={selectedCards}
+                renderItem={({ item }) =>
+                  selectedCardItem(item, handleSelectedCards, selectedCards)
+                }
+                keyExtractor={(item) => item.id}
+                numColumns={3}
+                contentContainerStyle={{
+                  margin: 0,
+                  padding: 0,
+                  flexGrow: 0,
+                }}
+              />
+            )}
           </View>
         </TouchableWithoutFeedback>
-        {selectedCards.length !== 0 && (
-          <FlatList
-            data={selectedCards}
-            renderItem={({ item }) =>
-              selectedCardItem(item, handleSelectedCards, selectedCards)
-            }
-            keyExtractor={(item) => item.id}
-            numColumns={3}
-            contentContainerStyle={{
-              margin: 0,
-              padding: 0,
-              flexGrow: 0,
-            }}
-          />
-        )}
-
         <ModalView modalVisible={modalVisible} handleModal={handleModal}>
           <ModalRoute
             handleModal={handleModal}
