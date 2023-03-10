@@ -2,7 +2,14 @@ import React from 'react';
 import { View, TouchableOpacity, Image, Text, Button } from 'react-native';
 
 const selectedCardItem = (item, handleSelectedCards, selectedCards) => (
-  <View key={item.id} style={{ paddingRight: 15, paddingLeft: 15 }}>
+  <View
+    key={item.id}
+    style={{
+      paddingRight: 15,
+      paddingLeft: 15,
+      width: 130,
+    }}
+  >
     <TouchableOpacity onPress={() => handleSelectedCards.handleClick(item)}>
       <Image
         source={{ uri: item.uri }}

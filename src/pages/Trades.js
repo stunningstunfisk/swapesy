@@ -34,8 +34,6 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   header: {
-    borderBottomWidth: 2,
-    borderColor: colors.dark,
     fontFamily: 'VT323',
     alignItems: 'center',
     justifyContent: 'center',
