@@ -39,7 +39,7 @@ function TransactionHistory({ owner }) {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    console.log('Transactions');
+    // console.log('Transactions');
     const listings = [];
     const setFetched = async (transactionsData) => {
       setTransactions(transactionsData);
@@ -49,7 +49,7 @@ function TransactionHistory({ owner }) {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(async (doc) => {
         listings.push(doc.data());
-        console.log('listings ', listings);
+        // console.log('listings ', listings);
         await setFetched(listings);
       });
     };
