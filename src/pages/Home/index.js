@@ -3,18 +3,32 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from './HomeScreen';
 import ListingInfo from '../ListingInfo';
+import Profile from '../UserProfile';
 
 const Stack = createNativeStackNavigator();
 
 function HomeStack({ user }) {
+  console.disableYellowBox = true;
+  console.reportErrorsAsExceptions = false;
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Home">
         {() => <HomeScreen user={user} />}
       </Stack.Screen>
       <Stack.Screen name="ListingInfo">
         {(state) => (
-          <ListingInfo user={user} listingId={state.route.params.listingId} />
+          <ListingInfo
+            userId={state.route.params.userId}
+            listingId={state.route.params.listingId}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen name="Profile">
+        {(state) => (
+          <Profile
+            user={state.route.params.user}
+            owner={state.route.params.owner}
+          />
         )}
       </Stack.Screen>
     </Stack.Navigator>

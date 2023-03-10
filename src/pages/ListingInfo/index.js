@@ -35,6 +35,10 @@ function ListingInfo({ user, listingId }) {
     reputation: 23,
   });
 
+  const [sellerId, setSellerId] = useState('1');
+  const [listingCards, setListingCards] = useState([]);
+  const [listingOffers, setListingOffers] = useState([]);
+
   useEffect(() => {
     const ref = doc(db, `listing/${listingId}`);
     const q = query(ref);
@@ -108,6 +112,8 @@ function ListingInfo({ user, listingId }) {
         cards={listingCards}
         seller={seller}
         sellerId={sellerId}
+        listingId={listingId}
+        userId={userId}
         handleModal={handleModal}
       />
       <Offers

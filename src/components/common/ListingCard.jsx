@@ -31,6 +31,7 @@ function ListingCard({ listing, homePage, user }) {
     // handle offer functionality goes here
     console.log("They're pressing me");
   };
+  const { uid } = user;
   return (
     // pressing on listing card opens up the listing page
     // {showListing ? <ListingInfo listingId={listing.id} userId={user.uid} /> :
