@@ -20,6 +20,7 @@ export default function AuthStack() {
           name="Welcome"
           options={{
             // This behaves oddly, compared other stacks down the chain
+            headerShown: false,
             headerStyle: [fonts.stackHeader.headerStyle, { height: 128 }],
             headerTitleStyle: [fonts.tabHeader],
           }}
