@@ -9,6 +9,9 @@ import {
   setDoc,
   getDoc,
 } from 'firebase/firestore';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { AirbnbRating } from '@rneui/themed';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MyCards from './MyCards';
 import CurrentListings from './CurrentListings';
 import Transactions from './TransactionHistory';
@@ -111,21 +114,26 @@ function UserProfile({ owner, user }) {
               onPress={handlePress}
               style={styles.button}
             >
-              <Text>{isOwner ? 'Edit' : 'Message'}</Text>
+              <Text>{isOwner ? <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" /> : 'Message'}</Text>
             </Pressable>
           </View>
-          <Text style={styles.reputation}>
-            REP:
-            {' '}
-            {owner.reputation ? owner.reputation : 0}
-          </Text>
+          <View style={styles.rating}>
+            <MaterialCommunityIcons
+                name="pokeball"
+                size={24}
+                style={styles.rating}
+            />
+            <Text style={styles.reputation}>
+              {owner.reputation ? owner.reputation : 0}
+            </Text>
+          </View>
           <Text style={styles.bio}>
             {owner.bio ? owner.bio : null}
           </Text>
         </View>
       </View>
       <SegmentSelect
-        buttons={owner ? ['Cards', 'Listings', 'Past Transactions'] : ['Listings', 'Past Transactions']}
+        buttons={owner ? ['CARDS', 'LISTINGS', 'PAST TRANSACTIONS'] : ['LISTINGS', 'PAST TRANSACTIONS']}
         views={owner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
           <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
             <Transactions owner={owner} />]}

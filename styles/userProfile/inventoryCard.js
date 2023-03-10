@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import colors from '../globalColors';
 
 // subtract 40 to account for paddingHorizontal property on wrapper
 const width = Dimensions.get('window').width - 40;
@@ -9,7 +10,7 @@ const width = Dimensions.get('window').width - 40;
 const cardStyles = StyleSheet.create({
   wrapper: {
     width: width / 4 - 10,
-    padding: 5,
+    margin: 5,
   },
   mainImg: {
     width: '100%',
@@ -17,9 +18,13 @@ const cardStyles = StyleSheet.create({
     aspectRatio: 3 / 4,
     padding: 5,
     resizeMode: 'contain',
-    borderWidth: 1,
-    borderColor: 'black',
     borderRadius: 8,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 2,
   },
 });
 
