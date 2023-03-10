@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
@@ -12,6 +12,7 @@ import fonts from '../../../styles/globalFonts';
 
 const database = getFirestore(firebase);
 
+const screenWidth = Dimensions.get('window').width - 40;
 const styles = StyleSheet.create({
   cardImage: {
     aspectRatio: 3 / 4,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     borderColor: colors.darkBackgroundAlpha,
     borderWidth: 2,
     borderRadius: 12,
-    width: '45%',
+    width: screenWidth / 2 - 10,
     margin: 8,
 
     elevation: 4, // for Android only
