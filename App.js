@@ -21,6 +21,7 @@ export default function App() {
   });
 
   const isHermes = () => !!global.HermesInternal;
+
   console.info('Using the Hermes Engine:', isHermes());
   console.disableYellowBox = true;
   console.disableRedBox = true;
