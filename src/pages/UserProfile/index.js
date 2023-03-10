@@ -2,11 +2,19 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { View, Text, Image, Pressable } from 'react-native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import {
   getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  Timestamp,
   doc,
   setDoc,
   collection,
+  limit,
+  orderBy,
 } from 'firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -26,41 +34,91 @@ const db = getFirestore(firebase);
 const listingRef = collection(db, 'listing');
 const offerRef = collection(db, 'offer');
 
-function createNewChat(currentUserId, otherUserId) {
-  setDoc(doc(db, 'conversation'), {
-    users: [currentUserId, otherUserId],
-  });
-}
 
 function UserProfile({ user, owner }) {
+  const isFocused = useIsFocused();
+  const [currentUser, setCurrentUser] = useState(user);
   const [isOwner, setIsOwner] = useState(true);
+  const [goBackToggle, setGoBackToggle] = useState(false);
   const navigation = useNavigation();
   const [transactions, setTransactions] = useState([]);
   const [rep, setRep] = useState(0);
 
+  // console.log('user', currentUser);
+  // console.log('owner', owner);
+
+  async function createNewChat(currentUserId, otherUserId) {
+    // const q = query(collection(db, 'conversation'), where('users', 'array-contains', [String(currentUserId), String(otherUserId)]));
+    // const docAvail = false;
+    // console.log(query);
+    // const docSnap = await getDocs(q);
+    // docSnap.forEach(async (doc) => {
+
+    // });
+    const ref = await addDoc(collection(db, 'conversation'), {
+      users: [currentUserId, otherUserId],
+    });
+    await addDoc(collection(db, `conversation/${ref.id}/messages`), {
+      text: `Starting Chat with ${user.name}`,
+      from: user.uid,
+      created_at: Timestamp.fromDate(new Date()),
+    });
+  }
+
   useEffect(() => {
-    if (user.uid === owner.uid) {
+    // console.log('USEEFFECT USERPROF');
+    if (currentUser.uid === owner.uid) {
       setIsOwner(true);
+    } else if (goBackToggle) {
+      setIsOwner(true);
+      setGoBackToggle(false);
     } else {
       setIsOwner(false);
     }
     fetchTransactions(owner)
-      .then((data) => setTransactions(data))
+      .then((data) => {
+        const totalRating = data.reduce(
+          (acc, item) => acc + parseInt(item.rating),
+          0,
+        );
+        const avgRating = totalRating / data.length;
+        setRep(avgRating);
+        setTransactions(data);
+      })
       .catch((err) => console.error(err));
-  }, []);
+  }, [isFocused]);
   console.log('transhistory', transactions);
 
-  const handlePress = () => {
-    if (user.uid === owner.uid) {
-      navigation.navigate('Profile', { screen: 'Edit', params: { user }});
+  const handlePress = async () => {
+    if (isOwner) {
+      navigation.navigate('Edit', {});
     } else {
-      createNewChat(user.uid, owner.uid);
-      navigation.navigate('Chats', {}); // TODO ask Mark what Page to navigate to and what params to pass
+      await createNewChat(currentUser.uid, owner.uid)
+        .then(() => {
+          navigation.navigate('Chat', { screen: 'Chats', params: { user } });
+        });
     }
+  };
+
+  const handleGoBack = () => {
+    setGoBackToggle(true);
+    setIsOwner(true);
   };
 
   return (
     <PokeballBackground>
+      {
+          !isOwner
+            ? (
+              <Pressable
+                onPress={handleGoBack}
+                style={styles.button}
+              >
+                <Text>Go Back to Your Profile</Text>
+              </Pressable>
+            )
+            : null
+        }
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <Image
@@ -78,7 +136,7 @@ function UserProfile({ user, owner }) {
                 ellipsizeMode="tail"
                 style={styles.userName}
               >
-                {owner.name ? owner.name : 'Nameless Beautiful Unicorn'}
+                {isOwner ? currentUser.name : owner.name}
               </Text>
               <Pressable
                 onPress={handlePress}

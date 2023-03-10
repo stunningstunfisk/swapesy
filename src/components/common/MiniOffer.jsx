@@ -16,8 +16,6 @@ import {
 } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
-const database = getFirestore(firebase);
-
 import ashImage from '../../../dev/test_data/ash.jpg';
 import HorizontalDivider from './spacers/HorizontalDivider';
 import TrashButton from './buttons/TrashButton';
@@ -25,6 +23,8 @@ import TrashButton from './buttons/TrashButton';
 import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
 import stunfiskImage from '../../../dev/test_data/stunfisk.png';
+
+const database = getFirestore(firebase);
 
 
 const styles = StyleSheet.create({
@@ -103,7 +103,7 @@ function MiniOffer({ offer }) {
 
   function handleUserPress() {
     console.log('pressed trade offer avatar', sellerData);
-    navigation.navigate('OtherUser', { user: sellerData });
+    navigation.navigate('Profile', { owner: sellerData });
   }
   function handleListingPress() {
     console.log('pressed trade offer title');

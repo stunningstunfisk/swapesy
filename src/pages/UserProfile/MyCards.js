@@ -20,7 +20,7 @@ function Item({ card }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleModal = () => {
-    console.log('Pressed');
+    // console.log('Pressed');
     setModalVisible(!modalVisible);
   };
 

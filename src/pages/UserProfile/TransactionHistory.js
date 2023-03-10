@@ -23,6 +23,7 @@ function Item({ item, owner }) {
   return <TransactionInfo transaction={item} owner={owner} />;
 }
 
+
 function TransactionHistory({ owner, transactions }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

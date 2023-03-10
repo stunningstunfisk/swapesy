@@ -29,6 +29,7 @@ function Item({ listing, owner }) {
 function CurrentListings({ owner }) {
   const [listings, setListings] = useState([]);
   useEffect(() => {
+    // console.log('Listings');
     const fetched = [];
     const setFetched = async (listingsData) => {
       setListings(listingsData);
@@ -39,6 +40,7 @@ function CurrentListings({ owner }) {
 
       querySnapshot.forEach(async (doc) => {
         fetched.push(doc.data());
+        // console.log('listings ', fetched);
         await setFetched(fetched);
       });
     };
