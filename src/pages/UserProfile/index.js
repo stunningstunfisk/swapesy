@@ -4,7 +4,6 @@ import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import {
   getFirestore,
-  collection,
   addDoc,
   query,
   where,
