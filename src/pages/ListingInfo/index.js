@@ -82,7 +82,8 @@ function ListingInfo({ userId, listingId }) {
   }, []);
 
   const handleModal = async () => {
-    await fetchUserCards(user)
+    const u = { uid: userId };
+    await fetchUserCards(u)
       .then((data) => {
         setModalCards(data);
       })
@@ -126,7 +127,7 @@ function ListingInfo({ userId, listingId }) {
           handleModal={handleModal}
           route="Offer"
           content={{
-            modalCards,
+            cards: modalCards,
             handleSelectedCards,
             selectedCards,
             handleModal: handleModalOpen,
