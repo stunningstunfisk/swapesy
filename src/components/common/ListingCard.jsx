@@ -93,7 +93,7 @@ function ListingCard({ listing, homePage, user }) {
 
   const navigation = useNavigation();
   const defaultImage = 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg';
-  const isPlural = `offer${listing.offers.length > 1 ? 's' : ''}`;
+  const isPlural = `offer${listing.offers?.length > 1 ? 's' : ''}`;
 
   const handlePress = () => {
     navigation.navigate('ListingInfo', { listingId: listing.id, userId: user.uid });
@@ -133,7 +133,7 @@ function ListingCard({ listing, homePage, user }) {
 
       <View>
         <Text style={styles.footer}>
-          {listing.offers.length}
+          {listing.offers?.length}
           {' '}
           {isPlural}
         </Text>
