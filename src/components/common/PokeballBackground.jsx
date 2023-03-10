@@ -10,12 +10,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const PokeballBackground = function CreatePokeballBackgroundImage({ children }) {
+const PokeballBackground = function CreatePokeballBackgroundImage({ children, ...props }) {
   return (
     <ImageBackground
       imageStyle={{ resizeMode: 'repeat', opacity: 0.5 }}
-      style={styles.backgroundImage}
+      style={[props.style, styles.backgroundImage]}
       source={backgroundImage}
+      {...props}
     >
       {children}
     </ImageBackground>
