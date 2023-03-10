@@ -89,6 +89,7 @@ function Trades({ navigation, user }) {
         setMyOffers(offers);
       })
       .catch((error) => console.error(error));
+  console.log('trades', user);
   }, []);
 
   return (

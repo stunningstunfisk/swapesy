@@ -114,7 +114,7 @@ function ListingInfo({ userId, listingId }) {
         seller={seller}
         sellerId={sellerId}
         listingId={listingId}
-        userId={userId}
+        user={user}
         handleModal={handleModal}
       />
       <Offers

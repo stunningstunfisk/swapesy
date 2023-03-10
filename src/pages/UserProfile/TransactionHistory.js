@@ -18,16 +18,6 @@ import firebase from '../../config/firebase';
 
 const db = getFirestore(firebase);
 const listingRef = collection(db, 'listing');
-const offerRef = collection(db, 'offer');
-
-const getTransactions = (userId) => {
-  // for the current user
-  // get listings with completed: true
-  // get offers with accepted: true
-  // listings: listing.title, listing.price, listing.date, listing.rating ?
-  // offers: find listing in listings by listing_id from the offer, get all
-  // the info that was written out in listings
-};
 
 function Item({ item, owner }) {
   return <TransactionInfo transaction={item} owner={owner} />;
