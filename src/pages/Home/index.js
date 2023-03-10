@@ -13,7 +13,9 @@ function HomeStack({ user }) {
         {() => <HomeScreen user={user} />}
       </Stack.Screen>
       <Stack.Screen name="ListingInfo">
-        {(state) => <ListingInfo userId={user.id} listingId={state.route.params.listingId} /> }
+        {(state) => (
+          <ListingInfo user={user} listingId={state.route.params.listingId} />
+        )}
       </Stack.Screen>
     </Stack.Navigator>
   );

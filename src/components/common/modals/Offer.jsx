@@ -35,7 +35,7 @@ function Offer({ content }) {
           padding: 10,
         }}
       >
-        <Text>Enter Bid Price:</Text>
+        <Text>Enter Bid Price: $</Text>
         <TextInput
           placeholder="enter price"
           keyboardType="numeric"
@@ -43,24 +43,7 @@ function Offer({ content }) {
           value={bidprice}
         />
       </View>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 10,
-          alignContent: 'center',
-          padding: 10,
-        }}
-      >
-        <Text>Enter Bid Price:</Text>
-        <TextInput
-          placeholder="enter price"
-          keyboardType="numeric"
-          onChangeText={(e) => setBidPrice(e)}
-          value={bidprice}
-        />
-      </View>
-      <Button title="Submit" />
+      <Button title="Submit" onPress={content.handleModal} />
     </>
   );
 }

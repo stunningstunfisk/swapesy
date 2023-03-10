@@ -20,7 +20,7 @@ import fetchUserCards from '../../util/fetchUserCards';
 
 const db = getFirestore(firebase);
 
-function ListingInfo({ user, listingId = 'TEST' }) {
+function ListingInfo({ user, listingId }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -86,6 +86,8 @@ function ListingInfo({ user, listingId = 'TEST' }) {
       .catch((err) => console.error(err));
   };
 
+  const handleModalOpen = () => setModalVisible(!modalVisible);
+
   const handleSelectedCards = {
     handleClick: (item) => {
       if (!selectedCards.includes(item)) {
@@ -117,7 +119,12 @@ function ListingInfo({ user, listingId = 'TEST' }) {
         <ModalRoute
           handleModal={handleModal}
           route="Offer"
-          content={{ cards, handleSelectedCards, selectedCards }}
+          content={{
+            cards,
+            handleSelectedCards,
+            selectedCards,
+            handleModal: handleModalOpen,
+          }}
         />
       </ModalView>
     </View>
