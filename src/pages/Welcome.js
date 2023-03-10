@@ -3,6 +3,8 @@ import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
+import PokeballBackground from '../components/common/PokeballBackground';
+
 
 const styles = StyleSheet.create({
   fontVT323: {
@@ -14,19 +16,21 @@ const styles = StyleSheet.create({
 
 function Welcome({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={styles.fontVT323}>
-        Splash
-      </Text>
-      <Button
-        title="Sign in"
-        onPress={() => navigation.navigate('SignIn')}
-      />
-      <Button
-        title="Sign up"
-        onPress={() => navigation.navigate('SignUp')}
-      />
-    </View>
+    <PokeballBackground>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={styles.fontVT323}>
+          Splash
+        </Text>
+        <Button
+          title="Sign in"
+          onPress={() => navigation.navigate('SignIn')}
+        />
+        <Button
+          title="Sign up"
+          onPress={() => navigation.navigate('SignUp')}
+        />
+      </View>
+    </PokeballBackground>
   );
 }
 
