@@ -6,7 +6,7 @@ import {
   Text,
   Button,
   View,
-  StyleSheet,
+  Pressable,
   Animated,
   PanResponder,
   Dimensions,
@@ -52,8 +52,8 @@ export default function ModalView({
     >
       <Animated.View
         style={{
-          height: pictureView ? '100%' : '50%',
-          marginTop: screenHeight / (pictureView ? 3 : 5),
+          height: !pictureView ? '100%' : '70%',
+          paddingTop: screenHeight / (!pictureView ? 3 : 5),
           transform: [{ translateY: pan.y }],
         }}
         {...panResponder.panHandlers}
@@ -66,7 +66,9 @@ export default function ModalView({
             borderRadius: 5,
           }}
         >
-          <Button title="Close Modal" onPress={handleModal} />
+          <Pressable onPress={handleModal}>
+            <Text>Close Modal</Text>
+          </Pressable>
           {children}
         </View>
       </Animated.View>
