@@ -9,15 +9,20 @@ const Stack = createNativeStackNavigator();
 
 function HomeStack({ user }) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Home">
         {() => <HomeScreen user={user} />}
       </Stack.Screen>
       <Stack.Screen name="ListingInfo">
-        {(state) => <ListingInfo userId={state.route.params.userId} listingId={state.route.params.listingId} /> }
+        {(state) => (
+          <ListingInfo
+            userId={state.route.params.userId}
+            listingId={state.route.params.listingId}
+          />
+        ) }
       </Stack.Screen>
       <Stack.Screen name="Profile">
-        {(state) => { console.log('state', state.route.params); return <Profile user={state.route.params.user} owner={state.route.params.owner} />; } }
+        {(state) => <Profile user={state.route.params.user} owner={state.route.params.owner} /> }
       </Stack.Screen>
     </Stack.Navigator>
   );

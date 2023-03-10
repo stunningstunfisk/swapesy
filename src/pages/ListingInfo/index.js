@@ -26,8 +26,6 @@ function ListingInfo({ userId, listingId }) {
     reputation: 23,
   });
 
-  console.log('info', userId);
-
   const [sellerId, setSellerId] = useState('1');
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);

@@ -17,8 +17,6 @@ function FancyCarousel({ cards, seller, sellerId, listingId, userId }) {
   const newUser = { uid: userId };
   const newSeller = { ...seller, uid: sellerId };
 
-  console.log('new', newUser, newSeller);
-
   const navigateToSellerProfile = () => {
     navigation.navigate('Profile', { user: newUser, owner: newSeller });
   };

@@ -32,7 +32,6 @@ function ListingCard({ listing, homePage, user }) {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
-  console.log('card', user.uid);
   const { uid } = user;
   return (
 
