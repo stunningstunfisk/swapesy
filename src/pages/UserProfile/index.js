@@ -52,7 +52,7 @@ function UserProfile({ user, owner }) {
 
   const handlePress = () => {
     if (user.uid === owner.uid) {
-      navigation.navigate('Edit', user);
+      navigation.navigate('Profile', { screen: 'Edit', params: { user }});
     } else {
       createNewChat(user.uid, owner.uid);
       navigation.navigate('Chats', {}); // TODO ask Mark what Page to navigate to and what params to pass

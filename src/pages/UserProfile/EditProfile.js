@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { View, Image, TextInput, FormButton } from 'react-native';
+import { View, Image, TextInput, FormButton, Alert } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
-import colors from '../../../styles/globalColors';
-import styles from '../../../styles/userProfile/userProfile';
 import {
   getFirestore,
   doc,
@@ -11,27 +9,30 @@ import {
   setDoc,
   getDoc,
 } from 'firebase/firestore';
+import colors from '../../../styles/globalColors';
+import styles from '../../../styles/userProfile/userProfile';
 import firebase from '../../config/firebase';
+
 const placeholderImg = 'https://avatars.cloudflare.steamstatic.com/52814099e40125301b521935ccca3b5865898777_full.jpg';
 
 function EditProfile({ user }) {
   const [userData, setUserData] = useState(null);
 
-  const handleUpdate = async() => {
+  const handleUpdate = async () => {
     db.collection('user')
-    .doc(user.uid)
-    .update({
-      name: userData.name,
-      bio: userData.bio,
-    })
-    .then(() => {
-      console.log('User Updated!');
-      Alert.alert(
-        'Profile Updated!',
-        'Your profile has been updated successfully.'
-      );
-    })
-  }
+      .doc(user.uid)
+      .update({
+        name: userData.name,
+        bio: userData.bio,
+      })
+      .then(() => {
+        console.log('User Updated!');
+        Alert.alert(
+          'Profile Updated!',
+          'Your profile has been updated successfully.',
+        );
+      });
+  };
 
   return (
     <View style={styles.wrapper}>
