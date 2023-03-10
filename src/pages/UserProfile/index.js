@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { View, Text, Image, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import {
   getFirestore,
   doc,
@@ -95,7 +94,10 @@ function UserProfile({ owner, user }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Image source={{ uri: owner.profile_picture || placeholderImg }} style={styles.profileImg} />
+        <Image
+          source={{ uri: owner.profile_picture || placeholderImg }}
+          style={styles.profileImg}
+        />
         <View style={styles.userInfoContainer}>
           <View style={styles.subContainer}>
             <Text
@@ -125,8 +127,8 @@ function UserProfile({ owner, user }) {
       <SegmentSelect
         buttons={owner ? ['Cards', 'Listings', 'Past Transactions'] : ['Listings', 'Past Transactions']}
         views={owner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
-        <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
-        <Transactions owner={owner} />]}
+          <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
+            <Transactions owner={owner} />]}
       />
     </View>
   );
