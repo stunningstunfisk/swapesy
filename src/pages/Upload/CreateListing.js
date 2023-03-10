@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   StyleSheet,
-  Input,
+  FlatList,
   View,
   Text,
   TextInput,
@@ -14,13 +14,14 @@ import ModalRoute from '../../components/common/modals/ModalRoute';
 import ToggleSwitch from 'toggle-switch-react-native';
 import CurrencyInput from 'react-currency-input-field';
 import fetchUserCards from '../../util/fetchUserCards';
+import selectedCardItem from '../../components/common/modals/selectedCardItem';
 
 import PokeballBackground from '../../components/common/PokeballBackground';
-
 
 function CreateListing({ user }) {
   const navigation = useNavigation();
   const [cards, setCards] = useState([]);
+  const [selectedCards, setSelectedCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [name, onChangeName] = useState('');
   const [price, onChangePrice] = useState(0);
@@ -29,7 +30,6 @@ function CreateListing({ user }) {
   const [data, setData] = useState({
     cards: [],
     price: null,
-
   });
 
   const handleModal = async () => {
@@ -40,6 +40,29 @@ function CreateListing({ user }) {
       .then(() => setModalVisible(!modalVisible))
       .catch((err) => console.error(err));
   };
+
+  const handleSelectedCards = {
+    handleClick: (item) => {
+      if (!selectedCards.includes(item)) {
+        setSelectedCards([...selectedCards, item]);
+      }
+    },
+    handleRemove: (item) => {
+      const newSelected = selectedCards.filter(
+        (selectedItem) => selectedItem !== item,
+      );
+      setSelectedCards(newSelected);
+    },
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { value = '' } = e.target;
+    const parsedValue = value.replace(/[^\d.]/gi, '');
+    setValue(parsedValue);
+  };
+
+  const handleOnBlur = () => setValue(Number(value).toFixed(2));
 
   return (
     <PokeballBackground>
@@ -95,22 +118,17 @@ function CreateListing({ user }) {
         <Pressable onPress={handleModal}>
           <Text>Select Cards</Text>
         </Pressable>
-        <ModalView
-          modalVisible={modalVisible}
-          handleModal={handleModal}
-          pictureView
-        >
+        <ModalView modalVisible={modalVisible} handleModal={handleModal}>
           <ModalRoute
             handleModal={handleModal}
             route="UserCards"
-            content={cards}
+            content={{ cards, handleSelectedCards, selectedCards }}
           />
         </ModalView>
       </View>
     </PokeballBackground>
   );
 }
-
 export default CreateListing;
 
 const styles = StyleSheet.create({

@@ -21,10 +21,15 @@ function HomeStack({ user }) {
             userId={state.route.params.userId}
             listingId={state.route.params.listingId}
           />
-        ) }
+        )}
       </Stack.Screen>
       <Stack.Screen name="Profile">
-        {(state) => <Profile user={state.route.params.user} owner={state.route.params.owner} /> }
+        {(state) => (
+          <Profile
+            user={state.route.params.user}
+            owner={state.route.params.owner}
+          />
+        )}
       </Stack.Screen>
     </Stack.Navigator>
   );
