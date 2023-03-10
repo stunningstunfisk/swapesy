@@ -6,10 +6,16 @@ import {
   getFirestore,
   collection,
   addDoc,
-  getDocs,
   query,
   where,
   Timestamp,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  collection,
+  limit,
+  orderBy,
 } from 'firebase/firestore';
 import MyCards from './MyCards';
 import CurrentListings from './CurrentListings';
@@ -21,8 +27,12 @@ import styles from '../../../styles/userProfile/userProfile';
 import firebase from '../../config/firebase';
 
 import PokeballBackground from '../../components/common/PokeballBackground';
+import fetchUserCards from '../../util/fetchUserCards';
+import fetchTransactions from '../../util/fetchTransactions';
 
 const db = getFirestore(firebase);
+const listingRef = collection(db, 'listing');
+const offerRef = collection(db, 'offer');
 
 
 function UserProfile({ user, owner }) {
@@ -31,6 +41,8 @@ function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
   const [goBackToggle, setGoBackToggle] = useState(false);
   const navigation = useNavigation();
+  const [transactions, setTransactions] = useState([]);
+  const [rep, setRep] = useState(0);
   
   // console.log('user', currentUser);
   // console.log('owner', owner);
@@ -63,7 +75,11 @@ function UserProfile({ user, owner }) {
     } else {
       setIsOwner(false);
     }
+    fetchTransactions(owner)
+      .then((data) => setTransactions(data))
+      .catch((err) => console.error(err));
   }, [isFocused]);
+  console.log('transhistory', transactions);
 
 
   let buttons;
@@ -71,13 +87,18 @@ function UserProfile({ user, owner }) {
   if (isOwner) {
     buttons = ['Cards', 'Listings', 'Past Transactions'];
 
-    views = [<MyCards owner={currentUser} />, <CurrentListings owner={currentUser} />,
+    views = [
+      <MyCards owner={currentUser} />,
+      <CurrentListings owner={currentUser} />,
+      <Transactions owner={currentUser} transactions={transactions} />,
+    ];
 
-      <Transactions owner={owner} />];
   } else {
     buttons = ['Listings', 'Past Transactions'];
-    views = [<CurrentListings owner={owner} />,
-      <Transactions owner={owner} />];
+    views = [
+      <CurrentListings owner={owner} />,
+      <Transactions owner={owner} transactions={transactions} />,
+    ];
   }
   const profilePic = currentUser.photoURL ? currentUser.photoURL : placeholder;
 
@@ -126,27 +147,16 @@ function UserProfile({ user, owner }) {
               >
                 {isOwner ? currentUser.name : owner.name}
               </Text>
-              <Pressable
-                onPress={handlePress}
-                style={styles.button}
-              >
+              
+              <Pressable onPress={handlePress} style={styles.button}>
                 <Text>{isOwner ? 'Edit' : 'Message'}</Text>
               </Pressable>
             </View>
-            <Text style={styles.reputation}>
-              REP:
-              {' '}
-              {isOwner ? currentUser.reputation : owner.reputation}
-            </Text>
-            <Text style={styles.bio}>
-              {isOwner ? currentUser.bio : owner.bio}
-            </Text>
+            <Text style={styles.reputation}>REP: {transactions.length}</Text>
+            <Text style={styles.bio}>{user.bio ? user.bio : null}</Text>
           </View>
         </View>
-        <SegmentSelect
-          buttons={buttons}
-          views={views}
-        />
+        <SegmentSelect buttons={buttons} views={views} />
       </View>
     </PokeballBackground>
   );
