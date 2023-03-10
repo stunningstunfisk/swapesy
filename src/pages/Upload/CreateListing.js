@@ -22,7 +22,13 @@ import fonts from '../../../styles/globalFonts';
 import PressableOpacity from '../../components/common/buttons/PressableOpacity';
 import backgroundImage from '../../../assets/poke-paper.png';
 
-import { getFirestore, doc, setDoc, collection, addDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  collection,
+  addDoc,
+} from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
 const db = getFirestore(firebase);
@@ -51,7 +57,6 @@ function CreateListing({ user }) {
     type: '', // sell, trade or both
   });
 
-
   const handleModal = async () => {
     await fetchUserCards(user)
       .then((cardData) => {
@@ -63,8 +68,8 @@ function CreateListing({ user }) {
   };
 
   const handleType = async () => {
-    console.log('enabled?', isEnabled)
-    console.log('price?', data.price)
+    console.log('enabled?', isEnabled);
+    console.log('price?', data.price);
     if (isEnabled && data.price) {
       setData({ ...data, type: 'both' });
     } else if (isEnabled && data.price === '') {
@@ -140,7 +145,13 @@ function CreateListing({ user }) {
         <View style={styles.navbarView}>
           <PressableOpacity
             onPress={() => setCurrentView(1)}
-            style={[styles.button, { backgroundColor: currentView === 0 ? 'lightgrey' : colors.primary }]}
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                  currentView === 0 ? 'lightgrey' : colors.primary,
+              },
+            ]}
           >
             <Text style={styles.fontVT323}>CREATE A LISTING</Text>
           </PressableOpacity>
@@ -150,17 +161,22 @@ function CreateListing({ user }) {
               navigation.navigate('UploadCard');
               setCurrentView(1);
             }}
-            style={[styles.button, { backgroundColor: currentView === 0 ? colors.primary : 'lightgrey' }]}
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                  currentView === 0 ? colors.primary : 'lightgrey',
+              },
+            ]}
           >
             <Text style={styles.fontVT323}>UPLOAD A CARD</Text>
           </PressableOpacity>
         </View>
 
-        <TouchableWithoutFeedback
-          onPress={Keyboard.dismiss}
-          accessible={false}
-        >
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
             {/* <Text
               onPress={() => navigation.navigate('Home')}
               style={{ fontSize: 26, fontWeight: 'bold' }}
@@ -191,7 +207,9 @@ function CreateListing({ user }) {
             />
 
             <View style={{ flexDirection: 'row', margin: 10 }}>
-              <Text style={{ margin: 5, paddingRight: 10 }}>Accepting Trades</Text>
+              <Text style={{ margin: 5, paddingRight: 10 }}>
+                Accepting Trades
+              </Text>
               <Switch
                 label="Accepting Trades"
                 trackColor={{ false: colors.primary, true: '#8fbc8f' }}
@@ -206,6 +224,21 @@ function CreateListing({ user }) {
             </Pressable>
           </View>
         </TouchableWithoutFeedback>
+        {selectedCards.length !== 0 && (
+          <FlatList
+            data={selectedCards}
+            renderItem={({ item }) =>
+              selectedCardItem(item, handleSelectedCards, selectedCards)
+            }
+            keyExtractor={(item) => item.id}
+            numColumns={3}
+            contentContainerStyle={{
+              margin: 0,
+              padding: 0,
+              flexGrow: 0,
+            }}
+          />
+        )}
 
         <ModalView modalVisible={modalVisible} handleModal={handleModal}>
           <ModalRoute
