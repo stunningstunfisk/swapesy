@@ -15,33 +15,26 @@ const placeholderImg = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/chari
 
 const db = getFirestore(firebase);
 
+
 // homePage is a prop passed in HomePage view to conditionally render views and
 // functionality available on HomePage only
 // listing prop will be passed down
 function ListingCard({ listing, homePage, user }) {
-  const navigation = useNavigation();
+  const [showListing, setShowListing] = useState(false);
   const [card, setCard] = useState({});
-
+  const navigation = useNavigation();
   const handleOffer = () => {
     // handle offer functionality goes here
     console.log('They\'re pressing me');
   };
-
-  useEffect(() => {
-    const cardRef = doc(db, `card/${listing.cards[0]}`);
-    const q = query(cardRef);
-    getDoc(q)
-      .then((data) => {
-        setCard(data.data());
-      })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error(err));
-  }, []);
-
   return (
+
+    // pressing on listing card opens up the listing page
+    // {showListing ? <ListingInfo listingId={listing.id} userId={user.uid} /> :
     <TouchableOpacity
       style={styles.wrapper}
-      onPress={() => navigation.navigate('ListingInfo', { screen: 'ListingInfo', params: { listingId: listing.id, userId: user.uid } })}
+      onPress={() => navigation.navigate('ListingInfo', { listingId: listing.id, userId: user.uid })}
+      // onPress={() => setShowListing(!showListing)}
     >
       <View style={styles.imgWrapper}>
         <Image source={{ uri: listing.uri || 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg' }} style={styles.mainImg} />

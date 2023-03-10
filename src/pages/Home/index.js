@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Options from './Options';
-import listingFuncs from './listingFuncs';
-import ListingCard from '../../components/common/ListingCard';
+import HomeScreen from './HomeScreen';
+import ListingInfo from '../ListingInfo';
 
-const sorts = listingFuncs;
+const Stack = createNativeStackNavigator();
 
-function Home({ navigation }) {
-  const [listings, setListings] = useState(undefined);
-  const [sort, setSort] = useState('recent');
-  const [filter, setFilter] = useState();
-
-  useEffect(() => { sorts[sort](setListings, filter); }, [sort, filter]);
-
+function HomeStack({ user }) {
   return (
-    <View style={{ flex: 1 }}>
-      <Options setSort={setSort} setFilter={setFilter} />
-      <FlatList
-        columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
-        showsVerticalScrollIndicator={false}
-        data={listings}
-        renderItem={({ item }) => <ListingCard listing={item} />}
-        keyExtreactor={(item) => item.id}
-        numColumns={2}
-      />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="Home">
+        {() => <HomeScreen user={user} />}
+      </Stack.Screen>
+      <Stack.Screen name="ListingInfo">
+        {(state) => <ListingInfo userId={user.id} listingId={state.route.params.listingId} /> }
+      </Stack.Screen>
+    </Stack.Navigator>
   );
 }
 
-export default Home;
+export default HomeStack;

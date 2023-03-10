@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Avatar, ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   collection,
@@ -24,12 +25,17 @@ import TrashButton from './buttons/TrashButton';
 
 import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
+import stunfiskImage from '../../../dev/test_data/stunfisk.png';
 
 
 const styles = StyleSheet.create({
   avatar: {
     borderColor: colors.primary,
     borderWidth: 2,
+  },
+  backgroundImage: {
+    tintColor: 'grey',
+    opacity: 0.25,
   },
   cardImage: {
     height: 75,
@@ -39,6 +45,7 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   chevron: {
+    color: colors.dark,
     margin: 4,
   },
   container: {
@@ -53,6 +60,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
+  },
+  none: {
+    elevation: 0,
+    shadowColor: 'rgba(0,0,0,0)',
+    borderwidth: 0,
   },
   offer: {
     flex: 1,
@@ -86,6 +98,9 @@ function MiniOffer({ offer, user }) {
   const [listing, setListing] = useState({});
   const [offerCards, setOfferCards] = useState([]);
   const [sellerPic, setSellerPic] = useState(ashImage);
+  const [sellerData, setSellerData] = useState('');
+
+  const navigation = useNavigation();
   const [owner, setOwner] = useState({});
   const navigation = useNavigation();
 
@@ -93,8 +108,16 @@ function MiniOffer({ offer, user }) {
     navigation.navigate('Profile', { user, owner });
   }
 
-  function handleListingPress() { }
-  function handleTrashLongPress() { }
+  function handleUserPress() {
+    console.log('pressed trade offer avatar', sellerData);
+    navigation.navigate('UserProfile', { user: sellerData });
+  }
+  function handleListingPress() {
+    console.log('pressed trade offer title');
+  }
+  function handleTrashLongPress() {
+    console.warn('deleting');
+  }
 
   useEffect(() => {
     // PASSED offer -> GET offer's listing -> SET seller TO listing.user
@@ -109,6 +132,8 @@ function MiniOffer({ offer, user }) {
         getDoc(userQuery)
           .then((userData) => {
             foundUser = userData.data();
+            console.log('userData:', userData, userData.data());
+            setSellerData(userData.data());
           })
           .then(() => {
             setSellerPic({ uri: foundUser.profile_picture });
@@ -141,48 +166,52 @@ function MiniOffer({ offer, user }) {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.titleBar}>
-          <Pressable onPress={handleUserPress}>
-            <Avatar
-              rounded
-              size="large"
-              source={sellerPic} // the seller user picture
-              containerStyle={styles.avatar}
-            />
-          </Pressable>
-          <Pressable style={styles.titleBar} onPress={handleListingPress}>
-            <Text style={styles.title}>{listing.title}</Text>
-          </Pressable>
-
-        </View>
-        <ListItem.Swipeable
-          containerStyle={styles.container}
-          leftContent={(reset) => (
-            <TrashButton onLongPress={() => { handleTrashLongPress(); reset(); }} />
-          )}
-          leftWidth={60}
-          rightWidth={0}
+        <ImageBackground
+          imageStyle={styles.backgroundImage}
+          source={stunfiskImage}
         >
+          <View style={styles.titleBar}>
+            <Pressable onPress={handleUserPress}>
+              <Avatar
+                rounded
+                size="large"
+                source={sellerPic} // the seller user picture
+                containerStyle={styles.avatar}
+              />
+            </Pressable>
+            <Pressable style={styles.titleBar} onPress={handleListingPress}>
+              <Text style={styles.title}>{listing.title}</Text>
+            </Pressable>
 
-          {/* Offer List Item */}
-          <View style={styles.offer}>
-            <View style={{ flexDirection: 'row' }}>
-              {offerCards.map((card) => (
-                <Image style={styles.cardImage} source={{ uri: card.uri }} />
-              ))}
-            </View>
           </View>
-          {(offer.price > 0)
-            ? (
-              <Text style={styles.price}>{`$${offer.price}`}</Text>
-            )
-            : (
-              null
+          <ListItem.Swipeable
+            containerStyle={[styles.container, styles.none]}
+            leftContent={(reset) => (
+              <TrashButton onLongPress={() => { handleTrashLongPress(); reset(); }} />
             )}
-          <FontAwesome style={styles.chevron} name="chevron-right" size={24} color="black" />
+            leftWidth={60}
+            rightWidth={0}
+          >
 
-        </ListItem.Swipeable>
+            {/* Offer List Item */}
+            <View style={styles.offer}>
+              <View style={{ flexDirection: 'row' }}>
+                {offerCards.map((card) => (
+                  <Image style={styles.cardImage} source={{ uri: card.uri }} />
+                ))}
+              </View>
+            </View>
+            {(offer.price > 0)
+              ? (
+                <Text style={styles.price}>{`$${offer.price}`}</Text>
+              )
+              : (
+                null
+              )}
+            <FontAwesome style={styles.chevron} name="chevron-right" size={24} color="black" />
 
+          </ListItem.Swipeable>
+        </ImageBackground>
       </View>
       <HorizontalDivider />
     </>

@@ -1,29 +1,82 @@
 // /* eslint-disable */
 import React, { useState } from 'react';
-import { StyleSheet, Image, View, Text, Pressable, TextInput, Button } from 'react-native';
+import { StyleSheet, Image, View, Text, TextInput, Button } from 'react-native';
 import DropdownComponent from '../../components/common/Dropdown.js';
 import ImagePickerComponent from '../../components/upload_page/ImagePicker.js';
 import CameraView from './CameraView.js';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-function UploadCard({ user }) {
-  const [name, onChangeName] = useState('');
-  const navigation = useNavigation();
-  const [uri, setUri] = useState(null);
+import { getFirestore, doc, setDoc, collection, addDoc } from 'firebase/firestore';
+import firebase from '../../config/firebase';
 
+import upload from '../../util/imageUpload.js';
+
+const db = getFirestore(firebase);
+const dbRef = collection(db, 'card');
+
+function UploadCard({ user, uri, setUri }) {
+  const navigation = useNavigation();
+  // const [name, setName] = useState('');
+  // const [condition, setCondition] = useState(null);
+  // const [uri, setUri] = useState(null);
+
+  const [data, setData] = useState({
+    condition: '',
+    name: '',
+    uri: '',
+    user: '',
+  });
+
+  // these could probably get changed to just an array of strings
   const conditions = [
-    { label: 'Near Mint', value: '1' },
-    { label: 'Lightly Played', value: '2' },
-    { label: 'Moderately Played', value: '3' },
-    { label: 'Heavily Played', value: '4' },
-    { label: 'Damaged', value: '5' },
+    { label: 'Near Mint', value: 'Near Mint' },
+    { label: 'Lightly Played', value: 'Lightly Played' },
+    { label: 'Moderately Played', value: 'Moderately Played' },
+    { label: 'Heavily Played', value: 'Heavily Played' },
+    { label: 'Damaged', value: 'Damaged' },
   ];
+
+  const handleUpload = async () => {
+    const id = (Math.random() + 1).toString(36).substring(7);
+    const image = await upload(uri, id);
+
+    if (image === undefined || data.name === '' || data.condition === '') {
+      // setData({
+      //   ...data,
+      //   error: 'Fields cannot be empty!',
+      // });
+      console.log('error, missing fields');
+      return;
+    }
+
+    const copyData = { ...data };
+    copyData.uri = image;
+    copyData.user = user.uid;
+    // setData({ ...copyData });
+    // await setData({ ...data, uri: image, user: user.uid });
+
+    try {
+      await addDoc(dbRef, { ...copyData });
+
+      setUri(null);
+    } catch (error) {
+      console.log('addDoc error');
+      // setData({
+      //   ...data,
+      //   error: error.message,
+      // });
+    }
+  };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Create listing"
+        onPress={() => navigation.navigate('CreateListing')}
+      />
       <Text
-        onPress={() => navigation.navigate('Home')}
+        // onPress={() => navigation.navigate('Home')}
         style={{ fontSize: 26, fontWeight: 'bold' }}
       >
         Add a Card
@@ -32,35 +85,33 @@ function UploadCard({ user }) {
       <TextInput
         style={styles.input}
         placeholder="Card Name..."
-        onChangeText={onChangeName}
-        value={name}
+        // onChangeText={setName}
+        onChangeText={(text) => setData({ ...data, name: text })}
+        value={data.name}
       />
 
-      <DropdownComponent data={conditions} />
+      <DropdownComponent conditions={conditions} data={data} setData={setData} />
 
       {uri ? (
-      <View>
-        <Image
-          style={styles.displayImage}
-          source={{ uri: uri }}
-        />
-      </View>
+        <View>
+          <Image
+            style={styles.displayImage}
+            source={{ uri: uri }}
+          />
+        </View>
       ) : (
-      <View style={styles.imageBox}>
-        <AntDesign name="camera" size={20} color="black" />
-        <ImagePickerComponent uri={uri} setUri={setUri} />
-        <Button
-          title="Take a picture"
-          onPress={() => { navigation.navigate('CameraView', { setUri: setUri }); }}
-        />
-      </View>
+        <View style={styles.imageBox}>
+          <AntDesign name="camera" size={20} color="black" />
+          <ImagePickerComponent uri={uri} setUri={setUri} />
+          <Button
+            title="Take a picture"
+            onPress={() => { navigation.navigate('CameraView'); }}
+          />
+        </View>
       )}
 
-      <Button title="Upload" onPress={() => setUri(null)} />
-      <Button
-        title="Create listing"
-        onPress={() => navigation.navigate('CreateListing')}
-      />
+      <Button title="Remove Image" onPress={() => setUri(null)} />
+      <Button title="Upload" onPress={handleUpload} />
     </View>
   );
 }
