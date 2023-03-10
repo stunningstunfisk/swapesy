@@ -1,96 +1,170 @@
 import React, { useState } from 'react';
 import {
   StyleSheet,
-  Input,
   View,
   Text,
   TextInput,
   Pressable,
   Button,
+  Switch,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ModalView from '../../components/common/modals/ModalView';
 import ModalRoute from '../../components/common/modals/ModalRoute';
-import ToggleSwitch from 'toggle-switch-react-native';
-import CurrencyInput from 'react-currency-input-field';
+import CurrencyInput from 'react-native-currency-input';
 import fetchUserCards from '../../util/fetchUserCards';
+import colors from '../../../styles/globalColors';
+import fonts from '../../../styles/globalFonts';
+import PressableOpacity from '../../components/common/buttons/PressableOpacity';
+
+import { getFirestore, doc, setDoc, collection, addDoc } from 'firebase/firestore';
+import firebase from '../../config/firebase';
+
+const db = getFirestore(firebase);
+const dbRef = collection(db, 'card');
 
 function CreateListing({ user }) {
   const navigation = useNavigation();
   const [cards, setCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [name, onChangeName] = useState('');
-  const [price, onChangePrice] = useState(0);
-  const [description, onChangeDescription] = useState('');
-  const [value, setValue] = useState(0);
   const [data, setData] = useState({
+    buyer: '',
     cards: [],
-    price: null,
-
+    completed: false,
+    // id: ,
+    offers: [],
+    price: '',
+    rating: null,
+    timestamp: '',
+    title: '',
+    user: '',
   });
+
+  const [currentView, setCurrentView] = useState(1);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const handleModal = async () => {
     await fetchUserCards(user)
-      .then((data) => {
-        setCards(data);
+      .then((cardData) => {
+        setCards(cardData);
+        setData({ ...data, cards: cardData });
       })
       .then(() => setModalVisible(!modalVisible))
       .catch((err) => console.error(err));
   };
 
+  const handleUploadTemp = async () => {
+    console.log('data', data);
+    setData({ ...data, title: '', price: '', description: '' });
+  };
+
+  const handleUpload = async () => {
+    if (data.title === '' || data.price === '' || data.cards === []) {
+      // setData({
+      //   ...data,
+      //   error: 'Fields cannot be empty!',
+      // });
+      console.log('error, missing fields');
+      return;
+    }
+
+    const copyData = { ...data };
+    // copyData.uri = image;
+    // copyData.user = user.uid;
+    // setData({ ...copyData });
+    // await setData({ ...data, uri: image, user: user.uid });
+
+    try {
+      await addDoc(dbRef, { ...copyData });
+
+      // setUri(null);
+      // need to clear form after submitted
+    } catch (error) {
+      console.log('addDoc error');
+      // setData({
+      //   ...data,
+      //   error: error.message,
+      // });
+    }
+  };
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        title="Upload Card"
-        onPress={() => navigation.navigate('UploadCard')}
-      />
-      <Text
-        onPress={() => navigation.navigate('Home')}
-        style={{ fontSize: 26, fontWeight: 'bold' }}
+    <View style={styles.listingView}>
+      <View style={styles.navbarView}>
+        <PressableOpacity
+          onPress={() => setCurrentView(1)}
+          style={[styles.button, { backgroundColor: currentView === 0 ? 'lightgrey' : colors.primary }]}
+        >
+          <Text style={styles.fontVT323}>CREATE A LISTING</Text>
+        </PressableOpacity>
+        <PressableOpacity
+          onPress={() => {
+            setCurrentView(0);
+            navigation.navigate('UploadCard');
+            setCurrentView(1);
+          }}
+          style={[styles.button, { backgroundColor: currentView === 0 ? colors.primary : 'lightgrey' }]}
+        >
+          <Text style={styles.fontVT323}>UPLOAD A CARD</Text>
+        </PressableOpacity>
+      </View>
+
+      <TouchableWithoutFeedback
+        onPress={Keyboard.dismiss}
+        accessible={false}
       >
-        Create a Listing
-      </Text>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          {/* <Text
+            onPress={() => navigation.navigate('Home')}
+            style={{ fontSize: 26, fontWeight: 'bold' }}
+          >
+            Create a Listing
+          </Text> */}
+          <TextInput
+            style={styles.input}
+            placeholder="Listing title..."
+            onChangeText={(text) => setData({ ...data, title: text })}
+            value={data.title}
+          />
+          <CurrencyInput
+            style={styles.currencyInput}
+            placeholder="Price..."
+            prefix="$"
+            separator="."
+            delimiter=","
+            value={data.price}
+            onChangeValue={(text) => setData({ ...data, price: text })}
+          />
+          <TextInput
+            style={styles.descriptionInput}
+            placeholder="Description..."
+            onChangeText={(text) => setData({ ...data, description: text })}
+            value={data.description}
+            multiline
+          />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Listing title..."
-        onChangeText={onChangeName}
-        value={name}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Price..."
-        onChangeText={onChangePrice}
-        value={price.toString()}
-        prefix="$"
-        delimiter="."
-        separator="."
-        precision={2}
-        keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.descriptionInput}
-        placeholder="Description..."
-        onChangeText={onChangeDescription}
-        value={description}
-        multiline={true}
-      />
+          <View style={{ flexDirection: 'row', margin: 10 }}>
+            <Text style={{ margin: 5, paddingRight: 10 }}>Accepting Trades</Text>
+            <Switch
+              label="Accepting Trades"
+              trackColor={{ false: colors.primary, true: '#8fbc8f' }}
+              thumbColor={isEnabled ? colors.background : colors.background}
+              ios_backgroundColor={colors.dark}
+              onValueChange={toggleSwitch} // (value) => setData({ ...data, type: text }) ?
+              value={isEnabled}
+            />
+          </View>
 
-      {/* <CurrencyInput /> */}
 
-      <ToggleSwitch
-        isOn={false}
-        onColor="green"
-        offColor="red"
-        label="Accepting Trades"
-        labelStyle={{ color: 'black', fontWeight: '900' }}
-        size="large"
-        onToggle={(isOn) => console.log('changed to : ', isOn)}
-      />
+          <Pressable onPress={handleModal}>
+            <Text>Select Cards</Text>
+          </Pressable>
+        </View>
+      </TouchableWithoutFeedback>
 
-      <Pressable onPress={handleModal}>
-        <Text>Select Cards</Text>
-      </Pressable>
       <ModalView
         modalVisible={modalVisible}
         handleModal={handleModal}
@@ -102,6 +176,7 @@ function CreateListing({ user }) {
           content={cards}
         />
       </ModalView>
+      <Button title="Upload" onPress={handleUploadTemp} />
     </View>
   );
 }
@@ -109,7 +184,20 @@ function CreateListing({ user }) {
 export default CreateListing;
 
 const styles = StyleSheet.create({
+  listingView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.background,
+  },
   input: {
+    height: 40,
+    width: 200,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+  currencyInput: {
     height: 40,
     width: 200,
     margin: 12,
@@ -122,5 +210,22 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  button: {
+    height: 48,
+    margin: 4,
+  },
+  navbarView: {
+    // flex: 1,
+    flexDirection: 'row',
+  },
+  fontVT323: {
+    color: colors.light,
+    fontFamily: fonts.text.fontFamily,
+    fontSize: 20,
+  },
+  tradesView: {
+    backgroundColor: colors.background,
+    flex: 1,
   },
 });
