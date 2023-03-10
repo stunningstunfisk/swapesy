@@ -114,7 +114,9 @@ function MiniOffer({ offer, user }) {
             setSellerPic({ uri: foundUser.profile_picture });
             setListing(foundListing);
             console.log('foundUser', foundUser);
-            setOwner(foundUser);
+            console.log('Owner id ', foundListing.user);
+            // foundUser.uid = listing.user;
+            setOwner(foundListing.user);
           })
           .catch((error) => console.error(error));
       })
