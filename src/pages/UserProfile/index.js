@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { useIsFocused } from "@react-navigation/native";
 import { View, Text, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   getFirestore,
   doc,
+  query,
   setDoc,
   getDoc,
 } from 'firebase/firestore';
@@ -27,14 +29,15 @@ function createNewChat(currentUserId, otherUserId) {
 }
 
 function UserProfile({ owner, user }) {
-  console.log('owner here ', owner);
-  console.log('user here ', user);
+  const isFocused = useIsFocused();
+  console.log('owner here ', owner.uid);
+  console.log('user here ', user.uid);
   // let isOwner;
   const [ownerInfo, setOwnerInfo] = useState(user);
   const [isOwner, setIsOwner] = useState(true);
   // if (owner.route !== undefined) {
-  //   if (owner.route.params.owner.user === user.uid) {
-  //     owner.uid = owner.route.params.owner.name;
+  //   if (owner.route.params.owner.uid === user.uid) {
+  //     // owner.uid = owner.route.params.owner.name;
   //     console.log('I\'m the owner ', owner);
   //     isOwner = false;
   //     // owner = user;
@@ -47,24 +50,33 @@ function UserProfile({ owner, user }) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (owner.route !== undefined) {
-      if (owner.route.params.owner.user === user.uid) {
-        // case where user = owner
-        owner.uid = owner.route.params.owner.name;
-        console.log('I\'m the owner ', owner);
-        console.log('I\'m the user ', user);
-        setIsOwner(false);
-        setOwnerInfo(owner); // can use user here
-        // owner = user;
+    if (isFocused) {
+      const fetchOwner = async () => {
+        const userRef = doc(db, 'user', owner.uid);
+        const quser = query(userRef);
+        const userSnapshot = await getDoc(quser);
+        setOwnerInfo(userSnapshot.data());
+      };
+      if (owner.route !== undefined) {
+        if (owner.route.params.owner.user === user.uid) {
+          // case where user = owner
+          owner.uid = owner.route.params.owner.name;
+          console.log('I\'m the owner ', owner.uid);
+          console.log('I\'m the user ', user.uid);
+          setIsOwner(false);
+          setOwnerInfo(user); // can use user herer
+          // owner = user;
+        }
+      } else {
+        // case where user != owner
+        setIsOwner(true);
+        console.log('got owner ', owner.uid);
+        console.log('got owner-user', user.uid);
+        fetchOwner();
+        // setOwnerInfo(owner.owner);
       }
-    } else {
-      // case where user != owner
-      setIsOwner(true);
-      console.log('got owner ', owner);
-      console.log('got owner-user', user);
-      setOwnerInfo(owner.owner);
     }
-  }, []);
+  }, [isFocused, ownerInfo]);
 
   const handlePress = () => {
     if (isOwner) {
@@ -78,7 +90,7 @@ function UserProfile({ owner, user }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        {/* <Image
+        <Image
           source={{ uri: ownerInfo.profile_picture || placeholderImg }}
           style={styles.profileImg}
         />
@@ -108,7 +120,7 @@ function UserProfile({ owner, user }) {
             {' '}
             {ownerInfo.bio || 'nothing is here yet'}
           </Text>
-        </View> */}
+        </View>
       </View>
       <SegmentSelect
         buttons={isOwner ? ['Cards', 'Listings', 'Past Transactions'] : ['Listings', 'Past Transactions']}
