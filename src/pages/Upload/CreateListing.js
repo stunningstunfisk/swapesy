@@ -201,11 +201,11 @@ function CreateListing({ user }) {
                 value={isEnabled}
               />
             </View>
-
-
-        <Pressable onPress={handleModal}>
-          <Text>Select Cards</Text>
-        </Pressable>
+            <Pressable onPress={handleModal}>
+              <Text>Select Cards</Text>
+            </Pressable>
+          </View>
+        </TouchableWithoutFeedback>
 
         <ModalView modalVisible={modalVisible} handleModal={handleModal}>
           <ModalRoute
@@ -214,25 +214,7 @@ function CreateListing({ user }) {
             content={{ cards, handleSelectedCards, selectedCards }}
           />
         </ModalView>
-      </View>
-    </PokeballBackground>
-            <Pressable onPress={handleModal}>
-              <Text>Select Cards</Text>
-            </Pressable>
-          </View>
-        </TouchableWithoutFeedback>
 
-        <ModalView
-          modalVisible={modalVisible}
-          handleModal={handleModal}
-          pictureView
-        >
-          <ModalRoute
-            handleModal={handleModal}
-            route="UserCards"
-            content={cards}
-          />
-        </ModalView>
         <Button title="Post Listing" onPress={handleUploadTemp} />
       </ImageBackground>
     </View>
