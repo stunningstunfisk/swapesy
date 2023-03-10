@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Avatar, ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   collection,
@@ -96,10 +97,20 @@ function MiniOffer({ offer }) {
   const [listing, setListing] = useState({});
   const [offerCards, setOfferCards] = useState([]);
   const [sellerPic, setSellerPic] = useState(ashImage);
+  const [sellerData, setSellerData] = useState('');
 
-  function handleUserPress() { }
-  function handleListingPress() { }
-  function handleTrashLongPress() { }
+  const navigation = useNavigation();
+
+  function handleUserPress() {
+    console.log('pressed trade offer avatar', sellerData);
+    navigation.navigate('UserProfile', { user: sellerData });
+  }
+  function handleListingPress() {
+    console.log('pressed trade offer title');
+  }
+  function handleTrashLongPress() {
+    console.warn('deleting');
+  }
 
   useEffect(() => {
     // PASSED offer -> GET offer's listing -> SET seller TO listing.user
@@ -114,6 +125,8 @@ function MiniOffer({ offer }) {
         getDoc(userQuery)
           .then((userData) => {
             foundUser = userData.data();
+            console.log('userData:', userData, userData.data());
+            setSellerData(userData.data());
           })
           .then(() => {
             setSellerPic({ uri: foundUser.profile_picture });
