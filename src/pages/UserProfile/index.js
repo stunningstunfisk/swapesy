@@ -13,7 +13,6 @@ import {
   setDoc,
   getDoc,
   getDocs,
-  collection,
   limit,
   orderBy,
 } from 'firebase/firestore';
@@ -43,7 +42,7 @@ function UserProfile({ user, owner }) {
   const navigation = useNavigation();
   const [transactions, setTransactions] = useState([]);
   const [rep, setRep] = useState(0);
-  
+
   // console.log('user', currentUser);
   // console.log('owner', owner);
 
@@ -100,7 +99,6 @@ function UserProfile({ user, owner }) {
       <CurrentListings owner={currentUser} />,
       <Transactions owner={currentUser} transactions={transactions} />,
     ];
-
   } else {
     buttons = ['Listings', 'Past Transactions'];
     views = [
@@ -155,12 +153,16 @@ function UserProfile({ user, owner }) {
               >
                 {isOwner ? currentUser.name : owner.name}
               </Text>
-              
+
               <Pressable onPress={handlePress} style={styles.button}>
                 <Text>{isOwner ? 'Edit' : 'Message'}</Text>
               </Pressable>
             </View>
-            <Text style={styles.reputation}>REP: {rep}</Text>
+            <Text style={styles.reputation}>
+              REP:
+              {' '}
+              {rep}
+            </Text>
             <Text style={styles.bio}>{user.bio ? user.bio : null}</Text>
           </View>
         </View>
