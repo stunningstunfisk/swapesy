@@ -1,13 +1,16 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 
 const styles = StyleSheet.create({
   item: {
-    width: window.width,
+    marginTop: 5,
+    minWidth: window.width,
   },
   toUser: {
+    display: 'flex',
+    flexDirections: 'row',
     backgroundColor: '#C9C9C9',
     maxWidth: 250,
     borderTopLeftRadius: 20,
@@ -15,9 +18,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
   },
   fromUser: {
-    // flexDirections: 'row-reverse',
-    // alignItemsArr: 'center',
-    // justifyContents: 'center',
+    display: 'flex',
+    flexDirections: 'row',
+    alignSelf: 'flex-end',
+    justifyContents: 'center',
     maxWidth: 250,
     backgroundColor: '#72BEE9',
     borderTopLeftRadius: 20,
@@ -27,9 +31,9 @@ const styles = StyleSheet.create({
 });
 
 function MessageEntry({ message, messageWith }) {
-  useEffect(() => { console.log('message', message, messageWith); }, []);
+  // useEffect(() => { console.log('message', message, messageWith); }, []);
   return (
-    <View>
+    <View style={styles.item}>
       <ListItem
         key={message.created_at.seconds}
         containerStyle={message.from === messageWith ? styles.toUser : styles.fromUser}

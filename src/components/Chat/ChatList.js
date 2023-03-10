@@ -8,6 +8,7 @@ import {
   View,
   StatusBar,
   FlatList,
+  ImageBackground,
 } from 'react-native';
 
 import {
@@ -25,11 +26,15 @@ import {
 import firebase from '../../config/firebase';
 
 import ChatEntry from './ChatEntry';
+import backgroundImage from '../../../assets/poke-paper.png';
 
 const db = getFirestore(firebase);
 const conversationRef = collection(db, 'conversation');
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
@@ -50,7 +55,7 @@ const styles = StyleSheet.create({
 });
 
 function Item({ item, viewMessages }) {
-  console.log('in item', item, viewMessages);
+  // console.log('in item', item, viewMessages);
   return (
     <ChatEntry
       chat={item}
@@ -66,7 +71,7 @@ function ChatList({ user }) {
   const [conversations, setConversations] = useState([]);
 
   const viewMessages = (chatId, otherUser) => {
-    console.log('Chatentry:handlePress', otherUser);
+    // console.log('Chatentry:handlePress', otherUser);
     navigation.navigate('Messages', {
       chatId,
       messageWith: otherUser,
@@ -74,7 +79,7 @@ function ChatList({ user }) {
   };
 
   useEffect(() => {
-    console.log('ChatList');
+    // console.log('ChatList');
     const fetchMessage = async (id) => {
       const messagesRef = collection(db, `conversation/${id}/messages`);
       const qmsg = query(messagesRef, orderBy('created_at'), limit(1));
@@ -132,29 +137,36 @@ function ChatList({ user }) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {
-        conversations.length
-          ? (
-            <FlatList
-              data={conversations}
-              renderItem={
-            ({ item }) => {
-              console.log('creating item', item);
-              return (
-                <Item
-                  item={item}
-                  viewMessages={viewMessages}
-                />
-              );
+    <ImageBackground
+      imageStyle={{ resizeMode: 'repeat', opacity: 0.5 }}
+      style={styles.backgroundImage}
+      source={backgroundImage}
+    >
+      <View style={styles.container}>
+        {
+          conversations.length
+            ? (
+              <FlatList
+                data={conversations}
+                renderItem={
+              ({ item }) =>
+                // console.log('creating item', item);
+                // eslint-disable-next-line implicit-arrow-linebreak
+                (
+                  <Item
+                    item={item}
+                    viewMessages={viewMessages}
+                  />
+                )
+
             }
-          }
-              keyExtractor={(item) => item.chatId}
-            />
-          )
-          : null
-      }
-    </View>
+                keyExtractor={(item) => item.chatId}
+              />
+            )
+            : null
+        }
+      </View>
+    </ImageBackground>
   );
 }
 
