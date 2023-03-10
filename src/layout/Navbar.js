@@ -3,6 +3,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import colors from '../../styles/globalColors';
 import fonts from '../../styles/globalFonts';
@@ -10,6 +11,7 @@ import fonts from '../../styles/globalFonts';
 const Tab = createBottomTabNavigator();
 
 function Navbar({ pages }) {
+  const insets = useSafeAreaInsets();
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -27,7 +29,7 @@ function Navbar({ pages }) {
               {
                 backgroundColor: colors.darkBackground,
                 display: 'flex',
-                height: 64,
+                height: 64 + insets.bottom,
               },
               null,
             ],
