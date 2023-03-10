@@ -36,18 +36,18 @@ function UserProfile({ user, owner }) {
     } else {
       setIsOwner(false);
     }
-  });
+  }, []);
 
   let buttons;
   let views;
   if (user.uid === owner.uid) {
     buttons = ['Cards', 'Listings', 'Past Transactions'];
     views = [<MyCards owner={user} />, <CurrentListings owner={user} />,
-    <Transactions owner={owner} />];
+      <Transactions owner={owner} />];
   } else {
     buttons = ['Listings', 'Past Transactions'];
     views = [<CurrentListings owner={owner} />,
-    <Transactions owner={owner} />];
+      <Transactions owner={owner} />];
   }
   const profilePic = user.photoURL ? user.photoURL : placeholder;
 

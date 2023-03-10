@@ -2,24 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
+import firebase from '../../config/firebase';
+
 import ashImage from '../../../dev/test_data/ash.jpg';
 import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
 
-import {
-  collection,
-  doc,
-  docs,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
-import firebase from '../../config/firebase';
 
 const database = getFirestore(firebase);
-
 
 const styles = StyleSheet.create({
   cardImage: {

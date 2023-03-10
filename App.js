@@ -23,10 +23,8 @@ export default function App() {
   const isHermes = () => !!global.HermesInternal;
 
   console.info('Using the Hermes Engine:', isHermes());
-  console.reportErrorsAsExceptions = false;
   console.disableYellowBox = true;
-  console.error = function () { };
-  console.warn = function () { };
+  console.disableRedBox = true;
 
   // TODO: user should live in a React context
 
