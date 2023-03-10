@@ -31,6 +31,7 @@ function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
   const [goBackToggle, setGoBackToggle] = useState(false);
   const navigation = useNavigation();
+  
   // console.log('user', currentUser);
   // console.log('owner', owner);
 
@@ -64,11 +65,14 @@ function UserProfile({ user, owner }) {
     }
   }, [isFocused]);
 
+
   let buttons;
   let views;
   if (isOwner) {
     buttons = ['Cards', 'Listings', 'Past Transactions'];
+
     views = [<MyCards owner={currentUser} />, <CurrentListings owner={currentUser} />,
+
       <Transactions owner={owner} />];
   } else {
     buttons = ['Listings', 'Past Transactions'];

@@ -1,34 +1,31 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import cardStyles from '../../../../styles/userProfile/inventoryCard';
+import { View, FlatList, Text } from 'react-native';
+import selectedCardItem from './selectedCardItem';
 
 function UserCards({ content }) {
-  console.log(content, 'here');
   return (
-    <View style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-      {content.map((card, i) => (
-        <View key={i}>
-          <Image
-            source={{ uri: card.uri }}
-            style={{
-              width: '100%',
-              height: 'auto',
-              aspectRatio: 1 / 4,
-              padding: 5,
-              resizeMode: 'contain',
-            }}
-          />
-          <Text>{card.name}</Text>
-        </View>
-      ))}
+    <View style={{ display: 'flex', flexDirection: 'column' }}>
+      <Text>Inventory</Text>
+
+      <FlatList
+        data={content.cards}
+        renderItem={(item) =>
+          selectedCardItem(
+            item.item,
+            content.handleSelectedCards,
+            content.selectedCards,
+          )
+        }
+        keyExtractor={(item) => item.id}
+        numColumns={3}
+        contentContainerStyle={{
+          margin: 0,
+          padding: 0,
+          flexGrow: 0,
+        }}
+      />
     </View>
   );
 }
 
 export default UserCards;
-
-// const style = {
-//   container : {
-
-//   }
-// }
