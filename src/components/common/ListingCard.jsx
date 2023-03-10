@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Badge } from '@rneui/themed';
 
 import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
 import firebase from '../../config/firebase';
@@ -111,6 +112,18 @@ function ListingCard({ listing, user }) {
         >
           {listing.title ? listing.title : 'Listing title'}
         </Text>
+        {listing.cards.length > 1
+      && (
+      // <View style={styles.numOfCards}>
+        <Badge
+          value={listing.cards.length}
+          status="success"
+          containerStyle={{ position: 'absolute', top: 0, right: 0, width: 7, heigth: 7, backgoundColor: colors.light, borderColor: colors.dark}}
+          badgeStyle={{backgroundColor: colors.light}}
+          textStyle={{fontFamily: fonts.tabHeader.fontFamily, alignText: 'center', color: '#54130e'}}
+        />
+      // </View>
+      )}
       </View>
 
       <View>
