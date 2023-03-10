@@ -25,6 +25,9 @@ function ListingInfo({ userId, listingId }) {
     profile_picture: 'https://freeyourmindexperience.com/wp-content/uploads/person-icon-person-icon-clipart-image-from-our-icon-clipart-category-9-500x500.png',
     reputation: 23,
   });
+
+  console.log('info', userId);
+
   const [sellerId, setSellerId] = useState('1');
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);
@@ -75,6 +78,7 @@ function ListingInfo({ userId, listingId }) {
         seller={seller}
         sellerId={sellerId}
         listingId={listingId}
+        userId={userId}
       />
       <Offers offers={listingOffers} sellerId={sellerId} currUserId={userId} />
     </View>

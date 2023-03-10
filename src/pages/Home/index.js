@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from './HomeScreen';
 import ListingInfo from '../ListingInfo';
+import Profile from '../UserProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,7 +14,10 @@ function HomeStack({ user }) {
         {() => <HomeScreen user={user} />}
       </Stack.Screen>
       <Stack.Screen name="ListingInfo">
-        {(state) => <ListingInfo userId={user.id} listingId={state.route.params.listingId} /> }
+        {(state) => <ListingInfo userId={state.route.params.userId} listingId={state.route.params.listingId} /> }
+      </Stack.Screen>
+      <Stack.Screen name="Profile">
+        {(state) => { console.log('state', state.route.params); return <Profile user={state.route.params.user} owner={state.route.params.owner} />; } }
       </Stack.Screen>
     </Stack.Navigator>
   );

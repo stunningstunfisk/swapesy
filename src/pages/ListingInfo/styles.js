@@ -33,6 +33,10 @@ export default StyleSheet.create({
     height: 20,
     width: '50%',
     backgroundColor: '#d06f3b',
+    shadowColor: 'black',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
   },
   details: {
     marginTop: '15%',

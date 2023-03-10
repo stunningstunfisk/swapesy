@@ -27,7 +27,7 @@ function createNewChat(currentUserId, otherUserId) {
 function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
   const navigation = useNavigation();
-  console.log('user', user);
+  console.log('user', user, 'owner', owner);
 
   useEffect(() => {
     if (user.uid === owner.uid) {
@@ -35,7 +35,7 @@ function UserProfile({ user, owner }) {
     } else {
       setIsOwner(false);
     }
-  });
+  }, []);
 
   let buttons;
   let views;

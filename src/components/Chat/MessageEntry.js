@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 function MessageEntry({ message, messageWith }) {
   useEffect(() => { console.log('message', message, messageWith); }, []);
   return (
-    <View>
+    <View styles={{ flex: 1 }}>
       <ListItem
         key={message.created_at.seconds}
         containerStyle={message.from === messageWith ? styles.toUser : styles.fromUser}
