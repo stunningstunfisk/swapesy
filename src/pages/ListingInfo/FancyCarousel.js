@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { Dimensions, View, Image, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -33,7 +34,7 @@ function FancyCarousel({
         layoutCardOffset={9}
         data={cards}
         renderItem={({ item }) => (
-          <View>
+          <View style={{ top: '-4%' }}>
             <Image style={styles.card} source={{ uri: item.uri }} />
             <View style={styles.cardCap}>
               <Text

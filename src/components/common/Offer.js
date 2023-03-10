@@ -103,7 +103,6 @@ function Offer({ offer, sellerId, currUserId }) {
     setShow(!show);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
-
   useEffect(() => {
     // Get User
     const userRef = doc(db, `user/${user}`);
@@ -134,7 +133,7 @@ function Offer({ offer, sellerId, currUserId }) {
             {userObj.name}
             {' \n'}
             {' '}
-            {userObj.rep || '0'}
+            {userObj.reputation || '0'}
             {' '}
             PokeStars
             {' '}
