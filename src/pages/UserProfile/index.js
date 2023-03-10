@@ -29,7 +29,6 @@ function createNewChat(currentUserId, otherUserId) {
 function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
   const navigation = useNavigation();
-  console.log('user', user);
 
   useEffect(() => {
     if (user.uid === owner.uid) {
