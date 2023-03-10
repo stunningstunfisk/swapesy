@@ -38,7 +38,7 @@ function CurrentListings({ owner }) { // listings props will be passed down
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    console.log('Listings');
+    // console.log('Listings');
     const fetched = [];
     const setFetched = async (listingsData) => {
       setListings(listingsData);
@@ -49,7 +49,7 @@ function CurrentListings({ owner }) { // listings props will be passed down
 
       querySnapshot.forEach(async (doc) => {
         fetched.push(doc.data());
-        console.log('listings ', fetched);
+        // console.log('listings ', fetched);
         await setFetched(fetched);
       });
     };

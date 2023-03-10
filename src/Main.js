@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getFirestore, doc, query, getDoc } from 'firebase/firestore';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import firebase from './config/firebase';
@@ -25,6 +25,7 @@ function Main({ user }) {
     return userSnapshot.data();
   };
 
+  const [currentUser, setCurrentUser] = useState(user);
 
   useEffect(() => {
     fetchUser(user.uid)
@@ -36,7 +37,7 @@ function Main({ user }) {
           reputation: userInfo.reputation,
         };
         // eslint-disable-next-line no-param-reassign
-        user = { ...user, ...userAdd };
+        setCurrentUser({ ...user, ...userAdd });
       });
   }, []);
 
@@ -46,14 +47,17 @@ function Main({ user }) {
       pages={
         (
           <>
-            <Tab.Screen name="Home">{() => <HomePage user={user} />}</Tab.Screen>
-            <Tab.Screen name="Chat">{() => <ChatPage user={user} />}</Tab.Screen>
-            <Tab.Screen name="Trades" component={TradesStack} user={user} />
+            <Tab.Screen name="Home">{() => <HomePage user={currentUser} />}</Tab.Screen>
+            <Tab.Screen name="Chat">{() => <ChatPage user={currentUser} />}</Tab.Screen>
+            <Tab.Screen name="Trades" component={TradesStack} user={currentUser} />
             <Tab.Screen name="Upload">
-              {() => <UploadStack user={user} />}
+              {() => <UploadStack user={currentUser} />}
             </Tab.Screen>
             <Tab.Screen name="Profile">
-              {() => <UserProfilePage user={user} owner={user} />}
+              {(state) => {
+                console.log('state', state);
+                return (<UserProfilePage user={currentUser} owner={state.route.params === undefined ? currentUser : state.route.params.owner} />);
+              }}
             </Tab.Screen>
           </>
         )
