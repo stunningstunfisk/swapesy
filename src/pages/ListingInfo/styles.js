@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   text: {
-    fontWeight: 'bold',
+    fontFamily: 'VT323',
     textAlign: 'center',
     fontSize: 18,
   },
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     marginLeft: '5%',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    height: 20,
+    height: 24,
     width: '50%',
     backgroundColor: '#d06f3b',
     shadowColor: 'black',
@@ -55,14 +55,17 @@ export default StyleSheet.create({
   offerButton: {
     backgroundColor: '#a6502c',
     width: '140%',
-    height: '10%',
+    height: '12%',
     padding: 1,
     borderRadius: 10,
   },
   offerButtonText: {
-    fontWeight: 'bold',
+    flex: 1,
+    fontFamily: 'VT323',
+    alignItems: 'center',
+    justifyContent: 'center',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 16,
     color: 'white',
   },
 });
