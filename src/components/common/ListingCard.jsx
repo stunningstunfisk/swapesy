@@ -79,16 +79,17 @@ const styles = StyleSheet.create({
 // homePage is a prop passed in HomePage view to conditionally render views and
 // functionality available on HomePage only
 // listing prop will be passed down
-function ListingCard({ listing, homePage, user }) {
+function ListingCard({ listing, user }) {
   const [seller, setSeller] = useState({});
-  console.log('seller is', seller, listing);
 
   const navigation = useNavigation();
   const defaultImage = 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg';
   const isPlural = `offer${listing.offers?.length > 1 ? 's' : ''}`;
 
+  const { uid } = user;
+
   const handlePress = () => {
-    navigation.navigate('ListingInfo', { listingId: listing.id, userId: user.uid });
+    navigation.navigate('ListingInfo', { listingId: listing.id, userId: uid });
   };
 
   useEffect(() => {
