@@ -7,12 +7,12 @@ import {
   addDoc,
   query,
   where,
+  collection,
   Timestamp,
   doc,
   setDoc,
   getDoc,
   getDocs,
-  collection,
   limit,
   orderBy,
 } from 'firebase/firestore';
