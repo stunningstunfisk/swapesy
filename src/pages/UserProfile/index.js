@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import {
   getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  Timestamp,
   doc,
   setDoc,
   getDoc,
   getDocs,
   collection,
-  query,
-  where,
   limit,
   orderBy,
 } from 'firebase/firestore';
@@ -31,21 +34,44 @@ const db = getFirestore(firebase);
 const listingRef = collection(db, 'listing');
 const offerRef = collection(db, 'offer');
 
-function createNewChat(currentUserId, otherUserId) {
-  setDoc(doc(db, 'conversation'), {
-    users: [currentUserId, otherUserId],
-  });
-}
 
 function UserProfile({ user, owner }) {
+  const isFocused = useIsFocused();
+  const [currentUser, setCurrentUser] = useState(user);
   const [isOwner, setIsOwner] = useState(true);
+  const [goBackToggle, setGoBackToggle] = useState(false);
   const navigation = useNavigation();
   const [transactions, setTransactions] = useState([]);
   const [rep, setRep] = useState(0);
+  
+  // console.log('user', currentUser);
+  // console.log('owner', owner);
+
+  async function createNewChat(currentUserId, otherUserId) {
+    // const q = query(collection(db, 'conversation'), where('users', 'array-contains', [String(currentUserId), String(otherUserId)]));
+    // const docAvail = false;
+    // console.log(query);
+    // const docSnap = await getDocs(q);
+    // docSnap.forEach(async (doc) => {
+
+    // });
+    const ref = await addDoc(collection(db, 'conversation'), {
+      users: [currentUserId, otherUserId],
+    });
+    await addDoc(collection(db, `conversation/${ref.id}/messages`), {
+      text: `Starting Chat with ${user.name}`,
+      from: user.uid,
+      created_at: Timestamp.fromDate(new Date()),
+    });
+  }
 
   useEffect(() => {
-    if (user.uid === owner.uid) {
+    // console.log('USEEFFECT USERPROF');
+    if (currentUser.uid === owner.uid) {
       setIsOwner(true);
+    } else if (goBackToggle) {
+      setIsOwner(true);
+      setGoBackToggle(false);
     } else {
       setIsOwner(false);
     }
@@ -60,18 +86,21 @@ function UserProfile({ user, owner }) {
         setTransactions(data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [isFocused]);
   console.log('transhistory', transactions);
+
 
   let buttons;
   let views;
-  if (user.uid === owner.uid) {
+  if (isOwner) {
     buttons = ['Cards', 'Listings', 'Past Transactions'];
+
     views = [
-      <MyCards owner={user} />,
-      <CurrentListings owner={user} />,
-      <Transactions owner={owner} transactions={transactions} />,
+      <MyCards owner={currentUser} />,
+      <CurrentListings owner={currentUser} />,
+      <Transactions owner={currentUser} transactions={transactions} />,
     ];
+
   } else {
     buttons = ['Listings', 'Past Transactions'];
     views = [
@@ -79,22 +108,44 @@ function UserProfile({ user, owner }) {
       <Transactions owner={owner} transactions={transactions} />,
     ];
   }
-  const profilePic = user.photoURL ? user.photoURL : placeholder;
+  const profilePic = currentUser.photoURL ? currentUser.photoURL : placeholder;
 
-  const handlePress = () => {
-    if (user.uid === owner.uid) {
+  const handlePress = async () => {
+    if (isOwner) {
       navigation.navigate('Edit', {});
     } else {
-      createNewChat(user.uid, owner.uid);
-      navigation.navigate('Chats', {});
+      await createNewChat(currentUser.uid, owner.uid)
+        .then(() => {
+          navigation.navigate('Chat', { screen: 'Chats', params: { user } });
+        });
     }
+  };
+
+  const handleGoBack = () => {
+    setGoBackToggle(true);
+    setIsOwner(true);
   };
 
   return (
     <PokeballBackground>
+      {
+          !isOwner
+            ? (
+              <Pressable
+                onPress={handleGoBack}
+                style={styles.button}
+              >
+                <Text>Go Back to Your Profile</Text>
+              </Pressable>
+            )
+            : null
+        }
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <Image source={profilePic} style={styles.profileImg} />
+          <Image
+            source={isOwner ? profilePic : owner.profile_picture}
+            style={styles.profileImg}
+          />
           <View style={styles.userInfoContainer}>
             <View style={styles.subContainer}>
               <Text
@@ -102,10 +153,11 @@ function UserProfile({ user, owner }) {
                 ellipsizeMode="tail"
                 style={styles.userName}
               >
-                {user.name ? user.name : 'Nameless Beautiful Unicorn'}
+                {isOwner ? currentUser.name : owner.name}
               </Text>
+              
               <Pressable onPress={handlePress} style={styles.button}>
-                <Text>{user.uid === owner.uid ? 'Edit' : 'Message'}</Text>
+                <Text>{isOwner ? 'Edit' : 'Message'}</Text>
               </Pressable>
             </View>
             <Text style={styles.reputation}>REP: {rep}</Text>
