@@ -19,7 +19,7 @@ function Main({ user }) {
       pages={
         (
           <>
-            <Tab.Screen name="Home" component={HomePage} />
+            <Tab.Screen name="Home">{() => <HomePage user={user} />}</Tab.Screen>
             <Tab.Screen name="Chat">{() => <ChatPage user={user} />}</Tab.Screen>
             <Tab.Screen name="Trades" component={TradesStack} user={user} />
             <Tab.Screen name="Upload">
