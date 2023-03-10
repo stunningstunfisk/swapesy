@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
+import PokeballBackground from '../components/common/PokeballBackground';
+
 const auth = getAuth();
 
 function SignIn({ navigation }) {
@@ -33,43 +35,45 @@ function SignIn({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>SignIn</Text>
+    <PokeballBackground>
+      <View style={styles.container}>
+        <Text>SignIn</Text>
 
-      {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
+        {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
 
-      <View style={styles.controls}>
-        <Input
-          inputMode="email"
-          placeholder="Email"
-          containerStyle={styles.control}
-          value={value.email}
-          onChangeText={(text) => setValue({ ...value, email: text })}
-          leftIcon={(
-            <Icon
-              name="envelope"
-              size={16}
-            />
-)}
-        />
+        <View style={styles.controls}>
+          <Input
+            inputMode="email"
+            placeholder="Email"
+            containerStyle={styles.control}
+            value={value.email}
+            onChangeText={(text) => setValue({ ...value, email: text })}
+            leftIcon={(
+              <Icon
+                name="envelope"
+                size={16}
+              />
+            )}
+          />
 
-        <Input
-          placeholder="Password"
-          containerStyle={styles.control}
-          value={value.password}
-          onChangeText={(text) => setValue({ ...value, password: text })}
-          secureTextEntry
-          leftIcon={(
-            <Icon
-              name="key"
-              size={16}
-            />
-)}
-        />
+          <Input
+            placeholder="Password"
+            containerStyle={styles.control}
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, password: text })}
+            secureTextEntry
+            leftIcon={(
+              <Icon
+                name="key"
+                size={16}
+              />
+            )}
+          />
 
-        <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
+          <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
+        </View>
       </View>
-    </View>
+    </PokeballBackground>
   );
 }
 
@@ -77,7 +81,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

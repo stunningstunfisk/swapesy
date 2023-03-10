@@ -19,4 +19,7 @@ export default {
   text: {
     fontFamily: 'VT323',
   },
+  title: {
+    fontFamily: 'PokemonSolid',
+  },
 };
