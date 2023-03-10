@@ -8,7 +8,6 @@ const selectedCardItem = (item, handleSelectedCards, selectedCards) => (
       paddingRight: 15,
       paddingLeft: 15,
       width: 130,
-      height: 150,
     }}
   >
     <TouchableOpacity onPress={() => handleSelectedCards.handleClick(item)}>
