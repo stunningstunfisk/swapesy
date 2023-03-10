@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 // import { StatusBar } from 'expo-status-bar';
 // import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider } from 'react-native-elements';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useAuthentication } from './src/util/hooks/userAuth';
 
@@ -31,9 +32,11 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <ThemeProvider>
-        {user ? <Main user={user} /> : <AuthStack />}
-        {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
-        {/* <Main /> */}
+        <SafeAreaProvider>
+          {user ? <Main user={user} /> : <AuthStack />}
+          {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
+          {/* <Main /> */}
+        </SafeAreaProvider>
       </ThemeProvider>
     );
   }
