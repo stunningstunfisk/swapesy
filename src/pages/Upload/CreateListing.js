@@ -16,13 +16,18 @@ import CurrencyInput from 'react-currency-input-field';
 import fetchUserCards from '../../util/fetchUserCards';
 
 function CreateListing({ user }) {
+  const navigation = useNavigation();
   const [cards, setCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [name, onChangeName] = useState('');
   const [price, onChangePrice] = useState(0);
   const [description, onChangeDescription] = useState('');
   const [value, setValue] = useState(0);
-  const navigation = useNavigation();
+  const [data, setData] = useState({
+    cards: [],
+    price: null,
+
+  });
 
   const handleModal = async () => {
     await fetchUserCards(user)
@@ -32,15 +37,6 @@ function CreateListing({ user }) {
       .then(() => setModalVisible(!modalVisible))
       .catch((err) => console.error(err));
   };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    const { value = '' } = e.target;
-    const parsedValue = value.replace(/[^\d.]/gi, '');
-    setValue(parsedValue);
-  };
-
-  const handleOnBlur = () => setValue(Number(value).toFixed(2));
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -65,7 +61,7 @@ function CreateListing({ user }) {
         style={styles.input}
         placeholder="Price..."
         onChangeText={onChangePrice}
-        value={price}
+        value={price.toString()}
         prefix="$"
         delimiter="."
         separator="."
@@ -81,38 +77,6 @@ function CreateListing({ user }) {
       />
 
       {/* <CurrencyInput /> */}
-
-      {/* <CurrencyInput
-        prefix="$"
-        name="currencyInput"
-        id="currencyInput"
-        data-number-to-fixed="2"
-        data-number-stepfactor="100"
-        value={value}
-        placeholder=""
-        onChange={handleChange}
-        onBlur={handleOnBlur}
-        allowDecimals
-        decimalsLimit="2"
-        disableAbbreviations
-
-
-        // value={value}
-        // name={}
-        // onValueChange={setValue}
-        // // renderTextInput={(textInputProps) => <Input {...textInputProps} variant='filled' />}
-        // // renderTextInput={(value) => <Input/>}
-        // // renderText
-        // prefix="$"
-        // delimiter="."
-        // separator="."
-        // precision={2}
-        // // minValue={0}
-        // keyboardType='numeric'
-        // // onValueChange={(formattedValue) => {
-        // //   console.log(formattedValue); // R$ +2.310,46
-        // // }}
-      /> */}
 
       <ToggleSwitch
         isOn={false}

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-function DropdownComponent({ data }) {
+function DropdownComponent({ conditions, setCondition, data, setData }) {
   const [value, setValue] = useState(null);
 
   return (
@@ -13,7 +13,7 @@ function DropdownComponent({ data }) {
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
-      data={data}
+      data={conditions}
       // search
       maxHeight={300}
       labelField="label"
@@ -21,8 +21,10 @@ function DropdownComponent({ data }) {
       placeholder="Condition"
       searchPlaceholder="Search..."
       value={value}
-      onChange={(item) => {
-        setValue(item);
+      onChange={(text) => {
+        setValue(text);
+        // setCondition(text);
+        setData({ ...data, condition: text.value });
       }}
       renderLeftIcon={() => (
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
