@@ -30,32 +30,10 @@ const getTransactions = (userId) => {
 };
 
 function Item({ item, owner }) {
-  return (
-    <TransactionInfo transaction={item} owner={owner} />
-  );
+  return <TransactionInfo transaction={item} owner={owner} />;
 }
 
-function TransactionHistory({ owner }) {
-  const [transactions, setTransactions] = useState([]);
-
-  useEffect(() => {
-    console.log('Transactions');
-    const listings = [];
-    const setFetched = async (transactionsData) => {
-      setTransactions(transactionsData);
-    };
-    const q = query(listingRef, where('user', '==', owner.uid), where('completed', '==', true)); // add a limit ?
-    const fetchTransactions = async () => {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(async (doc) => {
-        listings.push(doc.data());
-        console.log('listings ', listings);
-        await setFetched(listings);
-      });
-    };
-    fetchTransactions();
-  }, []);
-
+function TransactionHistory({ owner, transactions }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {transactions ? (
@@ -67,9 +45,7 @@ function TransactionHistory({ owner }) {
           contentContainerStyle={{ marginTop: 10, paddingBottom: 50 }}
         />
       ) : (
-        <Text style={styles.noData}>
-          Woops! There are no transactions yet
-        </Text>
+        <Text style={styles.noData}>Woops! There are no transactions yet</Text>
       )}
     </View>
   );
