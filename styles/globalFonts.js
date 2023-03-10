@@ -13,6 +13,7 @@ export default {
   tabHeader: {
     fontFamily: 'PokemonSolid',
     fontSize: 24,
+    color: colors.dark,
     letterSpacing: 3,
   },
   text: {

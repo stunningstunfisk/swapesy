@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, FlatList, StyleSheet, Text, View } from 'react-native';
 
 // TODO: all this is a utility file worthy extract
 import {
@@ -20,6 +20,7 @@ import MiniListing from '../components/common/MiniListing';
 import MiniOffer from '../components/common/MiniOffer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
+import backgroundImage from '../../assets/poke-paper.png';
 import colors from '../../styles/globalColors';
 import fonts from '../../styles/globalFonts';
 
@@ -28,20 +29,32 @@ const TEST_USER_ID = 'AshKetchum';
 
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+  },
   button: {
     height: 48,
     margin: 4,
   },
-  navbarView: {
-    flexDirection: 'row',
+  header: {
+    borderBottomWidth: 2,
+    borderColor: colors.dark,
+    fontFamily: 'VT323',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  fontVT323: {
+  buttonFont: {
     color: colors.light,
     fontFamily: fonts.text.fontFamily,
     fontSize: 20,
   },
+  navbarView: {
+    flexDirection: 'row',
+  },
   tradesView: {
     backgroundColor: colors.background,
+    borderTopWidth: 2,
+    borderColor: colors.dark,
     flex: 1,
   },
 });
@@ -83,55 +96,66 @@ function Trades({ navigation, user }) {
 
   return (
     <View style={styles.tradesView}>
-      <View style={styles.navbarView}>
-        <PressableOpacity
-          onPress={() => setCurrentView(0)}
-          style={[styles.button, { backgroundColor: currentView === 0 ? colors.primary : 'lightgrey' }]}
-        >
-          <Text style={styles.fontVT323}>MY OPEN LISTINGS</Text>
-        </PressableOpacity>
-        <PressableOpacity
-          onPress={() => setCurrentView(1)}
-          style={[styles.button, { backgroundColor: currentView === 0 ? 'lightgrey' : colors.primary }]}
-        >
-          <Text style={styles.fontVT323}>OUTGOING OFFERS</Text>
-        </PressableOpacity>
-      </View>
-      <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
-        {currentView === 0
-          ? (
-            <>
-              <Text>
-                INCOMING HEADER
-              </Text>
-              <FlatList
-                style={{ flex: 1 }}
-                data={userListings}
-                ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <MiniListing listing={item} user={user} />}
-                keyExtractor={(listing, index) => listing.id + index}
-              />
-            </>
-          )
+      <ImageBackground
+        imageStyle={{ resizeMode: 'repeat', opacity: 0.5 }}
+        style={styles.backgroundImage}
+        source={backgroundImage}
+      >
+        <View style={styles.navbarView}>
+          <PressableOpacity
+            onPress={() => setCurrentView(0)}
+            style={[styles.button, { backgroundColor: currentView === 0 ? colors.primary : 'lightgrey' }]}
+          >
+            <Text style={styles.buttonFont}>MY OPEN LISTINGS</Text>
+          </PressableOpacity>
+          <PressableOpacity
+            onPress={() => setCurrentView(1)}
+            style={[styles.button, { backgroundColor: currentView === 0 ? 'lightgrey' : colors.primary }]}
+          >
+            <Text style={styles.buttonFont}>OUTGOING OFFERS</Text>
+          </PressableOpacity>
+        </View>
+        <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+          {currentView === 0
+            ? (
+              <>
+                <View style={styles.header}>
+                  <Text style={fonts.text}>
+                    {`YOU HAVE ${userListings.length} POSTED LISTINGS`}
+                  </Text>
+                </View>
+                <FlatList
+                  style={{ flex: 1 }}
+                  data={userListings}
+                  ListEmptyComponent={<Text>NO DATA</Text>}
+                  renderItem={({ item }) => <MiniListing listing={item} user={user} />}
+                  keyExtractor={(listing, index) => listing.id + index}
+                />
+              </>
+            )
 
-          : (
-            <>
-              <Text>
-                OUTGOING HEADER
-              </Text>
+            : (
+              <>
+                <View style={styles.header}>
+                  <Text style={fonts.text}>
+                    {`YOU HAVE ${myOffers.length} OUTSTANDING OFFERS`}
+                  </Text>
+                </View>
 
-              <FlatList
-                style={{ flex: 1 }}
-                data={myOffers}
-                ListEmptyComponent={<Text>NO DATA</Text>}
-                renderItem={({ item }) => <MiniOffer user={user} offer={item} />}
-                // renderItem={({ item }) => <Text>OFFER FOUND</Text>}
-                keyExtractor={(item, index) => item.id + index}
-              />
-            </>
-          )}
-      </View>
+                <FlatList
+                  style={{ flex: 1 }}
+                  data={myOffers}
+                  ListEmptyComponent={<Text>NO DATA</Text>}
+                  renderItem={({ item }) => <MiniOffer user={user} offer={item} />}
+                  // renderItem={({ item }) => <Text>OFFER FOUND</Text>}
+                  keyExtractor={(item, index) => item.id + index}
+                />
+              </>
+            )}
+        </View>
+      </ImageBackground>
     </View>
+
   );
 }
 
