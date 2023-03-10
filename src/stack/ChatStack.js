@@ -15,12 +15,15 @@ export default function ChatStack({ user }) {
 
     <Stack.Navigator>
       <Stack.Screen
-        options={fonts.stackHeader}
+        options={{ headerShown: false }}
         name="Chats"
       >
         {() => <ChatPage user={user} />}
       </Stack.Screen>
-      <Stack.Screen name="Messages">
+      <Stack.Screen
+        name="Messages"
+        options={fonts.stackHeader}
+      >
         {(state) => <MessagePage user={user} state={state} />}
       </Stack.Screen>
     </Stack.Navigator>

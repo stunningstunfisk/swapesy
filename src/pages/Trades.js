@@ -20,7 +20,7 @@ import MiniListing from '../components/common/MiniListing';
 import MiniOffer from '../components/common/MiniOffer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
-import backgroundImage from '../../assets/poke-paper.png';
+import PokeballBackground from '../components/common/PokeballBackground';
 import colors from '../../styles/globalColors';
 import fonts from '../../styles/globalFonts';
 
@@ -29,9 +29,6 @@ const TEST_USER_ID = 'AshKetchum';
 
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-  },
   button: {
     height: 48,
     margin: 4,
@@ -97,11 +94,7 @@ function Trades({ navigation, user }) {
 
   return (
     <View style={styles.tradesView}>
-      <ImageBackground
-        imageStyle={{ resizeMode: 'repeat', opacity: 0.5 }}
-        style={styles.backgroundImage}
-        source={backgroundImage}
-      >
+      <PokeballBackground>
         <View style={styles.navbarView}>
           <PressableOpacity
             onPress={() => setCurrentView(0)}
@@ -154,7 +147,7 @@ function Trades({ navigation, user }) {
               </>
             )}
         </View>
-      </ImageBackground>
+      </PokeballBackground>
     </View>
 
   );

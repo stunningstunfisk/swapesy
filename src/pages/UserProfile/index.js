@@ -20,7 +20,7 @@ import styles from '../../../styles/userProfile/userProfile';
 
 import firebase from '../../config/firebase';
 
-const placeholderImg = 'https://avatars.cloudflare.steamstatic.com/52814099e40125301b521935ccca3b5865898777_full.jpg';
+import PokeballBackground from '../../components/common/PokeballBackground';
 
 const db = getFirestore(firebase);
 
@@ -30,24 +30,24 @@ function createNewChat(currentUserId, otherUserId) {
   });
 }
 
-function UserProfile({ owner, user }) {
-  // const isFocused = useIsFocused();
-  // if (owner !== undefined) {
-  //   console.log('owner here ', owner);
-  // }
-  // console.log('user here ', user);
-  // console.log('in index ', navigation.state.params);
-  // console.log('in index ', route.params);
-  // const [ownerInfo, setOwnerInfo] = useState(user);
-  // const [isOwner, setIsOwner] = useState(true);
-  let isOwner;
-  if (owner.route !== undefined) {
-    if (owner.route.params.owner.uid === user.uid) {
-      // owner.uid = owner.route.params.owner.name;
-      console.log('I\'m the owner ', owner);
-      isOwner = false;
-      // owner = user;
+function UserProfile({ user, owner }) {
+  const [isOwner, setIsOwner] = useState(true);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (user.uid === owner.uid) {
+      setIsOwner(true);
+    } else {
+      setIsOwner(false);
     }
+  }, []);
+
+  let buttons;
+  let views;
+  if (user.uid === owner.uid) {
+    buttons = ['Cards', 'Listings', 'Past Transactions'];
+    views = [<MyCards owner={user} />, <CurrentListings owner={user} />,
+      <Transactions owner={owner} />];
   } else {
     isOwner = true;
     console.log('got owner ', owner);
@@ -95,29 +95,27 @@ function UserProfile({ owner, user }) {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.container}>
-        <Image
-          source={{ uri: owner.profile_picture || placeholderImg }}
-          style={styles.profileImg}
-        />
-        <View style={styles.userInfoContainer}>
-          <View style={styles.subContainer}>
-            <Text
-              numberOfLines={2}
-              ellipsizeMode="tail"
-              style={styles.userName}
-            >
-              {owner.name ? owner.name : 'Nameless Beautiful Unicorn'}
-            </Text>
-            <Pressable
-              onPress={handlePress}
-              style={styles.button}
-            >
-              <Text>{isOwner ? <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" /> : 'Message'}</Text>
-            </Pressable>
-          </View>
-          <View style={styles.rating}>
+    <PokeballBackground>
+      <View style={styles.wrapper}>
+        <View style={styles.container}>
+          <Image source={profilePic} style={styles.profileImg} />
+          <View style={styles.userInfoContainer}>
+            <View style={styles.subContainer}>
+              <Text
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                style={styles.userName}
+              >
+                {щцтук.name ? user.name : 'Nameless Beautiful Unicorn'}
+              </Text>
+              <Pressable
+                onPress={handlePress}
+                style={styles.button}
+              >
+                <Text>{isOwner ? <Ionicons name={isOwner ? 'create-outline' : 'send-outline'} size={20} color="#54130e" /> : 'Message'}</Text>
+              </Pressable>
+            </View>
+            <View style={styles.rating}>
             <MaterialCommunityIcons
                 name="pokeball"
                 size={24}
@@ -127,18 +125,19 @@ function UserProfile({ owner, user }) {
               {owner.reputation ? owner.reputation : 0}
             </Text>
           </View>
-          <Text style={styles.bio}>
+            <Text style={styles.bio}>
             {owner.bio ? owner.bio : null}
-          </Text>
+            </Text>
+          </View>
         </View>
-      </View>
-      <SegmentSelect
+        <SegmentSelect
         buttons={owner ? ['CARDS', 'LISTINGS', 'PAST TRANSACTIONS'] : ['LISTINGS', 'PAST TRANSACTIONS']}
         views={owner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
           <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
             <Transactions owner={owner} />]}
-      />
-    </View>
+        />
+      </View>
+    </PokeballBackground>
   );
 }
 
