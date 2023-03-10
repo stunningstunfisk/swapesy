@@ -18,7 +18,7 @@ import firebase from '../../config/firebase';
 
 const db = getFirestore(firebase);
 
-function ListingInfo({ userId, listingId = 'TEST' }) {
+function ListingInfo({ userId, listingId }) {
   const [seller, setSeller] = useState({
     name: 'Ash Catchum',
     id: '1',
