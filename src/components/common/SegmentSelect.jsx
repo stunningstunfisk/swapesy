@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   selected: {
-    backgroundColor: colors.dark,
+    backgroundColor: colors.light,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   selectedText: {
-    color: colors.light,
+    color: colors.dark,
     alignText: 'center',
     fontFamily: fonts.text.fontFamily,
     fontSize: 15,
