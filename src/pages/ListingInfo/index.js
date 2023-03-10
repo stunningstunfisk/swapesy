@@ -24,9 +24,7 @@ function ListingInfo({ user, listingId }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [cards, setCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
-  const [listingCards, setListingCards] = useState([]);
-  const [listingOffers, setListingOffers] = useState([]);
-  const [sellerId, setSellerId] = useState('1');
+
   const [seller, setSeller] = useState({
     name: 'Ash Catchum',
     id: '1',

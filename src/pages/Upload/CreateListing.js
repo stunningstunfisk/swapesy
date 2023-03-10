@@ -206,6 +206,7 @@ function CreateListing({ user }) {
         <Pressable onPress={handleModal}>
           <Text>Select Cards</Text>
         </Pressable>
+
         <ModalView modalVisible={modalVisible} handleModal={handleModal}>
           <ModalRoute
             handleModal={handleModal}
