@@ -7,7 +7,7 @@ import CameraView from './CameraView.js';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-import { getFirestore, doc, setDoc, collection } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, collection, addDoc } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
 import upload from '../../util/imageUpload.js';
@@ -41,7 +41,7 @@ function UploadCard({ user, uri, setUri }) {
     const id = (Math.random() + 1).toString(36).substring(7);
     const image = await upload(uri, id);
 
-    if (image === null || data.name === '' || data.condition === null) {
+    if (image === undefined || data.name === '' || data.condition === '') {
       // setData({
       //   ...data,
       //   error: 'Fields cannot be empty!',
@@ -50,30 +50,18 @@ function UploadCard({ user, uri, setUri }) {
       return;
     }
 
-    console.log('image', image);
-    console.log('uid', user.uid);
     const copyData = { ...data };
     copyData.uri = image;
     copyData.user = user.uid;
     // setData({ ...copyData });
     // await setData({ ...data, uri: image, user: user.uid });
-    console.log('copy', copyData);
-    console.log('data', data);
-
 
     try {
-      console.log('try');
-      await setDoc(dbRef, copyData);
-      // await setDoc(dbRef, {
-      //   condition: data.condition,
-      //   name: data.name,
-      //   uri: data.uri,
-      //   user: user.uid,
-      // });
+      await addDoc(dbRef, { ...copyData });
 
       setUri(null);
     } catch (error) {
-      console.log('setDoc error');
+      console.log('addDoc error');
       // setData({
       //   ...data,
       //   error: error.message,
@@ -102,7 +90,6 @@ function UploadCard({ user, uri, setUri }) {
         value={data.name}
       />
 
-      {/* <DropdownComponent data={conditions} setCondition={setCondition} /> */}
       <DropdownComponent conditions={conditions} data={data} setData={setData} />
 
       {uri ? (
@@ -116,7 +103,6 @@ function UploadCard({ user, uri, setUri }) {
         <View style={styles.imageBox}>
           <AntDesign name="camera" size={20} color="black" />
           <ImagePickerComponent uri={uri} setUri={setUri} />
-          {/* <ImagePickerComponent data={data} setData={setData} /> */}
           <Button
             title="Take a picture"
             onPress={() => { navigation.navigate('CameraView'); }}
