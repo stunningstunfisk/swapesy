@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   StyleSheet,
+  FlatList,
   View,
   Text,
   TextInput,
@@ -26,10 +27,14 @@ import firebase from '../../config/firebase';
 
 const db = getFirestore(firebase);
 const dbRef = collection(db, 'card');
+import selectedCardItem from '../../components/common/modals/selectedCardItem';
+
+import PokeballBackground from '../../components/common/PokeballBackground';
 
 function CreateListing({ user }) {
   const navigation = useNavigation();
   const [cards, setCards] = useState([]);
+  const [selectedCards, setSelectedCards] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentView, setCurrentView] = useState(1);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -101,6 +106,29 @@ function CreateListing({ user }) {
       // setData({ ...data, error: error.message });
     }
   };
+
+  const handleSelectedCards = {
+    handleClick: (item) => {
+      if (!selectedCards.includes(item)) {
+        setSelectedCards([...selectedCards, item]);
+      }
+    },
+    handleRemove: (item) => {
+      const newSelected = selectedCards.filter(
+        (selectedItem) => selectedItem !== item,
+      );
+      setSelectedCards(newSelected);
+    },
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { value = '' } = e.target;
+    const parsedValue = value.replace(/[^\d.]/gi, '');
+    setValue(parsedValue);
+  };
+
+  const handleOnBlur = () => setValue(Number(value).toFixed(2));
 
   return (
     <View style={styles.listingView}>
@@ -175,6 +203,18 @@ function CreateListing({ user }) {
             </View>
 
 
+        <Pressable onPress={handleModal}>
+          <Text>Select Cards</Text>
+        </Pressable>
+        <ModalView modalVisible={modalVisible} handleModal={handleModal}>
+          <ModalRoute
+            handleModal={handleModal}
+            route="UserCards"
+            content={{ cards, handleSelectedCards, selectedCards }}
+          />
+        </ModalView>
+      </View>
+    </PokeballBackground>
             <Pressable onPress={handleModal}>
               <Text>Select Cards</Text>
             </Pressable>
@@ -197,7 +237,6 @@ function CreateListing({ user }) {
     </View>
   );
 }
-
 export default CreateListing;
 
 const styles = StyleSheet.create({

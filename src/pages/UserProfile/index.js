@@ -16,6 +16,8 @@ import styles from '../../../styles/userProfile/userProfile';
 
 import firebase from '../../config/firebase';
 
+import PokeballBackground from '../../components/common/PokeballBackground';
+
 const db = getFirestore(firebase);
 
 function createNewChat(currentUserId, otherUserId) {
@@ -27,7 +29,6 @@ function createNewChat(currentUserId, otherUserId) {
 function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
   const navigation = useNavigation();
-  console.log('user', user);
 
   useEffect(() => {
     if (user.uid === owner.uid) {
@@ -35,7 +36,7 @@ function UserProfile({ user, owner }) {
     } else {
       setIsOwner(false);
     }
-  });
+  }, []);
 
   let buttons;
   let views;
@@ -60,40 +61,42 @@ function UserProfile({ user, owner }) {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.container}>
-        <Image source={profilePic} style={styles.profileImg} />
-        <View style={styles.userInfoContainer}>
-          <View style={styles.subContainer}>
-            <Text
-              numberOfLines={2}
-              ellipsizeMode="tail"
-              style={styles.userName}
-            >
-              {user.name ? user.name : 'Nameless Beautiful Unicorn'}
+    <PokeballBackground>
+      <View style={styles.wrapper}>
+        <View style={styles.container}>
+          <Image source={profilePic} style={styles.profileImg} />
+          <View style={styles.userInfoContainer}>
+            <View style={styles.subContainer}>
+              <Text
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                style={styles.userName}
+              >
+                {user.name ? user.name : 'Nameless Beautiful Unicorn'}
+              </Text>
+              <Pressable
+                onPress={handlePress}
+                style={styles.button}
+              >
+                <Text>{user.uid === owner.uid ? 'Edit' : 'Message'}</Text>
+              </Pressable>
+            </View>
+            <Text style={styles.reputation}>
+              REP:
+              {' '}
+              {user.reputation ? user.reputation : 0}
             </Text>
-            <Pressable
-              onPress={handlePress}
-              style={styles.button}
-            >
-              <Text>{user.uid === owner.uid ? 'Edit' : 'Message'}</Text>
-            </Pressable>
+            <Text style={styles.bio}>
+              {user.bio ? user.bio : null}
+            </Text>
           </View>
-          <Text style={styles.reputation}>
-            REP:
-            {' '}
-            {user.reputation ? user.reputation : 0}
-          </Text>
-          <Text style={styles.bio}>
-            {user.bio ? user.bio : null}
-          </Text>
         </View>
+        <SegmentSelect
+          buttons={buttons}
+          views={views}
+        />
       </View>
-      <SegmentSelect
-        buttons={buttons}
-        views={views}
-      />
-    </View>
+    </PokeballBackground>
   );
 }
 
