@@ -10,6 +10,8 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import firebase from '../config/firebase';
 
+import PokeballBackground from '../components/common/PokeballBackground';
+
 const auth = getAuth();
 
 const db = getFirestore(firebase);
@@ -18,7 +20,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -83,81 +84,83 @@ function SignUp({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Signup screen</Text>
+    <PokeballBackground>
+      <View style={styles.container}>
+        <Text>Signup screen</Text>
 
-      {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
+        {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
 
-      <View style={styles.controls}>
-        <Input
-          placeholder="Email"
-          containerStyle={styles.control}
-          value={value.email}
-          onChangeText={(text) => setValue({ ...value, email: text })}
-          leftIcon={(
-            <Icon
-              name="envelope"
-              size={16}
-            />
-          )}
-        />
-
-        <Input
-          placeholder="Username"
-          containerStyle={styles.control}
-          value={value.password}
-          onChangeText={(text) => setValue({ ...value, name: text })}
-          secureTextEntry
-          leftIcon={(
-            <Icon
-              name="key"
-              size={16}
-            />
-          )}
-        />
-        <Input
-          placeholder="Password"
-          containerStyle={styles.control}
-          value={value.password}
-          onChangeText={(text) => setValue({ ...value, password: text })}
-          secureTextEntry
-          leftIcon={(
-            <Icon
-              name="key"
-              size={16}
-            />
-          )}
-        />
-        <Input
-          placeholder="About You"
-          containerStyle={styles.control}
-          value={value.password}
-          onChangeText={(text) => setValue({ ...value, bio: text })}
-          secureTextEntry
-          leftIcon={(
-            <Icon
-              name="key"
-              size={16}
-            />
+        <View style={styles.controls}>
+          <Input
+            placeholder="Email"
+            containerStyle={styles.control}
+            value={value.email}
+            onChangeText={(text) => setValue({ ...value, email: text })}
+            leftIcon={(
+              <Icon
+                name="envelope"
+                size={16}
+              />
             )}
-        />
-        <Input
-          placeholder="Your Location"
-          containerStyle={styles.control}
-          value={value.password}
-          onChangeText={(text) => setValue({ ...value, location: text })}
-          secureTextEntry
-          leftIcon={(
-            <Icon
-              name="key"
-              size={16}
-            />
-          )}
-        />
+          />
 
-        <Button title="Sign Up" buttonStyle={styles.control} onPress={signUp} />
+          <Input
+            placeholder="Username"
+            containerStyle={styles.control}
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, name: text })}
+            secureTextEntry
+            leftIcon={(
+              <Icon
+                name="key"
+                size={16}
+              />
+            )}
+          />
+          <Input
+            placeholder="Password"
+            containerStyle={styles.control}
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, password: text })}
+            secureTextEntry
+            leftIcon={(
+              <Icon
+                name="key"
+                size={16}
+              />
+            )}
+          />
+          <Input
+            placeholder="About You"
+            containerStyle={styles.control}
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, bio: text })}
+            secureTextEntry
+            leftIcon={(
+              <Icon
+                name="key"
+                size={16}
+              />
+            )}
+          />
+          <Input
+            placeholder="Your Location"
+            containerStyle={styles.control}
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, location: text })}
+            secureTextEntry
+            leftIcon={(
+              <Icon
+                name="key"
+                size={16}
+              />
+            )}
+          />
+
+          <Button title="Sign Up" buttonStyle={styles.control} onPress={signUp} />
+        </View>
       </View>
-    </View>
+    </PokeballBackground>
   );
 }
 
