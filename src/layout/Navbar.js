@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -32,7 +33,7 @@ function Navbar({ pages }) {
             ],
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
-              const rn = route.name;
+              const rn = route.name; // why is this here?
               switch (route.name) {
                 case 'Home':
                   iconName = focused ? 'home' : 'home-outline';
