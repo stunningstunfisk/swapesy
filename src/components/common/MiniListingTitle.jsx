@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
+import fonts from '../../../styles/globalFonts';
+
 import {
   collection,
   doc,
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   fontVT323: {
-    fontFamily: 'VT323',
+    fontFamily: fonts.text.fontFamily,
     fontSize: 20,
   },
   listing: {
