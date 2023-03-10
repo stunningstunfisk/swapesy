@@ -20,7 +20,7 @@ import MiniListing from '../components/common/MiniListing';
 import MiniOffer from '../components/common/MiniOffer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
 
-import backgroundImage from '../../assets/pokeball-wallpaper.jpg';
+import backgroundImage from '../../assets/poke-paper.png';
 import colors from '../../styles/globalColors';
 import fonts from '../../styles/globalFonts';
 
