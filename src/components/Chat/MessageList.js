@@ -7,6 +7,7 @@ import {
   StatusBar,
   TextInput,
   Button,
+  ImageBackground,
 } from 'react-native';
 
 import {
@@ -21,10 +22,14 @@ import {
 import firebase from '../../config/firebase';
 
 import MessageEntry from './MessageEntry';
+import backgroundImage from '../../../assets/poke-paper.png';
 
 const db = getFirestore(firebase);
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
@@ -115,8 +120,13 @@ function MessageList({ user, state }) {
   };
 
   return (
-    <View style={styles.container}>
-      {
+    <ImageBackground
+      imageStyle={{ resizeMode: 'repeat', opacity: 0.5 }}
+      style={styles.backgroundImage}
+      source={backgroundImage}
+    >
+      <View style={styles.container}>
+        {
         messages.length
           ? (
             <FlatList
@@ -124,7 +134,7 @@ function MessageList({ user, state }) {
               renderItem={
                 ({ item }) => {
                   const { messageWith } = state.route.params;
-                  console.log('creating item', item);
+                  // console.log('creating item', item);
                   return (
                     <Item
                       item={item}
@@ -138,21 +148,22 @@ function MessageList({ user, state }) {
           )
           : null
       }
-      <View style={styles.textInput}>
-        <TextInput
-          style={styles.input}
-          onChangeText={setInputMsg}
-          value={inputMsg}
-        />
-        <Button
-          style={styles.button}
-          onPress={() => { handleSubmit(); }}
-          title=">"
-          color="#841584"
-          accessibilityLabel="Send Message"
-        />
+        <View style={styles.textInput}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setInputMsg}
+            value={inputMsg}
+          />
+          <Button
+            style={styles.button}
+            onPress={() => { handleSubmit(); }}
+            title=">"
+            color="#841584"
+            accessibilityLabel="Send Message"
+          />
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
