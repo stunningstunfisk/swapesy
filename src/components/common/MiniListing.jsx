@@ -23,6 +23,7 @@ import PressableOpacity from './buttons/PressableOpacity';
 import TrashButton from './buttons/TrashButton';
 
 import colors from '../../../styles/globalColors';
+import fonts from '../../../styles/globalFonts';
 
 
 const styles = StyleSheet.create({
@@ -50,9 +51,9 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 2,
     borderWidth: 2,
-    borderColor: colors.darkBackgroundAlpha,
+    borderColor: colors.darkBackground,
     elevation: 4, // for Android only
-    shadowColor: '#c3b2a0',
+    shadowColor: colors.primary,
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
@@ -114,17 +115,19 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
           {/* Collapsable Content */}
           <PressableOpacity style={{ backgroundColor: 'red', height: 48 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <Text>DELETE LISTING</Text>
+              <Text style={[fonts.text, { fontSize: 24 }]}>DELETE LISTING</Text>
             </View>
           </PressableOpacity>
 
           {incomingOffers.map((offer) => (
             <ListItem.Swipeable
               containerStyle={styles.container}
+              // eslint-disable-next-line react/no-unstable-nested-components
               leftContent={(reset) => (
                 <TrashButton onLongPress={() => { handleTrashLongPress(); reset(); }} />
               )}
               leftWidth={60}
+              // eslint-disable-next-line react/no-unstable-nested-components
               rightContent={(reset) => (
                 <View style={styles.buttonView}>
                   <PressableOpacity
@@ -133,24 +136,20 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
                   >
                     <Text style={styles.buttonText}>ACCEPT OFFER</Text>
                   </PressableOpacity>
-                  <PressableOpacity
-                    onLongPress={() => reset()}
-                    style={[styles.button, { backgroundColor: 'lightgrey' }]}
-                  >
-                    <Text style={styles.buttonText}>MORE INFO</Text>
-                  </PressableOpacity>
                 </View>
               )}
             >
 
               {/* Offer List Item */}
-              <View style={styles.offer}>
-                <Offer currUserId={user} offer={offer} sellerId={1} />
+              <>
+                <View style={styles.offer}>
+                  <Offer currUserId={user} offer={offer} sellerId={1} />
+                </View>
                 <View style={styles.chevronRight}>
                   <FontAwesome name="chevron-left" size={24} color="black" />
                   <FontAwesome name="chevron-right" size={24} color="black" />
                 </View>
-              </View>
+              </>
 
             </ListItem.Swipeable>
           ))}

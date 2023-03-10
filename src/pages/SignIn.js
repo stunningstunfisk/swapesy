@@ -40,6 +40,7 @@ function SignIn({ navigation }) {
 
       <View style={styles.controls}>
         <Input
+          inputMode="email"
           placeholder="Email"
           containerStyle={styles.control}
           value={value.email}
