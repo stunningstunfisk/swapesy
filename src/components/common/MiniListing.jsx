@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -24,13 +24,13 @@ import TrashButton from './buttons/TrashButton';
 
 import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
+import stunfiskImage from '../../../dev/test_data/stunfisk.png';
 
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    flex: 1,
-    justifyContent: 'center',
-    resizeMode: 'cover',
+    tintColor: 'grey',
+    opacity: 0.25,
   },
   button: {
     margin: 2,
@@ -117,7 +117,12 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
           content={(
             // LIST TITLE AREA
             <View style={{ flex: 1, flexDirection: 'column' }}>
-              <MiniListingTitle listing={listing} offers={incomingOffers} />
+              <ImageBackground
+                imageStyle={styles.backgroundImage}
+                source={stunfiskImage}
+              >
+                <MiniListingTitle listing={listing} offers={incomingOffers} />
+              </ImageBackground>
             </View>
           )}
           icon={<FontAwesome style={{ color: colors.dark, margin: 12 }} name="chevron-down" size={24} color="black" />}

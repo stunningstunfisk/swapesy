@@ -154,7 +154,7 @@ function Trades({ navigation, user }) {
             )}
         </View>
       </ImageBackground>
-    </View >
+    </View>
 
   );
 }
