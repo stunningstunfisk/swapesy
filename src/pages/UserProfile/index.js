@@ -10,7 +10,6 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { AirbnbRating } from '@rneui/themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MyCards from './MyCards';
 import CurrentListings from './CurrentListings';
@@ -32,7 +31,6 @@ function createNewChat(currentUserId, otherUserId) {
 
 function UserProfile({ user, owner }) {
   const [isOwner, setIsOwner] = useState(true);
-  const navigation = useNavigation();
 
   useEffect(() => {
     if (user.uid === owner.uid) {
@@ -41,19 +39,6 @@ function UserProfile({ user, owner }) {
       setIsOwner(false);
     }
   }, []);
-
-  let buttons;
-  let views;
-  if (user.uid === owner.uid) {
-    buttons = ['Cards', 'Listings', 'Past Transactions'];
-    views = [<MyCards owner={user} />, <CurrentListings owner={user} />,
-      <Transactions owner={owner} />];
-  } else {
-    isOwner = true;
-    console.log('got owner ', owner);
-    console.log('got user ', user);
-    owner = user;
-  }
 
   // useEffect(() => {
   //   if (isFocused) {
@@ -98,7 +83,14 @@ function UserProfile({ user, owner }) {
     <PokeballBackground>
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <Image source={profilePic} style={styles.profileImg} />
+          <Image
+            source={{
+              uri:
+              owner.profile_picture
+              || 'https://product-images.tcgplayer.com/fit-in/437x437/89583.jpg',
+            }}
+            style={styles.profileImg}
+          />
           <View style={styles.userInfoContainer}>
             <View style={styles.subContainer}>
               <Text
@@ -106,7 +98,7 @@ function UserProfile({ user, owner }) {
                 ellipsizeMode="tail"
                 style={styles.userName}
               >
-                {щцтук.name ? user.name : 'Nameless Beautiful Unicorn'}
+                {owner.name ? owner.name : 'Nameless Beautiful Unicorn'}
               </Text>
               <Pressable
                 onPress={handlePress}
@@ -116,25 +108,25 @@ function UserProfile({ user, owner }) {
               </Pressable>
             </View>
             <View style={styles.rating}>
-            <MaterialCommunityIcons
+              <MaterialCommunityIcons
                 name="pokeball"
                 size={24}
                 style={styles.rating}
-            />
-            <Text style={styles.reputation}>
-              {owner.reputation ? owner.reputation : 0}
-            </Text>
-          </View>
+              />
+              <Text style={styles.reputation}>
+                {owner.reputation ? owner.reputation : 0}
+              </Text>
+            </View>
             <Text style={styles.bio}>
-            {owner.bio ? owner.bio : null}
+              {owner.bio ? owner.bio : null}
             </Text>
           </View>
         </View>
         <SegmentSelect
-        buttons={owner ? ['CARDS', 'LISTINGS', 'PAST TRANSACTIONS'] : ['LISTINGS', 'PAST TRANSACTIONS']}
-        views={owner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
-          <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
-            <Transactions owner={owner} />]}
+          buttons={owner ? ['CARDS', 'LISTINGS', 'PAST TRANSACTIONS'] : ['LISTINGS', 'PAST TRANSACTIONS']}
+          views={owner ? [<MyCards owner={user} />, <CurrentListings owner={user} />,
+            <Transactions owner={user} />] : [<CurrentListings owner={owner} />,
+              <Transactions owner={owner} />]}
         />
       </View>
     </PokeballBackground>
