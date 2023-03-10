@@ -1,16 +1,17 @@
 import React from 'react';
-import {
-  Dimensions,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { Dimensions, View, Image, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Carousel from 'react-native-snap-carousel';
 import styles from './styles';
 
-function FancyCarousel({ cards, seller, sellerId, listingId, userId }) {
+function FancyCarousel({
+  cards,
+  seller,
+  sellerId,
+  listingId,
+  userId,
+  handleModal,
+}) {
   const { width } = Dimensions.get('window');
   const navigation = useNavigation();
 
@@ -35,7 +36,13 @@ function FancyCarousel({ cards, seller, sellerId, listingId, userId }) {
           <View>
             <Image style={styles.card} source={{ uri: item.uri }} />
             <View style={styles.cardCap}>
-              <Text style={{ fontWeight: 'bold', textAlign: 'center', color: '#e9e7e4' }}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  color: '#e9e7e4',
+                }}
+              >
                 {item.name}
               </Text>
             </View>
@@ -48,14 +55,10 @@ function FancyCarousel({ cards, seller, sellerId, listingId, userId }) {
         <TouchableOpacity onPress={navigateToSellerProfile}>
           <Image style={styles.pfp} source={{ uri: seller.profile_picture }} />
           <Text style={styles.text}>{seller.name}</Text>
-          <Text style={styles.text}>
-            {seller.reputation}
-            {' '}
-            Stars
-          </Text>
+          <Text style={styles.text}>{seller.reputation} Stars</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={navigateToMakeOffer} style={styles.offerButton}>
+        <TouchableOpacity onPress={handleModal} style={styles.offerButton}>
           <Text style={styles.offerButtonText}>Make an Offer</Text>
         </TouchableOpacity>
       </View>
