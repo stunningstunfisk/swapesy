@@ -6,14 +6,19 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Carousel from 'react-native-snap-carousel';
 import styles from './styles';
 
-function FancyCarousel({ cards, seller, sellerId, listingId }) {
+function FancyCarousel({ cards, seller, sellerId, listingId, userId }) {
   const { width } = Dimensions.get('window');
+  const navigation = useNavigation();
+
+  const newUser = { uid: userId };
+  const newSeller = { ...seller, uid: sellerId };
 
   const navigateToSellerProfile = () => {
-    alert(sellerId);
+    navigation.navigate('Profile', { user: newUser, owner: newSeller });
   };
 
   const navigateToMakeOffer = () => {
