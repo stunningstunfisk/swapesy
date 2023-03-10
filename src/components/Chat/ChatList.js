@@ -151,6 +151,7 @@ function ChatList({ user }) {
                 renderItem={
               ({ item }) =>
                 // console.log('creating item', item);
+                // eslint-disable-next-line implicit-arrow-linebreak
                 (
                   <Item
                     item={item}
