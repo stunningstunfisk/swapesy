@@ -50,7 +50,15 @@ function UserProfile({ user, owner }) {
       setIsOwner(false);
     }
     fetchTransactions(owner)
-      .then((data) => setTransactions(data))
+      .then((data) => {
+        const totalRating = data.reduce(
+          (acc, item) => acc + parseInt(item.rating),
+          0,
+        );
+        const avgRating = totalRating / data.length;
+        setRep(avgRating);
+        setTransactions(data);
+      })
       .catch((err) => console.error(err));
   }, []);
   console.log('transhistory', transactions);
@@ -100,7 +108,7 @@ function UserProfile({ user, owner }) {
                 <Text>{user.uid === owner.uid ? 'Edit' : 'Message'}</Text>
               </Pressable>
             </View>
-            <Text style={styles.reputation}>REP: {transactions.length}</Text>
+            <Text style={styles.reputation}>REP: {rep}</Text>
             <Text style={styles.bio}>{user.bio ? user.bio : null}</Text>
           </View>
         </View>
