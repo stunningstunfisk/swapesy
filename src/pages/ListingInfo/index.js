@@ -24,10 +24,12 @@ import PokeballBackground from '../../components/common/PokeballBackground';
 const db = getFirestore(firebase);
 
 function ListingInfo({ userId, listingId }) {
+  // MODAL
   const [modalVisible, setModalVisible] = useState(false);
   const [modalCards, setModalCards] = useState([]);
   const [selectedCards, setSelectedCards] = useState([]);
 
+  // Other States
   const [seller, setSeller] = useState({
     name: 'Ash Catchum',
     id: '1',
@@ -35,7 +37,6 @@ function ListingInfo({ userId, listingId }) {
       'https://freeyourmindexperience.com/wp-content/uploads/person-icon-person-icon-clipart-image-from-our-icon-clipart-category-9-500x500.png',
     reputation: 23,
   });
-
   const [sellerId, setSellerId] = useState('1');
   const [listingCards, setListingCards] = useState([]);
   const [listingOffers, setListingOffers] = useState([]);
@@ -43,6 +44,7 @@ function ListingInfo({ userId, listingId }) {
   let user;
   let cards;
 
+  // Getting all data from DB
   useEffect(() => {
     const ref = doc(db, `listing/${listingId}`);
     const q = query(ref);
@@ -84,6 +86,7 @@ function ListingInfo({ userId, listingId }) {
       .catch((err) => console.error(err));
   }, []);
 
+  // Modal functions
   const handleModal = async () => {
     const u = { uid: userId };
     await fetchUserCards(u)
@@ -111,7 +114,7 @@ function ListingInfo({ userId, listingId }) {
   };
 
   return (
-    <PokeballBackground >
+    <PokeballBackground>
       <View style={styles.container}>
         <FancyCarousel
           cards={listingCards}
@@ -139,7 +142,7 @@ function ListingInfo({ userId, listingId }) {
           />
         </ModalView>
       </View>
-    </PokeballBackground >
+    </PokeballBackground>
   );
 }
 
