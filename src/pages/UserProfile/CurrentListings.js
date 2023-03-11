@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import {
-  getFirestore,
   doc,
   getDoc,
+  getFirestore,
   getDocs,
   collection,
   query,
   where,
-  limit,
-  orderBy,
 } from 'firebase/firestore';
 import ListingCard from '../../components/common/ListingCard';
 import Placeholder from '../../../dev/test_data/stunfisk.png';
@@ -19,15 +16,14 @@ import styles from '../../../styles/userProfile/userProfile';
 
 import firebase from '../../config/firebase';
 
-const { LISTINGS } = require('../../../dev/test_data/data_profile');
 
 const db = getFirestore(firebase);
 const listingRef = collection(db, 'listing');
 
-function Item({ listing, user }) {
+function Item({ listing, owner }) {
   return (
-    <View style={{ color: 'pink' }}>
-      <ListingCard listing={listing} user={user} />
+    <View>
+      <ListingCard listing={listing} user={owner} />
     </View>
   );
 }
@@ -46,7 +42,6 @@ const addUri = (listing) => {
 
 function CurrentListings({ owner }) { // listings props will be passed down
   const [listings, setListings] = useState([]);
-
   useEffect(() => {
     const q = query(listingRef, where('user', '==', owner.uid));
     const extracted = [];
@@ -59,15 +54,15 @@ function CurrentListings({ owner }) { // listings props will be passed down
       .catch((err) => console.error(err));
   }, []);
 
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {listings ? (
         <FlatList
           columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 15 }}
-          // contentContainerStyle={{marginTop: 10, paddingBottom: 50}}
           showsVerticalScrollIndicator={false}
           data={listings}
-          renderItem={({ item }) => <Item listing={item} user={owner} />}
+          renderItem={({ item }) => <Item listing={item} owner={owner} />}
           keyExtreactor={(item) => item.id}
           numColumns={2}
         />

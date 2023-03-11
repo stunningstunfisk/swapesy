@@ -239,7 +239,6 @@ function CreateListing({ user }) {
             )}
           </View>
         </TouchableWithoutFeedback>
-
         <ModalView modalVisible={modalVisible} handleModal={handleModal}>
           <ModalRoute
             handleModal={handleModal}

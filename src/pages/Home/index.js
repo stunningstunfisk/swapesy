@@ -5,6 +5,9 @@ import HomeScreen from './HomeScreen';
 import ListingInfo from '../ListingInfo';
 import Profile from '../UserProfile';
 
+import fonts from '../../../styles/globalFonts';
+
+
 const Stack = createNativeStackNavigator();
 
 function HomeStack({ user }) {
@@ -12,10 +15,10 @@ function HomeStack({ user }) {
   console.reportErrorsAsExceptions = false;
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Home">
+      <Stack.Screen name="Home" options={fonts.stackHeader}>
         {() => <HomeScreen user={user} />}
       </Stack.Screen>
-      <Stack.Screen name="ListingInfo">
+      <Stack.Screen name="ListingInfo" options={fonts.stackHeader}>
         {(state) => (
           <ListingInfo
             userId={state.route.params.userId}

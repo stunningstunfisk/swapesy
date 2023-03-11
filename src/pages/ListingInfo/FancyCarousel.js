@@ -28,18 +28,19 @@ function FancyCarousel({
   };
 
   return (
-    <View style={styles.carousel}>
+    <View style={[styles.carousel, { backgroundColor: 'rgba(0,0,0,0)' }]}>
       <Carousel
         layout="tinder"
         layoutCardOffset={9}
         data={cards}
         renderItem={({ item }) => (
-          <View style={{ top: '-4%' }}>
+          <View style={{ top: '-5%' }}>
             <Image style={styles.card} source={{ uri: item.uri }} />
             <View style={styles.cardCap}>
               <Text
                 style={{
-                  fontWeight: 'bold',
+                  fontFamily: 'VT323',
+                  fontSize: 16,
                   textAlign: 'center',
                   color: '#e9e7e4',
                 }}

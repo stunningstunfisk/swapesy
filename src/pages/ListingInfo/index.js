@@ -18,6 +18,9 @@ import ModalView from '../../components/common/modals/ModalView';
 import ModalRoute from '../../components/common/modals/ModalRoute';
 import fetchUserCards from '../../util/fetchUserCards';
 
+import PokeballBackground from '../../components/common/PokeballBackground';
+
+
 const db = getFirestore(firebase);
 
 function ListingInfo({ userId, listingId }) {
@@ -82,7 +85,8 @@ function ListingInfo({ userId, listingId }) {
   }, []);
 
   const handleModal = async () => {
-    await fetchUserCards(user)
+    const u = { uid: userId };
+    await fetchUserCards(u)
       .then((data) => {
         setModalCards(data);
       })
@@ -107,33 +111,35 @@ function ListingInfo({ userId, listingId }) {
   };
 
   return (
-    <View style={styles.container}>
-      <FancyCarousel
-        cards={listingCards}
-        seller={seller}
-        sellerId={sellerId}
-        listingId={listingId}
-        userId={userId}
-        handleModal={handleModal}
-      />
-      <Offers
-        offers={listingOffers}
-        sellerId={sellerId}
-        currUserId={userId}
-      />
-      <ModalView modalVisible={modalVisible} handleModal={handleModal}>
-        <ModalRoute
+    <PokeballBackground >
+      <View style={styles.container}>
+        <FancyCarousel
+          cards={listingCards}
+          seller={seller}
+          sellerId={sellerId}
+          listingId={listingId}
+          user={user}
           handleModal={handleModal}
-          route="Offer"
-          content={{
-            modalCards,
-            handleSelectedCards,
-            selectedCards,
-            handleModal: handleModalOpen,
-          }}
         />
-      </ModalView>
-    </View>
+        <Offers
+          offers={listingOffers}
+          sellerId={sellerId}
+          currUserId={userId}
+        />
+        <ModalView modalVisible={modalVisible} handleModal={handleModal}>
+          <ModalRoute
+            handleModal={handleModal}
+            route="Offer"
+            content={{
+              modalCards,
+              handleSelectedCards,
+              selectedCards,
+              handleModal: handleModalOpen,
+            }}
+          />
+        </ModalView>
+      </View>
+    </PokeballBackground >
   );
 }
 

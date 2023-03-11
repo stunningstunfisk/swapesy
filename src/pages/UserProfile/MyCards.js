@@ -1,6 +1,13 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import {
+  getFirestore,
+  getDocs,
+  collection,
+  query,
+  where,
+} from 'firebase/firestore';
 import styles from '../../../styles/userProfile/userProfile';
 import cardStyles from '../../../styles/userProfile/inventoryCard';
 import placeholder from '../../../dev/test_data/stunfisk.png';
@@ -8,8 +15,6 @@ import ModalView from '../../components/common/modals/ModalView';
 import ModalRoute from '../../components/common/modals/ModalRoute';
 
 import fetchUserCards from '../../util/fetchUserCards';
-
-const { CARDS } = require('../../../dev/test_data/data_profile');
 
 function Item({ card }) {
   const [modalVisible, setModalVisible] = useState(false);
