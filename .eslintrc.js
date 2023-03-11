@@ -36,5 +36,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 'warn',
     'react/prop-types': 'off',
     'react/no-array-index-key': 'off',
+    'no-console': 'off',
   },
 };

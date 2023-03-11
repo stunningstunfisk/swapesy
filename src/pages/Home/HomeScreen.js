@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
-
 import Options from './Options';
 import listingFuncs from './listingFuncs';
 import ListingCard from '../../components/common/ListingCard';
-
 import PokeballBackground from '../../components/common/PokeballBackground';
-
 
 const sorts = listingFuncs;
 
@@ -15,7 +12,9 @@ function Home({ user }) {
   const [sort, setSort] = useState('recent');
   const [filter, setFilter] = useState();
 
+  // Getting all listings that pass a combination of <sort> and <filter>
   useEffect(() => { sorts[sort](setListings, filter); }, [sort, filter]);
+
   return (
     <PokeballBackground>
       <View style={{ flex: 1 }}>
