@@ -24,6 +24,7 @@ function Options({ setSort, setFilter }) {
     setShow(!show);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
+
   return (
     <View style={styles.main}>
       <TouchableOpacity style={styles.dropDown} onPress={toggle}>
