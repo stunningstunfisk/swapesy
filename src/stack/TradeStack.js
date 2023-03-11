@@ -9,11 +9,12 @@ import UserProfile from '../pages/UserProfile/index';
 
 const Stack = createStackNavigator();
 
-function TradeStack({navigation, route}) {
-  console.log('params in TradeStack', route.params);
+function TradeStack({ user }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="TradeScreen" component={Trades} />
+      <Stack.Screen name="TradeScreen">
+        {() => <Trades user={user} />}
+      </Stack.Screen>
       <Stack.Screen name="ListingInfo" component={ListingInfo} />
       <Stack.Screen name="OtherUser" component={UserProfile} />
     </Stack.Navigator>

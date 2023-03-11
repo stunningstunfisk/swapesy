@@ -2,22 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
-import fonts from '../../../styles/globalFonts';
-
-import {
-  collection,
-  doc,
-  docs,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
+import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
-const database = getFirestore(firebase);
+import fonts from '../../../styles/globalFonts';
 
+
+const database = getFirestore(firebase);
 
 const styles = StyleSheet.create({
   cardImage: {
@@ -32,7 +23,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 4,
-    zIndex: 100,
+    zIndex: 9999,
   },
   fontVT323: {
     fontFamily: fonts.text.fontFamily,
@@ -62,7 +53,6 @@ const MiniListingTitle = function CreateMiniListingTitle({ listing, offers }) {
         .catch((err) => console.error(err));
     }))
       .then((cardsData) => {
-        console.log('cards are', cardsData);
         setCards(cardsData);
       });
   }, []);
