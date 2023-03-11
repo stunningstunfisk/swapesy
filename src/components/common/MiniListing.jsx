@@ -3,18 +3,8 @@ import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
-import {
-  collection,
-  doc,
-  docs,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
+import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
 import firebase from '../../config/firebase';
-const database = getFirestore(firebase);
 
 import HorizontalDivider from './spacers/HorizontalDivider';
 import Offer from './Offer';
@@ -26,6 +16,8 @@ import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
 import stunfiskImage from '../../../dev/test_data/stunfisk.png';
 
+
+const database = getFirestore(firebase);
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -95,14 +87,21 @@ const MiniListing = function CreateMiniListing({ listing, user }) {
   const [incomingOffers, setIncomingOffers] = useState([]);
 
   useEffect(() => {
-    Promise.all(listing.offers.map((offerId) => {
-      const offerRef = doc(database, `offer/${offerId}`);
-      const offerQuery = query(offerRef);
-      return getDoc(offerQuery)
-        .then((da) => da.data())
-        .catch((err) => console.error(err));
-    }))
-      .then((offers) => setIncomingOffers(offers));
+    if ((listing.offers?.length > 0) && listing.offers[0] !== '') {
+      const offers = [];
+      listing.offers.forEach((offerId) => {
+        const offerRef = doc(database, `offer/${offerId}`);
+        const offerQuery = query(offerRef);
+        getDoc(offerQuery)
+          .then((data) => {
+            offers.push(data.data());
+          })
+          .then(() => {
+            setIncomingOffers(offers);
+          })
+          .catch((err) => console.error(err));
+      });
+    }
   }, []);
 
   function handleTrashLongPress() {

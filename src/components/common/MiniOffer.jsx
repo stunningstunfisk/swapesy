@@ -4,28 +4,19 @@ import { Avatar, ListItem } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-import {
-  collection,
-  doc,
-  docs,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
+import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
 import firebase from '../../config/firebase';
 
-import ashImage from '../../../dev/test_data/ash.jpg';
 import HorizontalDivider from './spacers/HorizontalDivider';
 import TrashButton from './buttons/TrashButton';
 
 import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
+import ashImage from '../../../dev/test_data/ash.jpg';
 import stunfiskImage from '../../../dev/test_data/stunfisk.png';
 
-const database = getFirestore(firebase);
 
+const database = getFirestore(firebase);
 
 const styles = StyleSheet.create({
   avatar: {
@@ -102,7 +93,6 @@ function MiniOffer({ offer }) {
   const navigation = useNavigation();
 
   function handleUserPress() {
-    console.log('pressed trade offer avatar', sellerData);
     navigation.navigate('Profile', { owner: sellerData });
   }
   function handleListingPress() {
@@ -125,7 +115,6 @@ function MiniOffer({ offer }) {
         getDoc(userQuery)
           .then((userData) => {
             foundUser = userData.data();
-            console.log('userData:', userData, userData.data());
             setSellerData(userData.data());
           })
           .then(() => {
@@ -146,7 +135,6 @@ function MiniOffer({ offer }) {
           .catch((err) => console.error(err));
       }))
         .then((cards) => {
-          console.log('cards are', cards);
           setOfferCards(cards);
         });
     }

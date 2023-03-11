@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { ImageBackground, FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 // TODO: all this is a utility file worthy extract
-import {
-  collection,
-  doc,
-  docs,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
+import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import firebase from '../config/firebase';
-
-const database = getFirestore(firebase);
 
 import MiniListing from '../components/common/MiniListing';
 import MiniOffer from '../components/common/MiniOffer';
 import PressableOpacity from '../components/common/buttons/PressableOpacity';
+import UserContext from '../util/UserContext';
 
 import PokeballBackground from '../components/common/PokeballBackground';
 import colors from '../../styles/globalColors';
 import fonts from '../../styles/globalFonts';
 
-// TODO: Remove hardcoded magic strings and test data!!
-const TEST_USER_ID = 'AshKetchum';
 
+const database = getFirestore(firebase);
 
 const styles = StyleSheet.create({
   button: {
@@ -54,30 +43,29 @@ const styles = StyleSheet.create({
   },
 });
 
-function Trades({ navigation, user }) {
+function Trades() {
   const [currentView, setCurrentView] = useState(0);
   const [myOffers, setMyOffers] = useState([]);
   const [userListings, setUserListings] = useState([]);
 
-
-  user = TEST_USER_ID; // TODO: REMOVE HARDCODED TEST DATA
-
+  const currentUser = useContext(UserContext);
 
   useEffect(() => {
     const listingDocRef = collection(database, 'listing');
-    const listingQuery = query(listingDocRef, where('user', '==', user));
+    const listingQuery = query(listingDocRef, where('user', '==', currentUser.uid));
     const listings = [];
     getDocs(listingQuery)
       .then((data) => {
         data.forEach((item) => listings.push(item.data()));
       })
       .then(() => {
+        console.log('TRADES listings are', listings);
         setUserListings(listings);
       })
       .catch((error) => console.error(error));
 
     const offerDocRef = collection(database, 'offer');
-    const offerQuery = query(offerDocRef, where('user', '==', user));
+    const offerQuery = query(offerDocRef, where('user', '==', currentUser.uid));
     const offers = [];
     getDocs(offerQuery)
       .then((data) => {
@@ -87,7 +75,6 @@ function Trades({ navigation, user }) {
         setMyOffers(offers);
       })
       .catch((error) => console.error(error));
-  console.log('trades', user);
   }, []);
 
   return (
@@ -120,7 +107,8 @@ function Trades({ navigation, user }) {
                   style={{ flex: 1 }}
                   data={userListings}
                   ListEmptyComponent={<Text>NO DATA</Text>}
-                  renderItem={({ item }) => <MiniListing listing={item} user={user} />}
+                  renderItem={({ item }) => <MiniListing listing={item} user={currentUser} />}
+                  // renderItem={({ item }) => <Text>{item.title ? item.title : 'no title'}</Text>}
                   keyExtractor={(item, index) => (item + index)}
                 />
               </>
@@ -138,8 +126,7 @@ function Trades({ navigation, user }) {
                   style={{ flex: 1 }}
                   data={myOffers}
                   ListEmptyComponent={<Text>NO DATA</Text>}
-                  renderItem={({ item }) => <MiniOffer user={user} offer={item} />}
-                  // renderItem={({ item }) => <Text>OFFER FOUND</Text>}
+                  renderItem={({ item }) => <MiniOffer offer={item} />}
                   keyExtractor={(item, index) => (item + index)}
                 />
               </>
