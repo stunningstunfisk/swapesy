@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 
 function CardInfo({ content }) {
-  console.log(content, 'CARDINFO');
   return (
     <View>
       <Image
