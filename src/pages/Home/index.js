@@ -1,18 +1,13 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import HomeScreen from './HomeScreen';
 import ListingInfo from '../ListingInfo';
 import Profile from '../UserProfile';
-
 import fonts from '../../../styles/globalFonts';
-
 
 const Stack = createNativeStackNavigator();
 
 function HomeStack({ user }) {
-  console.disableYellowBox = true;
-  console.reportErrorsAsExceptions = false;
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Home" options={fonts.stackHeader}>
