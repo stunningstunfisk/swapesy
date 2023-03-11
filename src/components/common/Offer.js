@@ -7,10 +7,7 @@ import {
   doc,
 } from 'firebase/firestore';
 import firebase from '../../config/firebase';
-
-import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
-
 
 const db = getFirestore(firebase);
 
@@ -99,10 +96,12 @@ function Offer({ offer, sellerId, currUserId }) {
   const [userObj, setUserObj] = useState(user);
   const [extractedCards, setExtracted] = useState(user);
   const [show, setShow] = useState(false);
+
   const toggle = () => {
     setShow(!show);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
+
   useEffect(() => {
     // Get User
     const userRef = doc(db, `user/${user}`);
