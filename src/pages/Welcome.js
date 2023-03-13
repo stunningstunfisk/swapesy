@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     height: 48,
     margin: 4,
   },
+  buttonText: {
+    color: colors.light,
+  },
   image: {
     flex: 3,
     resizeMode: 'center',
@@ -45,13 +48,13 @@ function Welcome({ navigation }) {
           style={styles.button}
           onPress={() => navigation.navigate('SignIn')}
         >
-          <Text>LOGIN</Text>
+          <Text style={styles.buttonText}>LOGIN</Text>
         </PressableOpacity>
         <PressableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('SignUp')}
         >
-          <Text>NEW ACCOUNT</Text>
+          <Text style={styles.buttonText}>NEW ACCOUNT</Text>
         </PressableOpacity>
       </View>
     </PokeballBackground>

@@ -11,6 +11,8 @@ import { useAuthentication } from './src/util/hooks/userAuth';
 
 import Main from './src/Main';
 import AuthStack from './src/stack/AuthStack';
+import UserContext from './src/util/UserContext';
+
 
 export default function App() {
   const { user } = useAuthentication();
@@ -27,11 +29,13 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      <ThemeProvider>
-        {user ? <Main user={user} /> : <AuthStack />}
-        {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
-        {/* <Main /> */}
-      </ThemeProvider>
+      <UserContext.Provider value={user}>
+        <ThemeProvider>
+          {user ? <Main user={user} /> : <AuthStack />}
+          {/* TODO: DO NOT RELEASE THIS INTO PRODUCTION */}
+          {/* <Main /> */}
+        </ThemeProvider>
+      </UserContext.Provider>
     );
   }
 }
