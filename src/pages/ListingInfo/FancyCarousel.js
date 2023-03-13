@@ -9,22 +9,18 @@ function FancyCarousel({
   cards,
   seller,
   sellerId,
-  listingId,
   userId,
   handleModal,
 }) {
   const { width } = Dimensions.get('window');
   const navigation = useNavigation();
 
+  // Reference cloning for navigation
   const newUser = { uid: userId };
   const newSeller = { ...seller, uid: sellerId };
 
   const navigateToSellerProfile = () => {
     navigation.navigate('Profile', { user: newUser, owner: newSeller });
-  };
-
-  const navigateToMakeOffer = () => {
-    alert(listingId);
   };
 
   return (

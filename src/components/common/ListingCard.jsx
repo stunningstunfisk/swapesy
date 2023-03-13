@@ -2,18 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Badge } from '@rneui/themed';
-
 import { doc, getDoc, getFirestore, query } from 'firebase/firestore';
 import firebase from '../../config/firebase';
-
 import ashImage from '../../../dev/test_data/ash.jpg';
 import colors from '../../../styles/globalColors';
 import fonts from '../../../styles/globalFonts';
 
-
 const database = getFirestore(firebase);
-
 const screenWidth = Dimensions.get('window').width - 40;
+
 const styles = StyleSheet.create({
   cardImage: {
     aspectRatio: 3 / 4,
@@ -90,6 +87,7 @@ function ListingCard({ listing, user }) {
     navigation.navigate('ListingInfo', { listingId: listing.id, userId: uid });
   };
 
+  // Fetching Seller
   useEffect(() => {
     const userRef = doc(database, `user/${listing.user}`);
     const userQuery = query(userRef);
@@ -115,14 +113,12 @@ function ListingCard({ listing, user }) {
         </Text>
         {listing.cards.length > 1
       && (
-      // <View style={styles.numOfCards}>
         <Badge
           value={listing.cards.length}
           status="success"
-          containerStyle={{ position: 'absolute', top: 0, right: 0, width: 7, heigth: 7, backgoundColor: colors.light, borderColor: colors.dark}}
-          textStyle={{fontFamily: fonts.tabHeader.fontFamily, alignText: 'center', color: '#54130e'}}
+          containerStyle={{ position: 'absolute', top: 0, right: 0, width: 7, heigth: 7, backgoundColor: colors.light, borderColor: colors.dark }}
+          textStyle={{ fontFamily: fonts.tabHeader.fontFamily, alignText: 'center', color: '#54130e' }}
         />
-      // </View>
       )}
       </View>
 
@@ -152,7 +148,6 @@ function ListingCard({ listing, user }) {
         />
       </View>
     </TouchableOpacity>
-    // }
   );
 }
 

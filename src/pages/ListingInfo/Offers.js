@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React from 'react';
 import { View, Text, FlatList } from 'react-native';
-
 import Offer from '../../components/common/Offer';
 
 function Offers({ offers, sellerId, currUserId }) {

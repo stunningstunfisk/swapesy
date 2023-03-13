@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getFirestore, doc, query, getDoc } from 'firebase/firestore';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import firebase from './config/firebase';
+
 // Navbar
 import Navbar from './layout/Navbar';
 
@@ -13,9 +14,7 @@ import UploadStack from './stack/UploadStack';
 import UserProfilePage from './pages/UserProfile';
 
 const db = getFirestore(firebase);
-
 const Tab = createBottomTabNavigator();
-
 
 function Main({ user }) {
   const fetchUser = async (id) => {
@@ -41,7 +40,6 @@ function Main({ user }) {
       });
   }, []);
 
-
   return (
     <Navbar
       pages={
@@ -54,10 +52,12 @@ function Main({ user }) {
               {() => <UploadStack user={currentUser} />}
             </Tab.Screen>
             <Tab.Screen name="Profile">
-              {(state) => {
-                console.log('state', state);
-                return (<UserProfilePage user={currentUser} owner={state.route.params === undefined ? currentUser : state.route.params.owner} />);
-              }}
+              {(state) => (
+                <UserProfilePage
+                  user={currentUser}
+                  owner={state.route.params === undefined ? currentUser : state.route.params.owner}
+                />
+              )}
             </Tab.Screen>
           </>
         )

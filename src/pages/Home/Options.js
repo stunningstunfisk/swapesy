@@ -3,9 +3,7 @@ import { View, Text, TouchableOpacity, LayoutAnimation, StyleSheet } from 'react
 import { Input } from 'react-native-elements';
 
 const styles = StyleSheet.create({
-  main: {
-    alignItems: 'center', width: '60%', left: '20%',
-  },
+  main: { alignItems: 'center', width: '60%', left: '20%' },
   dropDown: { marginBottom: 25, width: '200%', alignItems: 'center', justifyContent: 'center', borderBottomWidth: 1, borderColor: 'gray', paddingBottom: 5, borderRadius: 20, height: 40 },
   red: { width: '100%', backgroundColor: 'red' },
   sectionOne: { flexDirection: 'row', width: '100%', marginBottom: 15 },
@@ -26,6 +24,7 @@ function Options({ setSort, setFilter }) {
     setShow(!show);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
+
   return (
     <View style={styles.main}>
       <TouchableOpacity style={styles.dropDown} onPress={toggle}>
