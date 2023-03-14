@@ -1,4 +1,5 @@
 
+
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
@@ -31,25 +32,19 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+Swapesy is a market place app for selling, trading, and auctioning Pokémon cards!
 
-[![Product Name Screen Shot][assets/mock/intro.jpq]]
+![Authentication](https://raw.githubusercontent.com/stunningstunfisk/swapesy/993b73631df1378d50a24fa05c7aa0d15f3909c3/assets/mock/intro.jpg)
 
-Swapesy
+![Home](https://raw.githubusercontent.com/stunningstunfisk/swapesy/993b73631df1378d50a24fa05c7aa0d15f3909c3/assets/mock/home.jpg)
 
-### Home Page
-[![Product Name Screen Shot][assets/mock/home.jpq]]
+![Profile](https://raw.githubusercontent.com/stunningstunfisk/swapesy/993b73631df1378d50a24fa05c7aa0d15f3909c3/assets/mock/profile.jpg)
 
-### Profile Page
-[![Product Name Screen Shot][assets/profile/intro.jpq]]
+![Upload](https://raw.githubusercontent.com/stunningstunfisk/swapesy/993b73631df1378d50a24fa05c7aa0d15f3909c3/assets/mock/upload.jpg)
 
-### Upload Page
-[![Product Name Screen Shot][assets/mock/upload.jpq]]
+![Chat](https://raw.githubusercontent.com/stunningstunfisk/swapesy/993b73631df1378d50a24fa05c7aa0d15f3909c3/assets/mock/chat.jpg)
 
-### Chat Page
-[![Product Name Screen Shot][assets/mock/chat.jpq]]
-
-### Trade Page
-[![Product Name Screen Shot][assets/mock/intro.jpq]] 
+![Trades](assets/mock/intro.jpq)
 
 <!-- CONTRIBUTING -->
 ## Contributing
